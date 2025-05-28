@@ -1,329 +1,727 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>RealLifeGTA WebApp</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,600&display=swap" rel="stylesheet">
+  <title>Real Life GTA WebApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
+    /* ========= ОСНОВНОЙ ДИЗАЙН ========== */
     body {
-      background: url('https://i.ibb.co/7rM0w0n/gta-map-dark.jpg') center/cover no-repeat, #181818;
-      font-family: 'Montserrat', 'Russo One', Arial, sans-serif;
-      margin: 0; min-height: 100vh; color: #e8e8e8;
+      margin:0; padding:0;
+      min-height:100vh;
+      background: linear-gradient(135deg, #181818 80%, #3e4a5e 100%);
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background-image: url('https://i.ibb.co/7rM0w0n/gta-map-dark.jpg');
+      background-size: cover;
     }
-    .gta-panel {
-      background: rgba(20, 20, 20, 0.93);
-      border-radius: 19px;
-      max-width: 400px;
-      margin: 2.2em auto;
-      box-shadow: 0 8px 32px #000a, 0 1.5px 4px #fff2;
-      padding: 2em 2em 1.5em 2em;
-      border: 2px solid #26e50077;
-      position: relative;
+    /* ====== ШАПКА ====== */
+    .gta-header {
+      width:100%;
       text-align: center;
-    }
-    .gta-title {
-      font-family: 'Russo One', 'Montserrat', Arial, sans-serif;
-      font-size: 2.2em;
+      font-family: 'Russo One',Arial,sans-serif;
+      font-size:2.3em;
       color: #ffe600;
-      letter-spacing: 2px;
-      margin-bottom: .4em;
-      text-shadow: 0 3px 8px #000, 0 0 2px #fff4;
+      letter-spacing:3.5px;
+      text-shadow: 0 4px 16px #222a, 0 1px 2px #fff8;
+      margin: 2vw 0 1vw 0;
+      padding-top:2vw;
+      user-select: none;
+      transition: font-size .2s;
     }
-    .avatar {
-      width: 72px; height: 72px;
-      background: #222; border-radius: 50%;
-      border: 3px solid #26e500;
-      margin: 0 auto .7em auto;
-      box-shadow: 0 4px 12px #000c;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.2em;
+    @media (max-width:600px){
+      .gta-header { font-size:1.4em; padding-top:4vw;}
     }
-    .gta-lvl {
-      font-family: 'Russo One'; font-size: 1.3em; color: #ffe600;
-      letter-spacing: 1px; margin-bottom: 0.6em; text-align: left;
+    /* ====== ИНДИКАТОРЫ ====== */
+    .indicators {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 98vw;
+      margin: 0 auto .2em auto;
+      padding: 0.7em 1.5vw 0.2em 1.5vw;
+      font-size:1.05em;
+      font-weight: 700;
+      background: rgba(20,20,20,0.71);
+      border-radius: 14px;
+      box-shadow:0 1px 12px #0006;
     }
-    .gta-xp-bar {
-      background: #fff2;
-      border-radius: 9px;
+    .indicators > div {
+      color: #fff;
+      margin: 0 .5em;
+      white-space: nowrap;
+      font-family: 'Russo One', Arial, sans-serif;
+    }
+    .indicators .left { text-align:left;}
+    .indicators .right { text-align:right;}
+    .indicators .center { text-align:center;}
+    /* ====== ПОЛОСА ОПЫТА ====== */
+    .gta-exp-bar-wrap {
+      width: 98vw;
+      margin: 0.2em auto 0.7em auto;
+      background: #232323;
+      border-radius: 10px;
+      height: 18px;
+      box-shadow:0 1px 8px #ffd90044;
       overflow: hidden;
-      height: 18px; width: 100%; margin-top: .2em 0 .6em 0;
-      margin-bottom: .7em;
-      border: 1.3px solid #ffe60066;
-      box-shadow: 0 1px 6px #ffe60033;
+      border: 1.2px solid #ffe60099;
+      position: relative;
     }
-    .gta-xp-fill {
-      background: linear-gradient(90deg, #1ee600 60%, #ffe600 100%);
+    .gta-exp-bar-fill {
       height: 100%;
-      border-radius: 8px;
-      transition: width .8s;
-      box-shadow: 0 0 5px #26e50077, 0 1px 5px #0008;
+      background: linear-gradient(90deg, #19ffe6 60%, #3e87ff 100%);
+      width: 0%;
+      border-radius: 10px;
+      transition: width .7s;
+      box-shadow:0 0 8px #19ffe622;
+      min-width: 2%;
     }
-    .gta-stats {
-      margin: 1.2em 0 1.1em 0; padding: 0;
-      font-size: 1.15em; text-align: left;
+    /* ====== ОСНОВНОЙ КОНТЕНТ ====== */
+    .gta-content {
+      width: 98vw;
+      margin: 0 auto;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 2.1em;
     }
-    .gta-stat-row {
-      display: flex; align-items: center; margin-bottom: .5em;
-      font-weight: 500;
+    /* ====== СКИН ПАНЕЛЬ ====== */
+    .gta-skin {
+      width: 98px; height: 98px;
+      margin: 0.3em auto 0.7em auto;
+      background: #1e232b;
+      border-radius: 19px;
+      box-shadow: 0 4px 16px #000c, 0 1.5px 4px #ffe60066;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      border: 3px solid #ffe600;
+      user-select:none;
     }
-    .gta-stat-row i { font-style: normal; width: 1.9em; text-align: center; }
+    .gta-skin img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      user-select:none;
+      pointer-events:none;
+    }
+    /* ====== АКТИВНОСТЬ ====== */
+    .gta-activity {
+      min-height: 42px;
+      font-size: 1.16em;
+      text-align: center;
+      margin:0.5em auto 0.4em auto;
+      color: #ffe600;
+      font-weight: 700;
+      text-shadow: 0 1px 4px #2229;
+      user-select: none;
+      line-height:1.5;
+    }
+    /* ====== КНОПКИ ====== */
+    .gta-buttons-bar {
+      position:fixed;
+      bottom:0; left:0; width:100vw;
+      background:rgba(20,20,20,0.98);
+      box-shadow:0 -6px 64px #000a;
+      border-top:2.5px solid #ffe600;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 1em 0 .7em 0;
+      z-index: 3;
+      gap: 0.3em;
+      flex-wrap:wrap;
+    }
     .gta-btn {
-      font-family: 'Russo One', 'Montserrat', Arial, sans-serif;
-      font-size: 1.1em;
-      background: linear-gradient(90deg, #1ee600 60%, #ffe600 100%);
-      color: #222; padding: .6em 1.7em;
-      border: none; border-radius: 13px;
-      font-weight: 700; margin: 0.6em 0.25em 0.6em 0.25em;
+      font-family: 'Russo One',Arial,sans-serif;
+      font-size: 1.07em;
+      background: linear-gradient(90deg, #ffe600 60%, #ffd900 100%);
+      color: #1b1b1b;
+      padding: .7em 1.5em;
+      border: none;
+      border-radius: 13px;
+      font-weight: 800;
+      margin: 0 0.15em .5em 0.15em;
       letter-spacing: 1px;
-      box-shadow: 0 2px 14px #ffe60040;
-      cursor: pointer; transition: filter .2s;
+      box-shadow: 0 2px 14px #ffe60030, 0 1.5px 4px #ffe60077;
+      cursor: pointer; transition: filter .14s, box-shadow .24s;
+      outline: none;
+      border-bottom: 3px solid #ffe60099;
     }
-    .gta-btn:active { filter: brightness(0.92); }
+    .gta-btn:active {
+      filter: brightness(0.93);
+      box-shadow: 0 1px 5px #ffe60070;
+      border-bottom: 2px solid #ffe600;
+    }
     .gta-btn.red {
       background: linear-gradient(90deg, #ff3c20 60%, #ffe600 100%);
       color: #fff; box-shadow: 0 3px 12px #ff3c2099;
+      border-bottom: 3px solid #ff3c20cc;
     }
     .gta-btn.blue {
       background: linear-gradient(90deg, #19b3ff 60%, #ffe600 100%);
       color: #fff; box-shadow: 0 3px 12px #199cff80;
+      border-bottom: 3px solid #19b3ffcc;
     }
-    .gta-section { margin: 1.1em 0 0.8em 0; }
-    .gta-dice, .gta-job, .gta-send, .gta-admin { margin-bottom: 1.1em; }
-    .gta-msg { min-height: 2em; color: #ffe600; font-size: 1.09em; margin: .7em 0;}
-    .gta-job-row {display:flex;justify-content:center; gap: 1em;}
-    .gta-admin-panel {
-      background: #1e1e1eec;
-      border: 2px solid #ffe60099;
-      border-radius: 16px;
-      padding: 1em;
-      margin: 1em 0 0 0;
+    /* ====== ОКНО РЕГИСТРАЦИИ ====== */
+    .gta-register-bg {
+      position: fixed; left:0;top:0;width:100vw;height:100vh;z-index:100;
+      background: linear-gradient(135deg, #15191c 80%, #2d384a 100%);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .gta-register-box {
+      background: rgba(20,20,20,0.99);
+      border-radius: 19px;
+      box-shadow:0 3px 22px #000b, 0 1.5px 4px #ffe60044;
+      padding: 2.6em 2em 2em 2em;
+      min-width: 330px;
+      max-width: 96vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2.5px solid #ffe600;
+      animation:gta_regin .8s cubic-bezier(.27,1.04,.38,1.01);
+    }
+    @keyframes gta_regin{
+      0%{opacity:0;transform:scale(0.8) translateY(30px);}
+      100%{opacity:1;transform:scale(1) translateY(0);}
+    }
+    .gta-register-title {
+      font-size: 2.3em;
+      font-family:'Russo One',Arial,sans-serif;
+      color: #ffe600;
+      margin-bottom: 0.6em;
+      text-shadow: 0 3px 8px #000, 0 0 2px #fff4;
+      letter-spacing:2px;
+    }
+    .gta-register-err {
+      color: #ff2929;
+      font-size: 1.03em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      min-height: 1.2em;
       text-align: center;
-      box-shadow: 0 2px 12px #ffe60033;
+      letter-spacing:.5px;
     }
-    .gta-admin-panel input {
-      font-size: 1.05em;
-      border-radius: 6px;
-      border: 1px solid #353535;
+    .gta-register-inp {
+      font-size: 1.13em;
+      background: #25282b;
+      color: #ffe600;
+      border: 2px solid #ffe600bb;
+      outline: none;
+      border-radius: 12px;
+      padding: .7em 1.1em;
+      margin-bottom: 1.2em;
+      font-family:'Montserrat',Arial,sans-serif;
+      width: 90%;
+      box-sizing: border-box;
+      box-shadow:0 1px 8px #ffe60022;
+      transition: border .2s;
+      text-align:center;
+    }
+    .gta-register-inp:focus { border: 2px solid #ffe600; }
+    .gta-register-gender {
+      display: flex;
+      width: 92%;
+      justify-content: space-around;
+      margin-bottom: 1.2em;
+      gap:0.7em;
+    }
+    .gta-gender-btn {
       background: #232323;
       color: #ffe600;
-      padding: 0.5em 1em;
-      margin: 0.3em;
-      outline: none;
-      width: 38%;
+      font-size: 1.1em;
+      border:2px solid #ffe60099;
+      border-radius: 11px;
+      font-family: 'Montserrat',Arial,sans-serif;
+      font-weight: 700;
+      padding: .7em 1.2em;
+      margin: 0 0.4em;
+      cursor: pointer;
+      transition: background .16s, border .18s, color .14s;
     }
-    .gta-anim-box {
-      width: 100px; height: 60px; margin: 0.8em auto 0 auto;
-      position: relative; background: none;
-      display: flex; align-items: flex-end; justify-content: center;
+    .gta-gender-btn.selected,
+    .gta-gender-btn:active {
+      background: #ffe600;
+      color: #25282b;
+      border:2px solid #ffe600;
     }
-    .gta-crate {
-      width: 44px; height: 44px; background: #ce8e3a;
-      border: 2.5px solid #8d5a1e; border-radius: 9px;
-      position: absolute; left: 30px; bottom: 0;
-      box-shadow: 0 6px 16px #0006;
-      animation: move-crate 1.7s cubic-bezier(.55,.05,.62,.98) 1;
+    .gta-register-submit {
+      background: linear-gradient(90deg, #ffe600 60%, #ffd900 100%);
+      color: #232323;
+      font-weight: 800;
+      border: none;
+      border-radius: 13px;
+      font-size: 1.17em;
+      padding: .8em 2em;
+      font-family: 'Russo One',Arial,sans-serif;
+      letter-spacing:1px;
+      box-shadow:0 2px 14px #ffe60044, 0 1.5px 4px #ffe60077;
+      margin-top: 1em;
+      cursor: pointer;
+      transition: filter .15s, box-shadow .19s;
+      border-bottom: 3px solid #ffe60099;
     }
-    @keyframes move-crate {
-      0% { left: -60px; bottom: 0; }
-      30% { left: 20px; bottom: 35px; }
-      55% { left: 50px; bottom: 48px; }
-      100% { left: 30px; bottom: 0; }
+    .gta-register-submit:active {
+      filter:brightness(0.93);
+      box-shadow:0 1px 5px #ffe60070;
+      border-bottom: 2px solid #ffe600;
     }
-    @media (max-width: 500px) {
-      .gta-panel { padding: 1.1em .5em 1.5em .5em; }
+    .skin-preview {
+      margin: 0.2em 0 1em 0;
+      display:flex;justify-content:center;gap:1.5em;
+      width:100%;
     }
-    /* Музыка — позиция кнопки */
-    .gta-music-btn {
-      position:absolute;right:24px;top:24px;z-index:99;
+    .skin-preview img {
+      width: 68px;height: 68px;border-radius: 15px;
+      border: 2.3px solid #ffe600bb;box-shadow:0 2px 10px #0007;
+      cursor: pointer; transition: border .15s, filter .19s;
+      object-fit:cover;
+      background: #151d23;
+      opacity:0.75;
+      filter:brightness(0.95) blur(0.2px);
+    }
+    .skin-preview img.selected,
+    .skin-preview img:hover {
+      border: 3px solid #ffe600;
+      opacity:1;
+      filter:brightness(1.07) blur(0);
+    }
+    /* ====== АНИМАЦИЯ КОСТЕЙ ====== */
+    .dice-anim {
+      width: 64px; height: 64px;
+      margin: 0.7em auto 0 auto;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 7;
+      pointer-events:none;
+    }
+    .dice-anim img {
+      width:100%;height:100%;user-select:none;pointer-events:none;
+      animation: dice-throw .7s cubic-bezier(.67,.04,.71,1.04);
+    }
+    @keyframes dice-throw {
+      0% {transform:rotate(-200deg) scale(0.5);}
+      80% {transform:rotate(30deg) scale(1.08);}
+      100% {transform:rotate(0) scale(1);}
+    }
+    /* ====== ВСПЛЫВАЮЩИЕ ОКНА ====== */
+    .gta-modal-bg {
+      position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:110;
+      background:rgba(0,0,0,0.62);
+      display:flex;align-items:center;justify-content:center;
+      animation:fadeinbg .2s;
+    }
+    @keyframes fadeinbg{0%{opacity:0;}100%{opacity:1;}}
+    .gta-modal-win {
+      background: #16171e;
+      border-radius: 18px;
+      box-shadow:0 2px 18px #000d;
+      padding:2.1em 1.1em 1.4em 1.1em;
+      min-width:270px;max-width:96vw;
+      color:#ffe600;font-family:'Russo One',Arial,sans-serif;
+      font-size:1.2em;text-align:center;
+      position:relative;
+      animation:modin .23s;
+    }
+    @keyframes modin{0%{transform:scale(0.92);opacity:0;}100%{transform:scale(1);opacity:1;}}
+    .gta-modal-close{
+      position:absolute;right:19px;top:14px;font-size:1.7em;color:#ffe600;
+      background:none;border:none;cursor:pointer;filter:opacity(0.7);
+      transition:filter .11s;
+    }
+    .gta-modal-close:hover{filter:opacity(1);}
+    /* ====== СКРОЛЛ ====== */
+    ::-webkit-scrollbar{width:6px;}
+    ::-webkit-scrollbar-thumb{background:#ffe60055;border-radius:7px;}
+    ::selection {background:#ffe60044;}
+    /* ====== MOBILE ====== */
+    @media (max-width:600px){
+      .gta-header { font-size:1.3em; padding-top:4vw;}
+      .gta-register-box { min-width: 95vw; }
+      .gta-skin { width: 64px; height: 64px;}
+      .dice-anim { width:40px;height:40px;}
+      .skin-preview img { width:45px;height:45px;}
+      .gta-modal-win {font-size:0.98em;}
     }
   </style>
 </head>
 <body>
-  <!-- Музыка GTA: кнопка и аудиоплеер -->
-  <div class="gta-music-btn">
-    <button id="music-btn" onclick="toggleMusic()" style="background:rgba(32,32,32,0.9);border:none;border-radius:50%;width:42px;height:42px;box-shadow:0 2px 10px #0006;cursor:pointer;">
-      <span id="music-ico" style="font-size:1.7em;">🔊</span>
-    </button>
-    <audio id="gta-music" src="https://files.catbox.moe/t6gdwp.mp3" loop></audio>
+  <!-- ====== ОКНО РЕГИСТРАЦИИ ====== -->
+  <div class="gta-register-bg" id="reg-bg" style="display:none;">
+    <form class="gta-register-box" id="reg-form" autocomplete="off" onsubmit="return false;">
+      <div class="gta-register-title">Real Life GTA</div>
+      <div class="gta-register-err" id="reg-err"></div>
+      <input class="gta-register-inp" id="reg-nick" maxlength="12" autocomplete="off" placeholder="Ваш ник (латиница)">
+      <div class="gta-register-gender">
+        <button type="button" class="gta-gender-btn selected" id="gender-m" onclick="selectGender('Парень')">Парень</button>
+        <button type="button" class="gta-gender-btn" id="gender-f" onclick="selectGender('Девушка')">Девушка</button>
+      </div>
+      <input class="gta-register-inp" id="reg-age" type="number" min="12" max="99" placeholder="Возраст (12-99)">
+      <div class="skin-preview" id="skin-preview"></div>
+      <button class="gta-register-submit" onclick="submitReg()">Создать персонажа</button>
+    </form>
   </div>
+  <!-- /ОКНО РЕГИСТРАЦИИ -->
 
-  <!-- /Музыка -->
-  <div class="gta-panel">
-    <div class="gta-title">RealLifeGTA</div>
-    <div class="avatar" id="avatar">👤</div>
-    <div class="gta-lvl">LVL <span id="lvl"></span> <span style="font-weight:400;font-size:.7em;">| ОПЫТ: <span id="exp"></span>/<span id="exp_max"></span></span></div>
-    <div class="gta-xp-bar"><div class="gta-xp-fill" id="xp-bar"></div></div>
-    <div class="gta-stats">
-      <div class="gta-stat-row"><i>💵</i> <span id="cash"></span></div>
-      <div class="gta-stat-row"><i>👔</i> <span id="job"></span></div>
-      <div class="gta-stat-row"><i>🎲</i> Побед: <span id="wins"></span> / Игр: <span id="games"></span></div>
+  <!-- ====== ОСНОВНОЕ ПРИЛОЖЕНИЕ ====== -->
+  <div id="app" style="display:none;">
+    <div class="gta-header">Real Life GTA</div>
+    <div class="indicators">
+      <div class="left" id="ind-left">LVL: 1 | EXP: 0/8</div>
+      <div class="center" id="ind-center">Работа: Нет</div>
+      <div class="right" id="ind-right">Деньги: 0$ | 18 лет</div>
     </div>
-
-    <div class="gta-section gta-dice">
-      <button class="gta-btn blue" onclick="playDice()">🎲 Кости</button>
-      <div class="gta-msg" id="dice-result"></div>
+    <div class="gta-exp-bar-wrap">
+      <div class="gta-exp-bar-fill" id="exp-bar"></div>
     </div>
-    <div class="gta-section gta-job">
-      <div class="gta-job-row">
-        <button class="gta-btn" onclick="doWork()">🏭 Склад</button>
-      </div>
-      <div class="gta-anim-box" id="anim-box"></div>
-      <div class="gta-msg" id="work-result"></div>
+    <div class="gta-content" id="content">
+      <div class="gta-skin"><img id="skin-img" src="https://i.ibb.co/3z2cZFc/gta5skin-male1.png" alt="skin"></div>
+      <div class="gta-activity" id="activity"></div>
+      <div class="dice-anim" id="dice-anim" style="display:none;"></div>
     </div>
-    <div class="gta-section gta-send">
-      <button class="gta-btn" onclick="sendProfile()">💾 Боту</button>
-    </div>
-    <div class="gta-section gta-admin">
-      <button class="gta-btn red" onclick="toggleAdmin()">🛠 Админка</button>
-      <div class="gta-admin-panel" id="admin-panel" style="display:none;">
-        <div style="margin-bottom:0.7em;">Выдать деньги игроку</div>
-        <input type="text" id="admin-user" placeholder="username">
-        <input type="number" id="admin-amount" placeholder="сумма">
-        <button class="gta-btn" onclick="adminSend()">Выдать</button>
-        <div style="margin-top:.7em; color:#ffe600;" id="admin-res"></div>
-      </div>
+    <div class="gta-buttons-bar" id="btn-bar">
+      <button class="gta-btn" onclick="showJobs()">Работа</button>
+      <button class="gta-btn" onclick="showDice()">Кости</button>
+      <button class="gta-btn" onclick="showTransfer()">Перевести</button>
+      <button class="gta-btn" onclick="showWithdraw()">Вывести RC</button>
+      <button class="gta-btn" onclick="showSkins()">Скин</button>
+      <button class="gta-btn" onclick="showSettings()">Настройки</button>
     </div>
   </div>
+  <!-- /ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+
+  <!-- ====== МОДАЛКИ (ВСПЛЫВАЮЩИЕ ОКНА) ====== -->
+  <div id="modal-bg" style="display:none;"></div>
+
+  <!-- ====== ЗВУКИ ====== -->
+  <audio id="dice-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_123b5c8a2e.mp3" preload="auto"></audio>
+  <audio id="work-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_112b6e94e4.mp3" preload="auto"></audio>
+  <audio id="levelup-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12d3f7b7f2.mp3" preload="auto"></audio>
+  <audio id="rc-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_1131a6e6e3.mp3" preload="auto"></audio>
+
   <script>
-    // GTA МУЗЫКА (управление)
-    let music = document.getElementById('gta-music');
-    let musicBtn = document.getElementById('music-btn');
-    let musicIco = document.getElementById('music-ico');
-    let musicMuted = localStorage.getItem('gta_music_muted') === '1';
+    // ================== НАСТРОЙКИ ==================
+    const GTA_SKINS = [
+      {gender:'Парень', url:'https://i.ibb.co/3z2cZFc/gta5skin-male1.png'},
+      {gender:'Парень', url:'https://i.ibb.co/b1PMT2s/gta5skin-male2.png'},
+      {gender:'Девушка', url:'https://i.ibb.co/r6k6P2M/gta5skin-female1.png'},
+      {gender:'Девушка', url:'https://i.ibb.co/rb1z6mP/gta5skin-female2.png'}
+    ];
+    const storageKey = "rlgta_monster";
+    let user = null;
 
-    function playMusicAuto() {
-      if (!musicMuted) {
-        music.volume = 0.38;
-        music.play().catch(()=>{});
-        musicIco.innerText = "🔊";
-      } else {
-        music.pause();
-        musicIco.innerText = "🔇";
+    // ================== РЕГИСТРАЦИЯ ==================
+    let regGender = "Парень";
+    let regSkin = GTA_SKINS[0].url;
+    function showReg() {
+      document.getElementById('reg-bg').style.display = 'flex';
+      document.getElementById('app').style.display = 'none';
+      // Скины по полу
+      renderSkinPreview();
+    }
+    function hideReg() {
+      document.getElementById('reg-bg').style.display = 'none';
+      document.getElementById('app').style.display = '';
+    }
+    function selectGender(g) {
+      regGender = g;
+      document.getElementById('gender-m').classList.toggle('selected', g === "Парень");
+      document.getElementById('gender-f').classList.toggle('selected', g === "Девушка");
+      renderSkinPreview();
+    }
+    function renderSkinPreview() {
+      const skinDiv = document.getElementById('skin-preview');
+      skinDiv.innerHTML = '';
+      GTA_SKINS.filter(s=>s.gender===regGender).forEach((s,idx)=>{
+        let img = document.createElement('img');
+        img.src = s.url;
+        img.className = (regSkin==s.url ? 'selected':'');
+        img.onclick = ()=>{regSkin=s.url;renderSkinPreview();};
+        skinDiv.appendChild(img);
+      });
+      if(!GTA_SKINS.filter(s=>s.gender===regGender).some(s=>s.url===regSkin)){
+        regSkin = GTA_SKINS.filter(s=>s.gender===regGender)[0].url;
       }
     }
-    function toggleMusic() {
-      musicMuted = !musicMuted;
-      localStorage.setItem('gta_music_muted', musicMuted ? '1' : '0');
-      playMusicAuto();
+    function validateNick(nick) {
+      return /^[a-zA-Z]{3,12}$/.test(nick);
     }
-    setTimeout(playMusicAuto, 300);
-
-    // Telegram API
-    const tg = window.Telegram.WebApp;
-    tg.expand();
-
-    // Профиль игрока (localStorage для демо)
-    let profile = JSON.parse(localStorage.getItem("rlgta_profile") || "{}");
-    const defaultProfile = () => ({
-      name: tg.initDataUnsafe.user?.first_name || "Гость",
-      username: tg.initDataUnsafe.user?.username || "",
-      lvl: 1, exp: 0, exp_max: 12, cash: 250, job: "Безработный", works: 0, wins: 0, games: 0
-    });
-    if (!profile.name) {
-      profile = defaultProfile();
-      localStorage.setItem("rlgta_profile", JSON.stringify(profile));
+    function validateAge(age) {
+      return /^\d{2}$/.test(age) && +age >= 12 && +age <= 99;
     }
-    function saveProfile() {
-      localStorage.setItem("rlgta_profile", JSON.stringify(profile));
-      renderProfile();
-    }
-    function progressBar(val, max) {
-      return Math.min(100, Math.round(100 * val / max)) + "%";
-    }
-    function renderProfile() {
-      document.getElementById("avatar").innerText = (tg.initDataUnsafe.user?.first_name?.[0] || "👤");
-      document.getElementById("lvl").innerText = profile.lvl;
-      document.getElementById("exp").innerText = profile.exp;
-      document.getElementById("exp_max").innerText = profile.exp_max;
-      document.getElementById("xp-bar").style.width = progressBar(profile.exp, profile.exp_max);
-      document.getElementById("cash").innerHTML = `<b>${profile.cash}$</b>`;
-      document.getElementById("job").innerText = profile.job;
-      document.getElementById("wins").innerText = profile.wins;
-      document.getElementById("games").innerText = profile.games;
-    }
-    renderProfile();
-
-    // Кости
-    function playDice() {
-      let bet = prompt("Ваша ставка ($, целое число):", "50");
-      if (!bet || isNaN(bet) || bet < 1) { return; }
-      bet = Math.floor(+bet);
-      if (profile.cash < bet) {
-        document.getElementById("dice-result").innerText = "Недостаточно денег!";
+    function submitReg() {
+      const nick = document.getElementById('reg-nick').value.trim();
+      const age = document.getElementById('reg-age').value.trim();
+      const err = document.getElementById('reg-err');
+      if (!validateNick(nick)) {
+        err.textContent = "Только латинские буквы, 3-12 символов, без пробелов и цифр!";
         return;
       }
+      if (!validateAge(age)) {
+        err.textContent = "Возраст должен быть от 12 до 99!";
+        return;
+      }
+      user = {
+        nick, gender: regGender, age: +age, lvl: 1, exp: 0, exp_max: 8,
+        cash: 0, job: "Нет", rc: 0, skin: regSkin, win:0, games:0, settings:{sound:true},
+        invitedBy: null
+      };
+      localStorage.setItem(storageKey, JSON.stringify(user));
+      err.textContent = "";
+      hideReg();
+      renderAll();
+      showModal('Добро пожаловать в Real Life GTA!','Желаем крутой игры!');
+    }
+
+    // ================== РЕНДЕРИНГ ==================
+    function renderAll() {
+      if (!user) return;
+      // Индикаторы
+      document.getElementById("ind-left").textContent = `LVL: ${user.lvl} | EXP: ${user.exp}/${user.exp_max}`;
+      document.getElementById("ind-center").textContent = `Работа: ${user.job}`;
+      document.getElementById("ind-right").textContent = `Деньги: ${user.cash}$ | ${user.age} лет`;
+      // Полоса опыта
+      document.getElementById("exp-bar").style.width = `${Math.min(100, Math.round(100 * user.exp / user.exp_max))}%`;
+      // Скин
+      document.getElementById("skin-img").src = user.skin;
+      // Активность
+      document.getElementById("activity").textContent = "";
+      // Сброс анимации
+      document.getElementById("dice-anim").style.display = "none";
+    }
+
+    // ================== РАБОТА ==================
+    function showJobs() {
+      let html = `<b>Выберите работу:</b><br>
+        <button class="gta-btn" onclick="startJob('Склад')">Склад</button>
+        <button class="gta-btn" onclick="startJob('Ферма')">Ферма</button>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    let jobInterval = null, jobEarned = 0, jobClicks = 0;
+    function startJob(job) {
+      if (user.job !== "Нет") {
+        document.getElementById("activity").innerHTML = `<b>Вы уже работаете: ${user.job}!</b><br><button class="gta-btn" onclick="quitJob()">Уволиться</button>`;
+        return;
+      }
+      user.job = job;
+      saveUser(); renderAll();
+      jobEarned = 0; jobClicks = 0;
+      document.getElementById("activity").innerHTML = `<b>${job} — кликер</b><br>
+      <button class="gta-btn blue" id="work-click">Кликать</button><br>
+      <span id="work-earned" style="color:#ffe600;display:block;margin-top:0.7em;">Заработано: 0$</span>
+      <br><button class="gta-btn" onclick="finishJob()">Закончить</button>`;
+      document.getElementById("work-click").onclick = function() {
+        let earn = (job === "Склад" ? 6 : 10);
+        jobEarned += earn;
+        jobClicks++;
+        document.getElementById("work-earned").textContent = `Заработано: ${jobEarned}$ (${jobClicks} кликов)`;
+        playSound('work-sound');
+      };
+      jobInterval = setInterval(()=>{},1000);
+      window.finishJob = function() {
+        clearInterval(jobInterval);
+        user.cash += jobEarned;
+        user.exp += 2 + Math.floor(jobEarned/40);
+        if(user.exp >= user.exp_max) levelUp();
+        user.job = "Нет";
+        saveUser(); renderAll();
+        document.getElementById("activity").textContent = `Работа завершена! +${jobEarned}$ и опыт`;
+      }
+    }
+    function quitJob() {
+      user.job = "Нет";
+      saveUser(); renderAll();
+      document.getElementById("activity").textContent = "Вы уволились.";
+    }
+
+    // ================== УРОВЕНЬ/ОПЫТ/RC ==================
+    function levelUp() {
+      user.exp -= user.exp_max;
+      user.lvl++;
+      user.exp_max += 4;
+      user.rc += 5;
+      playSound('levelup-sound');
+      saveUser(); renderAll();
+      document.getElementById("activity").textContent = `Поздравляем! Новый уровень: ${user.lvl} (+5 RC)`;
+      setTimeout(()=>{document.getElementById("activity").textContent="";},2500);
+    }
+
+    // ================== КОСТИ ==================
+    function showDice() {
+      let html = `<b>Кости</b><br>
+        <button class="gta-btn" onclick="playDiceBot()">Играть с Ботом</button>
+        <button class="gta-btn" onclick="playDicePlayer()">Играть с Игроком</button>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    // ---- Кости с ботом
+    function playDiceBot() {
+      document.getElementById("activity").innerHTML = `<b>Ставка (введите сумму):</b><br>
+        <input id="bet" type="number" min="1" max="${user.cash}" style="padding:0.5em 1em;border-radius:8px;width:60%;margin:0.6em 0;"><br>
+        <button class="gta-btn" onclick="startDiceBot()">Бросить кости</button>
+        <div id="dice-msg" style="margin-top:0.9em;"></div>`;
+    }
+    function startDiceBot() {
+      let bet = +document.getElementById("bet").value;
+      if (isNaN(bet) || bet < 1 || bet > user.cash) {
+        document.getElementById("dice-msg").textContent = "Некорректная ставка!";
+        return;
+      }
+      // Анимация/звук кости
+      showDiceAnimation();
       let userThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
       let botThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
-      profile.games++;
-      let res = `Вы: <b>${userThrow}</b> | Бот: <b>${botThrow}</b><br>`;
-      if (userThrow > botThrow) {
-        let win = Math.floor(bet * 0.9);
-        profile.cash += win;
-        profile.wins++;
-        profile.exp += 3;
-        res += `🏆 Победа! +${win}$ (10% комиссия)`;
-      } else if (userThrow < botThrow) {
-        profile.cash -= bet;
-        profile.exp += 1;
-        res += `😢 Проигрыш! -${bet}$`;
-      } else {
-        res += `🤝 Ничья!`;
-        profile.exp += 1;
-      }
-      // Уровень/опыт
-      if (profile.exp >= profile.exp_max) {
-        profile.exp -= profile.exp_max;
-        profile.lvl++;
-        profile.exp_max = 12 + profile.lvl*2;
-        res += `<br>📈 Новый уровень! LVL ${profile.lvl}`;
-      }
-      saveProfile();
-      document.getElementById("dice-result").innerHTML = res;
+      setTimeout(()=>{
+        let msg = `Вы: ${userThrow} | Бот: ${botThrow}<br>`;
+        if(userThrow > botThrow){
+          user.cash += bet;
+          user.exp += 2;
+          msg += `<span style="color:#ffe600;">Победа! +${bet}$</span>`;
+          user.win++;
+        } else if (userThrow < botThrow){
+          user.cash -= bet;
+          user.exp += 1;
+          msg += `<span style="color:#ff6060;">Проигрыш! -${bet}$</span>`;
+        } else {
+          user.exp += 1;
+          msg += `<span style="color:#b0b0b0;">Ничья!</span>`;
+        }
+        user.games++;
+        if(user.exp >= user.exp_max) levelUp();
+        saveUser(); renderAll();
+        document.getElementById("dice-msg").innerHTML = msg;
+      }, 800);
+    }
+    // ---- Кости с игроком (ЗАГЛУШКА: нужна серверная часть!)
+    function playDicePlayer() {
+      document.getElementById("activity").innerHTML = `<b>Пока игра с игроком в разработке. Скоро будет!</b>`;
+    }
+    // Анимация и звук броска кости
+    function showDiceAnimation() {
+      let dice = document.getElementById("dice-anim");
+      dice.innerHTML = `<img src="https://pngimg.com/uploads/dice/dice_PNG47.png" alt="dice">`;
+      dice.style.display = "";
+      playSound('dice-sound');
+      setTimeout(()=>{dice.style.display="none";},700);
     }
 
-    // Работа — склад с анимацией ящика
-    function doWork() {
-      if (profile.job !== "Безработный") {
-        document.getElementById("work-result").innerText = "Ты уже работаешь!";
+    // ================== ПЕРЕВОД ДЕНЕГ ==================
+    function showTransfer() {
+      document.getElementById("activity").innerHTML = `<b>Перевести деньги игроку</b><br>
+        <input id="transfer-nick" maxlength="12" placeholder="Кому (ник)" style="padding:0.5em 1em;border-radius:8px;width:60%;margin:0.6em 0;"><br>
+        <input id="transfer-amount" type="number" min="1" style="padding:0.5em 1em;border-radius:8px;width:60%;margin:0.3em 0;"><br>
+        <button class="gta-btn" onclick="doTransfer()">Перевести</button>
+        <div id="transfer-msg" style="margin-top:0.9em;"></div>`;
+    }
+    function doTransfer() {
+      let nick = document.getElementById("transfer-nick").value.trim();
+      let amount = +document.getElementById("transfer-amount").value;
+      if (!validateNick(nick) || nick === user.nick) {
+        document.getElementById("transfer-msg").textContent = "Некорректный ник!";
         return;
       }
-      profile.job = "Склад";
-      saveProfile();
-      document.getElementById("work-result").innerText = `Ты начал работу на складе!`;
-      let animBox = document.getElementById("anim-box");
-      animBox.innerHTML = '<div class="gta-crate"></div>';
-      setTimeout(() => {
-        profile.cash += 40;
-        profile.exp += 2;
-        profile.job = "Безработный";
-        saveProfile();
-        animBox.innerHTML = '';
-        document.getElementById("work-result").innerHTML = `📦 Ящик перенесён! +40$ и +2 опыта`;
-      }, 1700);
-    }
-
-    // Отправить профиль боту
-    function sendProfile() {
-      tg.sendData(JSON.stringify(profile));
-      tg.showPopup({title:"Успех", message:"Профиль отправлен боту!"});
-    }
-
-    // Админка
-    function toggleAdmin() {
-      let panel = document.getElementById("admin-panel");
-      panel.style.display = (panel.style.display === "none" ? "block" : "none");
-      document.getElementById("admin-res").innerText = "";
-    }
-    function adminSend() {
-      let username = document.getElementById("admin-user").value.trim();
-      let amount = parseInt(document.getElementById("admin-amount").value);
-      if (!username || isNaN(amount) || amount === 0) {
-        document.getElementById("admin-res").innerText = "Заполни username и сумму!";
+      if (isNaN(amount) || amount < 1 || amount > user.cash) {
+        document.getElementById("transfer-msg").textContent = "Некорректная сумма!";
         return;
       }
-      tg.sendData(JSON.stringify({admin: true, username, amount}));
-      document.getElementById("admin-res").innerText = "Запрос отправлен!";
+      // Здесь должен быть запрос на сервер для перевода (заглушка)
+      user.cash -= amount;
+      saveUser(); renderAll();
+      document.getElementById("transfer-msg").innerHTML = `<span style="color:#ffe600;">Готово! Переведено ${amount}$ игроку ${nick}</span>`;
+    }
+
+    // ================== ВЫВОД RC ==================
+    function showWithdraw() {
+      document.getElementById("activity").innerHTML = `<b>Вывести Real Coin (RC)</b><br>
+        <div>У вас: <b>${user.rc} RC</b></div>
+        <input id="rc-amount" type="number" min="1" max="${user.rc}" placeholder="Сколько RC вывести?" style="padding:0.5em 1em;border-radius:8px;width:60%;margin:0.6em 0;"><br>
+        <button class="gta-btn" onclick="doWithdraw()">Вывести</button>
+        <div id="withdraw-msg" style="margin-top:0.9em;"></div>`;
+    }
+    function doWithdraw() {
+      let amount = +document.getElementById("rc-amount").value;
+      if (isNaN(amount) || amount < 1 || amount > user.rc) {
+        document.getElementById("withdraw-msg").textContent = "Некорректная сумма!";
+        return;
+      }
+      user.rc -= amount;
+      playSound('rc-sound');
+      saveUser(); renderAll();
+      document.getElementById("withdraw-msg").innerHTML = `<span style="color:#ffe600;">Выведено ${amount} RC</span>`;
+    }
+
+    // ================== СКИНЫ ==================
+    function showSkins() {
+      let html = `<b>Выберите скин</b><br><div class="skin-preview">`;
+      GTA_SKINS.filter(s=>s.gender===user.gender).forEach((s,idx)=>{
+        html += `<img src="${s.url}" class="${user.skin==s.url?'selected':''}" style="cursor:pointer;" onclick="setSkin('${s.url}')">`;
+      });
+      html += `</div>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    function setSkin(url) {
+      user.skin = url;
+      saveUser(); renderAll();
+      document.getElementById("activity").textContent = "Скин изменён!";
+    }
+
+    // ================== НАСТРОЙКИ ==================
+    function showSettings() {
+      document.getElementById("activity").innerHTML = `<b>Настройки</b><br>
+        <label><input type="checkbox" id="soundchk" ${user.settings.sound?'checked':''} onchange="toggleSound()"> Звук</label>
+        <br>
+        <button class="gta-btn" onclick="resetUser()">Сбросить аккаунт</button>`;
+    }
+    function toggleSound() {
+      user.settings.sound = document.getElementById("soundchk").checked;
+      saveUser();
+    }
+    function resetUser() {
+      if(confirm('Точно сбросить аккаунт?')) {
+        localStorage.removeItem(storageKey);
+        location.reload();
+      }
+    }
+
+    // ================== ВСПЛЫВАЮЩИЕ ОКНА (МОДАЛКИ) ==================
+    function showModal(title, text) {
+      let m = document.createElement('div');
+      m.className = 'gta-modal-bg';
+      m.innerHTML = `<div class="gta-modal-win">
+        <button class="gta-modal-close" onclick="this.closest('.gta-modal-bg').remove()">×</button>
+        <div style="font-size:1.5em;color:#ffe600;margin-bottom:0.4em;letter-spacing:1.2px;">${title}</div>
+        <div style="color:#fff;font-size:1.1em;">${text}</div>
+      </div>`;
+      m.onclick = e=>{if(e.target===m)m.remove();};
+      document.body.appendChild(m);
+    }
+
+    // ================== ЗВУК ==================
+    function playSound(id) {
+      if(user.settings && user.settings.sound){
+        let audio = document.getElementById(id);
+        if(audio) { audio.currentTime=0; audio.play().catch(()=>{});}
+      }
+    }
+
+    // ================== СОХРАНЕНИЕ/ЗАГРУЗКА ==================
+    function saveUser() {
+      localStorage.setItem(storageKey, JSON.stringify(user));
+    }
+    function loadUser() {
+      let data = localStorage.getItem(storageKey);
+      if (!data) return null;
+      return JSON.parse(data);
+    }
+
+    // ================== СТАРТ ==================
+    window.onload = function() {
+      user = loadUser();
+      if (!user) { showReg(); }
+      else { hideReg(); renderAll(); }
     }
   </script>
 </body>

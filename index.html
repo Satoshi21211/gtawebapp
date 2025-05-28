@@ -7,7 +7,6 @@
   <!-- GTA Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
-    /* === ROOT COLORS === */
     :root {
       --gta-yellow: #ffe600;
       --gta-green: #19ffe6;
@@ -26,7 +25,6 @@
       overflow: hidden;
       background: var(--gta-bg-dark) no-repeat center center fixed;
       background-image: url('https://i.ibb.co/1fX7Nzz/gta-bg-1.webp');
-      background-image: url('https://i.imgur.com/cwDEvNF.jpg');
       background-size: cover;
       overscroll-behavior-y: contain;
       touch-action: manipulation;
@@ -461,7 +459,6 @@
       45%{transform:scale(1.26);}
       100%{transform:scale(1.0);}
     }
-    /* SLOTS */
     .slot-machine { display: flex; justify-content: center; align-items: center; gap: 1.2em; margin: 0.7em 0; }
     .slot-reel {
       background: #232323;
@@ -492,7 +489,6 @@
   </div>
   <!-- ===== ВЫДЕЛЕННАЯ СТРОКА ДЛЯ ЗАМЕНЫ МУЗЫКИ ===== -->
   <audio id="music" src="" loop preload="auto"></audio>
-  <!-- =============================================== -->
   <div class="gta-register-bg" id="reg-bg" style="display:none;">
     <form class="gta-register-box" id="reg-form" autocomplete="off" onsubmit="return false;">
       <div class="gta-register-title">Регистрация</div>
@@ -542,6 +538,7 @@
     </div>
   </div>
   <div id="modal-bg" style="display:none;"></div>
+  <!-- ====== ЗВУКИ ====== -->
   <audio id="dice-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_123b5c8a2e.mp3" preload="auto"></audio>
   <audio id="work-sound" src="https://cdn.pixabay.com/audio/2023/04/25/audio_12c6e893f2.mp3" preload="auto"></audio>
   <audio id="work-farm-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6e893f2.mp3" preload="auto"></audio>
@@ -549,13 +546,504 @@
   <audio id="levelup-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12d3f7b7f2.mp3" preload="auto"></audio>
   <audio id="rc-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_1131a6e6e3.mp3" preload="auto"></audio>
   <audio id="casino-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_112b6e94e4.mp3" preload="auto"></audio>
+  <!-- ====== НАЧАЛО JS ====== -->
   <script>
     // ====== ВАЖНО! МЕНЯТЬ МУЗЫКУ ТУТ ======
     const MUSIC_URL = "https://cdn.pixabay.com/audio/2022/12/19/audio_12e9e2b6fa.mp3"; // <-- СЮДА ВСТАВЬ СВОЮ GTA mp3 или m4a ссылку!
-    // =======================================
-    // ... (остальной JS код из предыдущей версии — полностью рабочий, адаптивный, с админкой, модалками, анимациями и всем-всем-всем — 2000+ строк) ...
-    // В целях экономии места и читаемости, если нужен полный JS-файл (огромный), пиши "дай полный JS блок" — выдам отдельным файлом!
-    // Данный шаблон уже содержит всё, что ты просил: адаптация, звук, музыка, огромный функционал, всё работает как часы.
+    // ====== ДАННЫЕ, СКИНЫ, ПАРАМЕТРЫ ======
+    const GTA_SKINS = [
+      {gender:'Парень', url:'https://i.ibb.co/3z2cZFc/gta5skin-male1.png'},
+      {gender:'Парень', url:'https://i.ibb.co/b1PMT2s/gta5skin-male2.png'},
+      {gender:'Девушка', url:'https://i.ibb.co/r6k6P2M/gta5skin-female1.png'},
+      {gender:'Девушка', url:'https://i.ibb.co/rb1z6mP/gta5skin-female2.png'}
+    ];
+    const storageKey = "gta_app_player";
+    const ENERGY_MAX = 200;
+    const ENERGY_RECOVER_SEC = 60 * 60; // 1 час
+
+    let user = null;
+    let soundEnabled = true, musicEnabled = true;
+    let adminNicks = ["Satoshi21211", "Admin"]; // ТВОЙ НИК для админки
+
+    // ====== МУЗЫКА ======
+    const music = document.getElementById('music');
+    music.src = MUSIC_URL;
+    function toggleMusic() {
+      musicEnabled = !musicEnabled;
+      localStorage.setItem('gta_music', musicEnabled?'1':'0');
+      updateMusicBtn();
+      if(musicEnabled) music.play().catch(()=>{});
+      else music.pause();
+    }
+    function updateMusicBtn() {
+      document.getElementById("music-ico").textContent = musicEnabled ? "🔊" : "🔇";
+    }
+    function startMusic() {
+      if(musicEnabled) music.play().catch(()=>{});
+    }
+    // ====== ЗВУК ======
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      localStorage.setItem('gta_sound', soundEnabled?'1':'0');
+      updateSoundBtn();
+    }
+    function updateSoundBtn() {
+      document.getElementById("sound-ico").textContent = soundEnabled ? "🔔" : "🔕";
+    }
+    function playSound(id) {
+      if(soundEnabled) {
+        let audio = document.getElementById(id);
+        if(audio) { audio.currentTime=0; audio.play().catch(()=>{});}
+      }
+    }
+    // ====== РЕГИСТРАЦИЯ ======
+    let regGender = "Парень";
+    let regSkin = GTA_SKINS[0].url;
+    function showReg() {
+      document.getElementById('reg-bg').style.display = 'flex';
+      document.getElementById('app').style.display = 'none';
+      renderSkinPreview();
+    }
+    function hideReg() {
+      document.getElementById('reg-bg').style.display = 'none';
+      document.getElementById('app').style.display = '';
+    }
+    function selectGender(g) {
+      regGender = g;
+      document.getElementById('gender-m').classList.toggle('selected', g === "Парень");
+      document.getElementById('gender-f').classList.toggle('selected', g === "Девушка");
+      renderSkinPreview();
+    }
+    function renderSkinPreview() {
+      const skinDiv = document.getElementById('skin-preview');
+      skinDiv.innerHTML = '';
+      GTA_SKINS.filter(s=>s.gender===regGender).forEach((s,idx)=>{
+        let img = document.createElement('img');
+        img.src = s.url;
+        img.className = (regSkin==s.url ? 'selected':'');
+        img.onclick = ()=>{regSkin=s.url;renderSkinPreview();};
+        skinDiv.appendChild(img);
+      });
+      if(!GTA_SKINS.filter(s=>s.gender===regGender).some(s=>s.url===regSkin)){
+        regSkin = GTA_SKINS.filter(s=>s.gender===regGender)[0].url;
+      }
+    }
+    function validateNick(nick) {
+      return /^[a-zA-Z]{3,12}$/.test(nick);
+    }
+    function validateAge(age) {
+      return /^\d{2}$/.test(age) && +age >= 12 && +age <= 99;
+    }
+    function submitReg() {
+      const nick = document.getElementById('reg-nick').value.trim();
+      const age = document.getElementById('reg-age').value.trim();
+      const err = document.getElementById('reg-err');
+      if (!validateNick(nick)) {
+        err.textContent = "Ник только латиницей, 3-12 символов!";
+        return;
+      }
+      if (!validateAge(age)) {
+        err.textContent = "Возраст от 12 до 99!";
+        return;
+      }
+      user = {
+        nick, gender: regGender, age: +age, lvl: 1, exp: 0, exp_max: 20,
+        cash: 0, job: "Нет", rc: 0, skin: regSkin, win:0, games:0,
+        energy: ENERGY_MAX, energy_ts: 0,
+        settings:{sound:true, music:true},
+        invitedBy: null
+      };
+      saveUser();
+      err.textContent = "";
+      hideReg();
+      renderAll();
+      showModal('Добро пожаловать в RealLifeGTA!','Создавай историю!');
+      startMusic();
+    }
+  
+    // ====== ЭНЕРГИЯ ======
+    function getCurrentEnergy() {
+      if (!user.energy_ts || user.energy >= ENERGY_MAX) return ENERGY_MAX;
+      const now = Math.floor(Date.now()/1000);
+      let diff = now - user.energy_ts;
+      let restored = Math.floor((diff / ENERGY_RECOVER_SEC) * ENERGY_MAX);
+      let value = Math.min(ENERGY_MAX, user.energy + restored);
+      if (value >= ENERGY_MAX) { user.energy_ts = 0; user.energy = ENERGY_MAX; saveUser(); }
+      return value;
+    }
+    function setEnergy(val) {
+      user.energy = Math.max(0, Math.min(ENERGY_MAX, val));
+      if(user.energy < ENERGY_MAX && user.energy_ts===0) user.energy_ts = Math.floor(Date.now()/1000);
+      if(user.energy >= ENERGY_MAX) user.energy_ts = 0;
+      saveUser();
+    }
+    function restoreEnergy() {
+      user.energy = ENERGY_MAX;
+      user.energy_ts = 0;
+      saveUser();
+      renderAll();
+      showModal("Энергия восстановлена!","Можно снова работать!");
+    }
+    function getEnergyPercent() {
+      return Math.round(100 * getCurrentEnergy() / ENERGY_MAX);
+    }
+    function getEnergyStatus() {
+      let value = getCurrentEnergy();
+      if (value === 0) {
+        let now = Math.floor(Date.now()/1000);
+        let ready = user.energy_ts + ENERGY_RECOVER_SEC;
+        let min = Math.max(0, Math.ceil((ready-now)/60));
+        if (min > 0) return `Энергия: 0/200 (через ${min} мин)`;
+        return "Энергия: 0/200";
+      }
+      return `Энергия: ${value}/${ENERGY_MAX}`;
+    }
+    setInterval(()=>{
+      if(user && user.energy < ENERGY_MAX && user.energy_ts > 0) renderAll();
+    }, 60000);
+
+    // ======= РЕНДЕР =======
+    function renderAll() {
+      if (!user) return;
+      document.getElementById("ind-money").textContent = `Деньги: ${user.cash}$`;
+      document.getElementById("ind-energy").textContent = getEnergyStatus();
+      document.getElementById("ind-lvl").textContent = `LVL: ${user.lvl} | EXP: ${user.exp}/${user.exp_max}`;
+      document.getElementById("energy-bar").style.width = getEnergyPercent()+"%";
+      document.getElementById("exp-bar").style.width = `${Math.min(100, Math.round(100 * user.exp / user.exp_max))}%`;
+      document.getElementById("skin-img").src = user.skin;
+      document.getElementById("activity").textContent = "";
+      document.getElementById("dice-anim").style.display = "none";
+      document.getElementById("work-anim").style.display = "none";
+      // Админка доступна только если ты Satoshi21211
+      document.getElementById("admin-btn").style.display = (adminNicks.includes(user.nick)) ? "" : "none";
+    }
+
+    // ============= JOBS (ФЕРМА/ЗАВОД, АНИМАЦИЯ) =============
+    function showJobs() {
+      let html = `<b>Выберите работу:</b><br>
+        <button class="gta-btn" onclick="startJob('Ферма')">Ферма</button>
+        <button class="gta-btn" onclick="startJob('Завод')">Завод</button>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    let jobInterval = null, jobEarned = 0, jobClicks = 0;
+    function startJob(job) {
+      if (user.job !== "Нет") {
+        document.getElementById("activity").innerHTML = `<b>Уже работаешь: ${user.job}!</b><br><button class="gta-btn" onclick="quitJob()">Уволиться</button>`;
+        return;
+      }
+      if (getCurrentEnergy() < 1) {
+        document.getElementById("activity").innerHTML = `<b>Нет энергии!</b><br>Ждите восстановления.<br><button class="gta-btn" onclick="restoreEnergy()">Восстановить (admin)</button>`;
+        return;
+      }
+      user.job = job; saveUser(); renderAll();
+      jobEarned = 0; jobClicks = 0;
+      let workAnim = document.getElementById("work-anim");
+      workAnim.innerHTML = (job === "Ферма")
+        ? `<img src="https://media.giphy.com/media/J0N0Q9nQb9u6k2cISm/giphy.gif" alt="ферма">`
+        : `<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2h2dGJwM2o2MmFqMHB0NmUza2x4Z25jYjZqNXd3N2p3eGRpZGNxMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6hZ7U5yBzKTRf8Z2t4/giphy.gif" alt="завод">`;
+      workAnim.style.display = "";
+      document.getElementById("activity").innerHTML = `<b>${job}: кликер</b><br>
+      <button class="gta-btn" id="work-click">Работать</button>
+      <span id="work-earned" style="color:#ffe600;display:block;margin-top:0.5em;">Заработано: 0$</span>
+      <br><button class="gta-btn" onclick="finishJob()">Завершить</button>`;
+      document.getElementById("work-click").onclick = function() {
+        let energy = getCurrentEnergy();
+        if (energy < 1) {
+          document.getElementById("work-click").disabled = true;
+          document.getElementById("work-earned").textContent = "Энергия закончилась!";
+          setEnergy(0);
+          renderAll();
+          return;
+        }
+        let earn = (job === "Ферма" ? 8 : 16);
+        jobEarned += earn;
+        jobClicks++;
+        setEnergy(energy-1);
+        document.getElementById("work-earned").textContent = `Заработано: ${jobEarned}$ (${jobClicks} кликов, энергия: ${getCurrentEnergy()})`;
+        playSound(job === "Ферма" ? 'work-farm-sound' : 'work-factory-sound');
+        // анимация на кнопку
+        let anim = document.getElementById("work-anim");
+        anim.style.display = "";
+        anim.style.opacity = 1;
+        anim.classList.remove("pulse");
+        void anim.offsetWidth;
+        anim.classList.add("pulse");
+        setTimeout(()=>{anim.style.opacity=0.3;},250);
+      };
+      window.finishJob = function() {
+        clearInterval(jobInterval);
+        user.cash += jobEarned;
+        user.exp += 2 + Math.floor(jobEarned/60);
+        if(user.exp >= user.exp_max) levelUp();
+        user.job = "Нет";
+        saveUser(); renderAll();
+        document.getElementById("work-anim").style.display = "none";
+        showModal("Работа завершена!", `+${jobEarned}$ и немного EXP`);
+      }
+    }
+    function quitJob() {
+      user.job = "Нет";
+      saveUser(); renderAll();
+      document.getElementById("work-anim").style.display = "none";
+      showModal("Уволен", "Вы ушли с работы.");
+    }
+    // ==== УРОВНИ ====
+    function levelUp() {
+      user.exp -= user.exp_max;
+      user.lvl++;
+      user.exp_max += Math.floor(user.lvl*2.3)+14;
+      user.rc += 5;
+      playSound('levelup-sound');
+      saveUser(); renderAll();
+      showModal("Level Up!", `LVL:${user.lvl} (+5 RC)`);
+    }
+    // === КОСТИ ===
+    function showDice() {
+      let html = `<b>Кости</b><br>
+        <button class="gta-btn" onclick="playDiceBot()">Бот</button>
+        <button class="gta-btn" onclick="playDicePlayer()">Игрок</button>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    function playDiceBot() {
+      document.getElementById("activity").innerHTML = `<b>Ставка ($):</b>
+        <input id="bet" type="number" min="1" max="${user.cash}" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
+        <button class="gta-btn" onclick="startDiceBot()">Бросить</button>
+        <div id="dice-msg" style="margin-top:0.6em;"></div>`;
+    }
+    function startDiceBot() {
+      let bet = +document.getElementById("bet").value;
+      if (isNaN(bet) || bet < 1 || bet > user.cash) {
+        document.getElementById("dice-msg").textContent = "Некорректная ставка!";
+        return;
+      }
+      showDiceAnimation();
+      let userThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
+      let botThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
+      setTimeout(()=>{
+        let msg = `Вы: ${userThrow} | Бот: ${botThrow}<br>`;
+        if(userThrow > botThrow){
+          user.cash += bet;
+          user.exp += 2;
+          msg += `<span style="color:#ffe600;">Победа! +${bet}$</span>`;
+          user.win++;
+        } else if (userThrow < botThrow){
+          user.cash -= bet;
+          user.exp += 1;
+          msg += `<span style="color:#ff6060;">Проигрыш! -${bet}$</span>`;
+        } else {
+          user.exp += 1;
+          msg += `<span style="color:#b0b0b0;">Ничья!</span>`;
+        }
+        user.games++;
+        if(user.exp >= user.exp_max) levelUp();
+        saveUser(); renderAll();
+        showModal("Результат броска", `Вы: ${userThrow} <br> Бот: ${botThrow}<br>${msg}`);
+      }, 800);
+    }
+    function playDicePlayer() {
+      document.getElementById("activity").innerHTML = `<b>Пока игра с игроком в разработке.</b>`;
+    }
+    function showDiceAnimation() {
+      let dice = document.getElementById("dice-anim");
+      dice.innerHTML = `<img src="https://pngimg.com/uploads/dice/dice_PNG47.png" alt="dice">`;
+      dice.style.display = "";
+      playSound('dice-sound');
+      setTimeout(()=>{dice.style.display="none";},700);
+    }
+    // === КАЗИНО (SLOTS) ===
+    const slotIcons = ['🍒','🍋','🔔','7','🍀','💎'];
+    function showCasino() {
+      document.getElementById("activity").innerHTML = `
+        <b>Слоты</b><br>
+        <div style="margin:0.4em 0 0.6em 0;">
+        <input id="slot-bet" type="number" min="1" max="${user.cash}" value="10" style="width:60px;padding:0.3em 0.7em;border-radius:7px;">
+        <button class="gta-btn" onclick="startSlots()">Играть</button>
+        </div>
+        <div class="slot-machine" id="slot-machine">
+          <div class="slot-reel" id="r1">?</div>
+          <div class="slot-reel" id="r2">?</div>
+          <div class="slot-reel" id="r3">?</div>
+        </div>
+        <div id="slot-msg" style="margin-top:0.7em;"></div>
+      `;
+    }
+    function startSlots() {
+      let bet = +document.getElementById("slot-bet").value;
+      let msg = document.getElementById("slot-msg");
+      if (isNaN(bet) || bet < 1 || bet > user.cash) {
+        msg.textContent = "Некорректная ставка!";
+        return;
+      }
+      let reels = [0,0,0];
+      let interval = 0, t = 0;
+      playSound('casino-sound');
+      interval = setInterval(()=>{
+        t++;
+        reels = [randIcon(),randIcon(),randIcon()];
+        document.getElementById("r1").textContent = slotIcons[reels[0]];
+        document.getElementById("r2").textContent = slotIcons[reels[1]];
+        document.getElementById("r3").textContent = slotIcons[reels[2]];
+        if(t>12) { clearInterval(interval); finishSlots(reels, bet);}
+      }, 70+Math.random()*30);
+      user.cash -= bet;
+      saveUser(); renderAll();
+      msg.textContent = "Крутим...";
+    }
+    function randIcon() { return Math.floor(Math.random()*slotIcons.length);}
+    function finishSlots(reels, bet) {
+      let msg = document.getElementById("slot-msg");
+      let [a,b,c]=reels.map(r=>slotIcons[r]);
+      let win = 0;
+      if(a==b && b==c) { win = bet*8;
+        msg.innerHTML = `<span style="color:#ffe600;">Джекпот! +${win}$</span>`;
+        playSound('levelup-sound');
+      } else if(a==b || b==c || a==c) {
+        win = Math.floor(bet*2.2);
+        msg.innerHTML = `<span style="color:#19ffe6;">2 совпадения! +${win}$</span>`;
+        playSound('dice-sound');
+      } else {
+        win = 0;
+        msg.innerHTML = `<span style="color:#ff6060;">Нет совпадений!</span>`;
+      }
+      user.cash += win;
+      user.exp += (win ? 2 : 1);
+      if(user.exp >= user.exp_max) levelUp();
+      saveUser(); renderAll();
+      showModal("Результат слотов", win ? `Выигрыш: ${win}$` : "Увы, ничего!");
+    }
+    // === ПЕРЕВОД ДЕНЕГ ===
+    function showTransfer() {
+      document.getElementById("activity").innerHTML = `<b>Перевести деньги</b><br>
+        <input id="transfer-nick" maxlength="12" placeholder="Кому (ник)" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
+        <input id="transfer-amount" type="number" min="1" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.3em 0;">
+        <button class="gta-btn" onclick="doTransfer()">Перевести</button>
+        <div id="transfer-msg" style="margin-top:0.6em;"></div>`;
+    }
+    function doTransfer() {
+      let nick = document.getElementById("transfer-nick").value.trim();
+      let amount = +document.getElementById("transfer-amount").value;
+      if (!validateNick(nick) || nick === user.nick) {
+        document.getElementById("transfer-msg").textContent = "Некорректный ник!";
+        return;
+      }
+      if (isNaN(amount) || amount < 1 || amount > user.cash) {
+        document.getElementById("transfer-msg").textContent = "Некорректная сумма!";
+        return;
+      }
+      user.cash -= amount;
+      saveUser(); renderAll();
+      showModal("Перевод совершен", `Переведено ${amount}$ игроку ${nick}`);
+    }
+    // === ВЫВОД RC ===
+    function showWithdraw() {
+      document.getElementById("activity").innerHTML = `<b>Вывести RealCoin (RC)</b><br>
+        <div>У вас: <b>${user.rc} RC</b></div>
+        <input id="rc-amount" type="number" min="1" max="${user.rc}" placeholder="Сколько RC?" style="padding:0.4em 1em;border-radius:8px;width:60%;margin:0.5em 0;">
+        <button class="gta-btn" onclick="doWithdraw()">Вывести</button>
+        <div id="withdraw-msg" style="margin-top:0.6em;"></div>`;
+    }
+    function doWithdraw() {
+      let amount = +document.getElementById("rc-amount").value;
+      if (isNaN(amount) || amount < 1 || amount > user.rc) {
+        document.getElementById("withdraw-msg").textContent = "Некорректная сумма!";
+        return;
+      }
+      user.rc -= amount;
+      playSound('rc-sound');
+      saveUser(); renderAll();
+      showModal("Вывод RC", `Выведено ${amount} RC`);
+    }
+    // === СКИНЫ ===
+    function showSkins() {
+      let html = `<b>Скин</b><br><div class="skin-preview">`;
+      GTA_SKINS.filter(s=>s.gender===user.gender).forEach((s,idx)=>{
+        html += `<img src="${s.url}" class="${user.skin==s.url?'selected':''}" style="cursor:pointer;" onclick="setSkin('${s.url}')">`;
+      });
+      html += `</div>`;
+      document.getElementById("activity").innerHTML = html;
+    }
+    function setSkin(url) {
+      user.skin = url;
+      saveUser(); renderAll();
+      showModal("Скин изменён!", "");
+    }
+    // === НАСТРОЙКИ ===
+    function showSettings() {
+      document.getElementById("activity").innerHTML = `<b>Настройки</b><br>
+        <label><input type="checkbox" id="soundchk" ${soundEnabled?'checked':''} onchange="toggleSound()"> Звук</label>
+        <label style="margin-left:1.3em;"><input type="checkbox" id="musicchk" ${musicEnabled?'checked':''} onchange="toggleMusic()"> Музыка</label>
+        <br>
+        <button class="gta-btn" onclick="resetUser()">Сбросить персонажа</button>`;
+    }
+    function resetUser() {
+      if(confirm('Точно сбросить персонажа?')) {
+        localStorage.removeItem(storageKey);
+        location.reload();
+      }
+    }
+    // === АДМИНКА ===
+    function showAdminPanel() {
+      if (!user) return;
+      showModal("Админ-панель",
+        `<div style="margin-bottom:0.7em;">Ник: <input type="text" id="adm-nick" value="${user.nick}" style="width:100px;"></div>
+         <div style="margin-bottom:0.7em;">LVL: <input type="number" id="adm-lvl" min="1" max="999" value="${user.lvl}" style="width:70px;"></div>
+         <div style="margin-bottom:0.7em;">EXP: <input type="number" id="adm-exp" min="0" max="9999" value="${user.exp}" style="width:70px;"></div>
+         <div style="margin-bottom:0.7em;">Деньги: <input type="number" id="adm-cash" min="0" max="9999999" value="${user.cash}" style="width:90px;"></div>
+         <div style="margin-bottom:0.7em;">RC: <input type="number" id="adm-rc" min="0" max="99999" value="${user.rc}" style="width:70px;"></div>
+         <button class="gta-btn" onclick="applyAdmin()">Выдать</button>`
+      );
+    }
+    function applyAdmin() {
+      let targetNick = document.getElementById('adm-nick').value.trim();
+      if (!validateNick(targetNick)) { showModal("Ошибка", "Неверный ник!"); return; }
+      if (targetNick === user.nick) {
+        user.lvl = +document.getElementById('adm-lvl').value;
+        user.exp = +document.getElementById('adm-exp').value;
+        user.cash = +document.getElementById('adm-cash').value;
+        user.rc = +document.getElementById('adm-rc').value;
+        saveUser();
+        renderAll();
+        Array.from(document.getElementsByClassName('gta-modal-bg')).forEach(e=>e.remove());
+        showModal("Готово!","Данные обновлены");
+      } else {
+        // emulate выдачу другому игроку (на демо просто модалка)
+        showModal("Готово!","Выдал игроку " + targetNick + " (демо)");
+      }
+    }
+    // === МОДАЛКИ ===
+    function showModal(title, text) {
+      let m = document.createElement('div');
+      m.className = 'gta-modal-bg';
+      m.innerHTML = `<div class="gta-modal-win">
+        <button class="gta-modal-close" onclick="this.closest('.gta-modal-bg').remove()">×</button>
+        <div style="font-size:1.2em;color:#ffe600;margin-bottom:0.4em;letter-spacing:1.2px;">${title}</div>
+        <div style="color:#fff;font-size:1em;">${text}</div>
+      </div>`;
+      m.onclick = e=>{if(e.target===m)m.remove();};
+      document.body.appendChild(m);
+    }
+    // === СОХРАНЕНИЕ ===
+    function saveUser() {
+      localStorage.setItem(storageKey, JSON.stringify(user));
+    }
+    function loadUser() {
+      let data = localStorage.getItem(storageKey);
+      if (!data) return null;
+      return JSON.parse(data);
+    }
+    // === СТАРТ ===
+    window.onload = function() {
+      user = loadUser();
+      soundEnabled = localStorage.getItem('gta_sound') !== '0';
+      musicEnabled = localStorage.getItem('gta_music') !== '0';
+      updateSoundBtn(); updateMusicBtn();
+      music.volume = 0.44;
+      music.loop = true;
+      music.oncanplay = ()=>{ setTimeout(()=>{ if(musicEnabled) music.play().catch(()=>{}); }, 200);}
+      document.addEventListener('click', ()=>{if(musicEnabled)music.play().catch(()=>{});}, {once:true});
+      if (!user) { showReg(); }
+      else { hideReg(); renderAll(); startMusic(); }
+    }
   </script>
 </body>
-</html>
+</html> 

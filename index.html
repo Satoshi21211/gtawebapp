@@ -216,6 +216,8 @@
       font-family: 'Russo One',Arial,sans-serif;
       min-width: 70px;
       text-align: left;
+      position: relative;
+      top: 0.4em;
     }
     .gta-bar-group {
       display: flex;
@@ -282,15 +284,36 @@
     .gta-activity .work-result {
       color: #29ff35;
       font-weight: bold;
-      font-size: 1.11em;
-      margin: 0.3em 0 0 0;
+      font-size: 0.98em;
+      margin: 0.15em 0 0 0;
       letter-spacing: 0.5px;
       text-shadow: 0 1px 6px #000d;
       transition: color .22s;
+      font-family: 'Montserrat',Arial,sans-serif;
     }
     .gta-activity .work-end { color: #29ff35; }
     .gta-activity .work-error { color: #ff4b4b; }
     .gta-activity .work-progress { color: #3e87ff; }
+    .work-float {
+      font-size: 0.97em;
+      color: #ffe600;
+      margin: 0.07em auto;
+      opacity: 0.97;
+      font-family: 'Montserrat',Arial,sans-serif;
+      padding: 2px 14px;
+      background: rgba(35,35,45,0.83);
+      border-radius: 10px;
+      animation: floatUp 1.1s cubic-bezier(.5,.1,.5,1.0) forwards;
+      pointer-events: none;
+      min-width: 110px;
+      box-shadow: 0 2px 8px #0004;
+    }
+    @keyframes floatUp {
+      0% {transform:translateY(0); opacity:1;}
+      70%{transform:translateY(-18px); opacity:0.95;}
+      100%{transform:translateY(-28px); opacity:0;}
+    }
+
     .gta-buttons-bar {
       position: fixed;
       bottom:0; left:0; width:100vw;
@@ -327,118 +350,63 @@
       box-shadow: 0 1px 5px #ffe60070;
       border-bottom: 2px solid var(--gta-yellow);
     }
-    @media (max-width: 700px) {
-      .gta-btn { font-size: 0.97em; min-width: 70px; }
-      .gta-buttons-bar {height: auto;}
-      .gta-app-wrap {height: 98vh;}
-      .gta-indicators-avatar {width: 36px; height:36px;}
-      .app-main {font-size: 0.98em;}
+    .gta-register-submit {
+      font-family: 'Montserrat',Arial,sans-serif;
+      font-size: 1.02em;
+      font-weight: 700;
+      color: #25282b;
+      background: linear-gradient(90deg, #ffe600 60%, #ffd900 100%);
+      border: 2px solid #ffe600cc;
+      border-radius: 10px;
+      padding: .55em 1.2em;
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+      cursor: pointer;
+      letter-spacing: 1.1px;
+      box-shadow: 0 2px 10px #ffe60033;
+      transition: background .16s, box-shadow .18s;
+      outline: none;
+      min-width: 120px;
+      display: block;
     }
-    .gta-modal-bg {
-      position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:110;
-      background:rgba(0,0,0,0.62);
-      display:flex;align-items:center;justify-content:center;
-      animation:fadeinbg .2s;
+    .gta-register-submit:active {
+      background: #ffe600;
+      color: #232323;
+      box-shadow: 0 1px 5px #ffe60070;
     }
-    .gta-modal-win {
-      background: #16171e;
-      border-radius: 16px;
-      box-shadow:0 2px 18px #000d;
-      padding:1.3em 1.1em 1em 1.1em;
-      min-width: 220px;
-      max-width:94vw;
-      color:var(--gta-yellow);font-family:'Russo One',Arial,sans-serif;
-      font-size:1.12em;text-align:center;
-      position:relative;
-      animation:modin .22s;
-    }
-    .gta-modal-close{
-      position:absolute;right:15px;top:10px;font-size:1.5em;color:var(--gta-yellow);
-      background:none;border:none;cursor:pointer;filter:opacity(0.7);
-      transition:filter .11s;
-    }
-    .gta-modal-close:hover{filter:opacity(1);}
-    .work-anim {
-      width: 50px; height: 50px;
-      margin: 0.2em auto 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 7;
-      pointer-events:none;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-    .work-anim img {
-      width:100%;height:100%;user-select:none;pointer-events:none;
-      animation: dice-throw .7s cubic-bezier(.67,.04,.71,1.04);
-    }
-    @keyframes dice-throw {
-      0% {transform:rotate(-200deg) scale(0.5);}
-      80% {transform:rotate(30deg) scale(1.08);}
-      100% {transform:rotate(0) scale(1);}
-    }
-    .work-anim.pulse {animation:work-pulse 0.3s;}
-    @keyframes work-pulse {
-      0%{transform:scale(1.0);}
-      45%{transform:scale(1.26);}
-      100%{transform:scale(1.0);}
-    }
-    .dice-anim {
-      width: 46px; height: 46px;
-      margin: 0.2em auto 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 7;
-      pointer-events:none;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-    .dice-anim img {
-      width:100%;height:100%;user-select:none;pointer-events:none;
-      animation: dice-throw .7s cubic-bezier(.67,.04,.71,1.04);
-    }
-    .skin-preview { margin: 0.2em 0 1em 0; display:flex;justify-content:center;gap:0.8em;width:100%; }
-    .skin-preview img { width: 46px;height: 46px;border-radius: 50%;border: 2px solid #ffe600bb;cursor: pointer;opacity:0.8; }
-    .skin-preview img.selected,
-    .skin-preview img:hover { border: 3px solid var(--gta-yellow);opacity:1; }
-    .gta-register-bg {
-      position: fixed; left:0;top:0;width:100vw;height:100vh;z-index:101;
-      background: linear-gradient(135deg, #15191c 70%, #2d384a 100%);
-      display:flex;align-items:center;justify-content:center;
-    }
-    .gta-register-box {
-      background: rgba(20,20,20,0.99);
-      border-radius: var(--gta-radius);
-      box-shadow: var(--gta-shadow);
-      padding: 1.7em 1.1em 1.1em 1.1em;
-      min-width: 280px; max-width: 97vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 2.5px solid var(--gta-yellow);
-      margin-bottom: 1em;
-    }
-    .gta-register-title {
-      font-size: 1.5em;
-      font-family:'Russo One',Arial,sans-serif;
+    .gta-register-inp,
+    .gta-register-inp[readonly],
+    .gta-register-inp:focus {
+      font-size: 1.02em;
+      background: #23232b;
       color: var(--gta-yellow);
-      margin-bottom: 0.5em;
-      text-shadow: 0 3px 8px #000, 0 0 2px #fff4;
-      letter-spacing:1.5px;
-    }
-    .gta-register-err { color: #ff2929; font-size: 1.02em; margin-bottom: 0.2em; min-height: 1.2em; text-align: center;}
-    .gta-register-inp {
-      font-size: 1.02em; background: #25282b; color: var(--gta-yellow);
-      border: 2px solid #ffe600bb; outline: none; border-radius: 11px;
-      padding: .6em 1em; margin-bottom: 0.7em;
-      font-family:'Montserrat',Arial,sans-serif; width: 92%;
+      border: 2px solid #ffe600cc;
+      outline: none;
+      border-radius: 10px;
+      padding: .6em 1em;
+      margin-bottom: 0.7em;
+      font-family:'Montserrat',Arial,sans-serif;
+      width: 92%;
       text-align:center;
+      box-shadow: 0 2px 8px #ffe60015;
+      transition: border .12s, box-shadow .17s;
     }
     .gta-register-inp:focus { border: 2px solid var(--gta-yellow); }
     .gta-register-gender { display: flex; width: 88%; justify-content: space-around; margin-bottom: 0.8em; gap:0.5em; }
     .gta-gender-btn {
-      background: #232323; color: var(--gta-yellow); font-size: 1.01em;
-      border:2px solid #ffe60099; border-radius: 9px; font-family: 'Montserrat',Arial,sans-serif;
-      font-weight: 700; padding: .45em 1em; margin: 0 0.2em; cursor: pointer;
+      background: #232323;
+      color: var(--gta-yellow);
+      font-size: 1.01em;
+      border:2px solid #ffe60099;
+      border-radius: 10px;
+      font-family: 'Montserrat',Arial,sans-serif;
+      font-weight: 700;
+      padding: .45em 1em;
+      margin: 0 0.2em;
+      cursor: pointer;
       transition: background .13s, border .13s, color .13s;
+      min-width: 95px;
+      box-shadow: 0 2px 8px #ffe60015;
     }
     .gta-gender-btn.selected,
     .gta-gender-btn:active { background: var(--gta-yellow); color: #25282b; border:2px solid var(--gta-yellow);}
@@ -448,6 +416,19 @@
       .gta-header{font-size:1em;}
       .gta-register-box{min-width:90vw;}
       .app-main{min-width:99vw;}
+    }
+    .gta-lvl-exp-row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.3em 0 0.1em 0;
+      font-size: 1.0em;
+      font-family: 'Russo One', Arial, sans-serif;
+      color: #ffe600;
+      letter-spacing: 1.1px;
+      text-shadow: 0 1px 4px #191c19cc;
+      gap: 1.0em;
     }
   </style>
 </head>
@@ -486,13 +467,13 @@
             <div class="gta-indicators-stats">
               <div class="gta-ind-money" id="ind-money"></div>
               <div class="gta-ind-rc" id="ind-rc"></div>
-              <div class="gta-ind-lvl" id="ind-lvl"></div>
             </div>
             <div class="gta-ind-energy" id="ind-energy"></div>
             <div class="gta-bar-group">
               <div class="gta-energy-bar-wrap"><div class="gta-energy-bar-fill" id="energy-bar"></div></div>
               <div class="gta-exp-bar-wrap"><div class="gta-exp-bar-fill" id="exp-bar"></div></div>
             </div>
+            <div class="gta-lvl-exp-row" id="lvl-exp-row" style="margin-bottom:0.5em;"></div>
           </div>
         </div>
         <div class="gta-activity" id="activity"></div>
@@ -560,7 +541,7 @@
         if(audio) { audio.volume=vol; audio.currentTime=0; audio.play().catch(()=>{});}
       }
     }
-    // ===== НОВАЯ ЭНЕРГИЯ =====
+    // ===== УЛУЧШЕННАЯ ЭНЕРГИЯ =====
     function getCurrentEnergy() {
       if (!user.energy_ts || user.energy >= ENERGY_MAX) return ENERGY_MAX;
       const now = Math.floor(Date.now()/1000);
@@ -586,23 +567,25 @@
       document.getElementById("energy-bar").style.width = getEnergyPercent()+"%";
       document.getElementById("ind-energy").textContent = `Энергия: ${val}/${ENERGY_MAX}`+(val<ENERGY_MAX?" (восст.)":"");
     }
+    // Обновление по событию и каждую секунду — чтобы энергия всегда чётко считалась и не лагала
     setInterval(()=>{
       if(user && user.energy < ENERGY_MAX && user.energy_ts > 0) renderEnergy();
-    }, 15000);
+    }, 1000);
 
     // ===== РОВНЫЕ ИНДИКАТОРЫ =====
     function renderIndicators() {
       document.getElementById("player-nick").textContent = user.nick;
       document.getElementById("ind-money").textContent = `${user.cash}$`;
-      document.getElementById("ind-lvl").textContent = `LVL: ${user.lvl} | EXP: ${user.exp}/${user.exp_max}`;
       document.getElementById("ind-rc").textContent = `RC: ${user.rc}`;
       document.getElementById("skin-img").src = user.skin;
       renderEnergy();
       document.getElementById("exp-bar").style.width = `${Math.min(100, Math.round(100 * user.exp / user.exp_max))}%`;
       document.getElementById('admin-btn').style.display = user.nick === "Admin" ? "" : "none";
+      // LVL/EXP вниз под ник
+      document.getElementById("lvl-exp-row").textContent = `LVL: ${user.lvl} | EXP: ${user.exp}/${user.exp_max}`;
     }
 
-    // ===== НОВАЯ СИСТЕМА РАБОТЫ =====
+    // ===== ЛЮКСОВАЯ РАБОТА (GTA STYLE) =====
     let jobActive = false, jobType = '', jobEarned = 0, jobClicks = 0;
     function showJobs() {
       document.getElementById("activity").innerHTML = `<b>Выберите работу:</b><br>
@@ -622,11 +605,11 @@
         `<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2h2dGJwM2o2MmFqMHB0NmUza2x4Z25jYjZqNXd3N2p3eGRpZGNxMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6hZ7U5yBzKTRf8Z2t4/giphy.gif" alt="склад">`;
       anim.style.display = "";
       document.getElementById("activity").innerHTML = `
-        <div class="work-progress">[${type}] Кликер-работа!</div>
         <button class="gta-btn" id="work-click">Работать</button>
-        <div class="work-result" id="work-earned">Доход: 0$</div>
-        <button class="gta-btn" onclick="finishJob()">Завершить</button>
+        <div class="work-result" id="work-earned"> </div>
+        <button class="gta-btn" style="margin-top:0.4em;" onclick="finishJob()">Завершить</button>
       `;
+      document.getElementById("work-earned").innerHTML = "";
       document.getElementById("work-click").onclick = workClick;
     }
     function workClick() {
@@ -636,24 +619,36 @@
         document.getElementById("work-click").disabled = true;
         document.getElementById("work-earned").innerHTML = `<span class="work-error">Энергия закончилась!</span>`;
         setEnergy(0);
-        playSound('work-farm-sound', 0.8);
+        playSound('work-farm-sound', 0.7);
         return;
       }
       let earn = jobType === "Ферма" ? 11 : 19;
+      let xpgain = 1 + Math.floor(earn/20);
       jobEarned += earn;
       jobClicks++;
       setEnergy(energy-1);
-      document.getElementById("work-earned").innerHTML = `Доход: ${jobEarned}$ (${jobClicks} раз, энергия: ${getCurrentEnergy()})`;
+      playWorkFloat(jobType, earn, xpgain);
+      playSound(jobType === "Ферма" ? 'work-farm-sound' : 'work-factory-sound',0.8);
+      playSound('click-sound', 0.13);
+      addXP(xpgain);
+      document.getElementById("work-earned").innerHTML = `<span style="color:#fff;font-size:0.97em;">${jobType==="Ферма"?"Собрано урожая":"Отработано на складе"}: ${jobClicks} (${jobEarned}$)</span>`;
       let anim = document.getElementById("work-anim");
       anim.style.display = "";
       anim.style.opacity = 1;
       anim.classList.remove("pulse");
       void anim.offsetWidth;
       anim.classList.add("pulse");
-      setTimeout(()=>{anim.style.opacity=0.3;},220);
-      playSound(jobType === "Ферма" ? 'work-farm-sound' : 'work-factory-sound',0.8);
-      playSound('click-sound', 0.18);
-      addXP(1 + Math.floor(earn/20));
+      setTimeout(()=>{anim.style.opacity=0.3;},180);
+    }
+    function playWorkFloat(type, money, xp) {
+      let msg = type === "Ферма"
+        ? `Собрано урожая <span style='color:#29ff35;'>+${money}$</span> <span style='color:#ffe600;'>+${xp}xp</span>`
+        : `Склад: <span style='color:#29ff35;'>+${money}$</span> <span style='color:#ffe600;'>+${xp}xp</span>`;
+      let float = document.createElement('div');
+      float.className = 'work-float';
+      float.innerHTML = msg;
+      document.getElementById("activity").appendChild(float);
+      setTimeout(()=>{float.remove();}, 1150);
     }
     function finishJob() {
       if(!jobActive) return;
@@ -681,17 +676,16 @@
       saveUser(); renderIndicators();
       showModal("Level Up!", `LVL:${user.lvl} (+5 RC)`);
     }
-
     // ====== АДМИНКА ======
     function showAdminPanel() {
       if(user.nick !== "Admin") return;
       showModal('Админка', `
         <div style="font-size:1em; color:#fff;">
-          <label>Кому (ник): <input id="ad-nick" maxlength="12" style="width:90px"></label><br>
-          <label>Дать $: <input id="ad-cash" type="number" style="width:60px"></label><br>
-          <label>Дать LVL: <input id="ad-lvl" type="number" style="width:60px"></label><br>
-          <label>Дать RC: <input id="ad-rc" type="number" style="width:60px"></label><br>
-          <button class="gta-btn" onclick="adminSetVals()">Выдать</button>
+          <label>Кому (ник): <input id="ad-nick" maxlength="12" class="gta-register-inp" style="width:90px;"></label><br>
+          <label>Дать $: <input id="ad-cash" type="number" class="gta-register-inp" style="width:60px;"></label><br>
+          <label>Дать LVL: <input id="ad-lvl" type="number" class="gta-register-inp" style="width:60px;"></label><br>
+          <label>Дать RC: <input id="ad-rc" type="number" class="gta-register-inp" style="width:60px;"></label><br>
+          <button class="gta-gender-btn" onclick="adminSetVals()">Выдать</button>
         </div>
       `);
     }
@@ -719,7 +713,9 @@
     }
     // ===== ПРОКИДЫВАЕМ СКРИПТЫ КАК БЫЛО =====
     function renderAll() { renderIndicators(); document.getElementById("activity").textContent = ""; document.getElementById("dice-anim").style.display = "none"; }
+
     // ... остальные функции (кости, перевод, rc, скины, настройки, модалки, регистрация) — без изменений ...
+    // Всё как было в твоём коде, только стилизованы инпуты!
     function showDice() {
       let html = `<b>Кости</b><br>
         <button class="gta-btn" onclick="playDiceBot()">Бросить с ботом</button>`;
@@ -727,7 +723,7 @@
     }
     function playDiceBot() {
       document.getElementById("activity").innerHTML = `<b>Ставка ($):</b>
-        <input id="bet" type="number" min="1" max="${user.cash}" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
+        <input id="bet" type="number" min="1" max="${user.cash}" class="gta-register-inp" style="width:60%;margin:0.5em 0;">
         <button class="gta-btn" onclick="startDiceBot()">Бросить</button>
         <div id="dice-msg" style="margin-top:0.6em;"></div>`;
     }
@@ -771,8 +767,8 @@
 
     function showTransfer() {
       document.getElementById("activity").innerHTML = `<b>Перевести деньги</b><br>
-        <input id="transfer-nick" maxlength="12" placeholder="Кому (ник)" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
-        <input id="transfer-amount" type="number" min="1" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.3em 0;">
+        <input id="transfer-nick" maxlength="12" class="gta-register-inp" placeholder="Кому (ник)" style="width:60%;margin:0.5em 0;">
+        <input id="transfer-amount" type="number" min="1" class="gta-register-inp" style="width:60%;margin:0.3em 0;">
         <button class="gta-btn" onclick="doTransfer()">Перевести</button>
         <div id="transfer-msg" style="margin-top:0.6em;"></div>`;
     }
@@ -794,7 +790,7 @@
     function showWithdraw() {
       document.getElementById("activity").innerHTML = `<b>Вывести RealCoin (RC)</b><br>
         <div>У вас: <b>${user.rc} RC</b></div>
-        <input id="rc-amount" type="number" min="1" max="${user.rc}" placeholder="Сколько RC?" style="padding:0.4em 1em;border-radius:8px;width:60%;margin:0.5em 0;">
+        <input id="rc-amount" type="number" min="1" max="${user.rc}" class="gta-register-inp" placeholder="Сколько RC?" style="width:60%;margin:0.5em 0;">
         <button class="gta-btn" onclick="doWithdraw()">Вывести</button>
         <div id="withdraw-msg" style="margin-top:0.6em;"></div>`;
     }

@@ -209,16 +209,6 @@
       min-width: 58px;
       text-align: left;
     }
-    .gta-ind-lvl {
-      color: #ffe600;
-      font-size: 1em;
-      margin-left: 0.5em;
-      font-family: 'Russo One',Arial,sans-serif;
-      min-width: 70px;
-      text-align: left;
-      position: relative;
-      top: 0.4em;
-    }
     .gta-bar-group {
       display: flex;
       flex-direction: column;
@@ -266,6 +256,20 @@
       margin: 2px 0 2px 0;
       font-weight: 500;
     }
+    /* LVL и EXP под ником */
+    .gta-lvl-exp-row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.3em 0 0.1em 0;
+      font-size: 1.0em;
+      font-family: 'Russo One', Arial, sans-serif;
+      color: #ffe600;
+      letter-spacing: 1.1px;
+      text-shadow: 0 1px 4px #191c19cc;
+      gap: 1.0em;
+    }
     .gta-activity {
       min-height: 64px;
       font-size: 1.13em;
@@ -293,7 +297,6 @@
     }
     .gta-activity .work-end { color: #29ff35; }
     .gta-activity .work-error { color: #ff4b4b; }
-    .gta-activity .work-progress { color: #3e87ff; }
     .work-float {
       font-size: 0.97em;
       color: #ffe600;
@@ -417,19 +420,6 @@
       .gta-register-box{min-width:90vw;}
       .app-main{min-width:99vw;}
     }
-    .gta-lvl-exp-row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0.3em 0 0.1em 0;
-      font-size: 1.0em;
-      font-family: 'Russo One', Arial, sans-serif;
-      color: #ffe600;
-      letter-spacing: 1.1px;
-      text-shadow: 0 1px 4px #191c19cc;
-      gap: 1.0em;
-    }
   </style>
 </head>
 <body>
@@ -468,12 +458,12 @@
               <div class="gta-ind-money" id="ind-money"></div>
               <div class="gta-ind-rc" id="ind-rc"></div>
             </div>
-            <div class="gta-ind-energy" id="ind-energy"></div>
             <div class="gta-bar-group">
               <div class="gta-energy-bar-wrap"><div class="gta-energy-bar-fill" id="energy-bar"></div></div>
               <div class="gta-exp-bar-wrap"><div class="gta-exp-bar-fill" id="exp-bar"></div></div>
             </div>
             <div class="gta-lvl-exp-row" id="lvl-exp-row" style="margin-bottom:0.5em;"></div>
+            <div class="gta-ind-energy" id="ind-energy"></div>
           </div>
         </div>
         <div class="gta-activity" id="activity"></div>
@@ -541,6 +531,7 @@
         if(audio) { audio.volume=vol; audio.currentTime=0; audio.play().catch(()=>{});}
       }
     }
+
     // ===== УЛУЧШЕННАЯ ЭНЕРГИЯ =====
     function getCurrentEnergy() {
       if (!user.energy_ts || user.energy >= ENERGY_MAX) return ENERGY_MAX;
@@ -567,7 +558,6 @@
       document.getElementById("energy-bar").style.width = getEnergyPercent()+"%";
       document.getElementById("ind-energy").textContent = `Энергия: ${val}/${ENERGY_MAX}`+(val<ENERGY_MAX?" (восст.)":"");
     }
-    // Обновление по событию и каждую секунду — чтобы энергия всегда чётко считалась и не лагала
     setInterval(()=>{
       if(user && user.energy < ENERGY_MAX && user.energy_ts > 0) renderEnergy();
     }, 1000);
@@ -606,7 +596,7 @@
       anim.style.display = "";
       document.getElementById("activity").innerHTML = `
         <button class="gta-btn" id="work-click">Работать</button>
-        <div class="work-result" id="work-earned"> </div>
+        <div class="work-result" id="work-earned"></div>
         <button class="gta-btn" style="margin-top:0.4em;" onclick="finishJob()">Завершить</button>
       `;
       document.getElementById("work-earned").innerHTML = "";
@@ -676,6 +666,7 @@
       saveUser(); renderIndicators();
       showModal("Level Up!", `LVL:${user.lvl} (+5 RC)`);
     }
+
     // ====== АДМИНКА ======
     function showAdminPanel() {
       if(user.nick !== "Admin") return;
@@ -714,8 +705,7 @@
     // ===== ПРОКИДЫВАЕМ СКРИПТЫ КАК БЫЛО =====
     function renderAll() { renderIndicators(); document.getElementById("activity").textContent = ""; document.getElementById("dice-anim").style.display = "none"; }
 
-    // ... остальные функции (кости, перевод, rc, скины, настройки, модалки, регистрация) — без изменений ...
-    // Всё как было в твоём коде, только стилизованы инпуты!
+    // Остальные функции (кости, перевод, rc, скины, настройки, модалки, регистрация) — как раньше, но все поля стилизованы!
     function showDice() {
       let html = `<b>Кости</b><br>
         <button class="gta-btn" onclick="playDiceBot()">Бросить с ботом</button>`;

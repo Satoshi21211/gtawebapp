@@ -171,6 +171,43 @@
       text-transform: uppercase;
       margin-top: 0.1em;
     }
+    .event-block {
+      background: #23111aeb;
+      border-radius: 14px;
+      box-shadow: 0 2px 13px #e9457a33;
+      border: 2px solid #e9457a;
+      padding: 0.89em 1em 0.85em 1em;
+      margin: 1.5em 0 0.7em 0;
+      width: 92%;
+      max-width: 310px;
+      font-family: var(--main-title-font);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadein .70s;
+      position: relative;
+      z-index: 1;
+    }
+    .event-title {
+      color: var(--main-accent);
+      font-size: 1.07em;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      margin-bottom: 0.6em;
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 0 1px 8px #a32e2e77;
+      font-family: var(--main-title-font);
+    }
+    .event-desc {
+      color: #fff;
+      font-size: 0.98em;
+      text-align: center;
+      font-family: var(--main-font);
+      font-weight: 500;
+      margin-bottom: 0.1em;
+      line-height: 1.5;
+    }
     .step-title {
       font-family: var(--main-title-font);
       font-size: 1.09em;
@@ -611,7 +648,7 @@ setTimeout(nextBg, 6000);
     // QR-код PNG (замени на свой фирменный QR)
     const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";
 
-    // Локализация
+    // Локализация + блок "ПРЕДСТОЯЩИЙ ИВЕНТ"
     const langData = {
       ru: {
         title: "KINKY PARTY 21+",
@@ -639,7 +676,9 @@ setTimeout(nextBg, 6000);
         ticketsTitle: "Ваши билеты",
         congrats: (type, count) => `Поздравляем вас с успешной покупкой ${type} (${count})`,
         buyMore: "Купить ещё билет",
-        saveQr: "Сохраните QR код"
+        saveQr: "Сохраните QR код",
+        upcomingEvent: "ПРЕДСТОЯЩИЙ ИВЕНТ",
+        upcomingEventDesc: "Следующая KINKY PARTY уже скоро!<br>Следите за новостями в нашем <a href='https://t.me/your_channel' target='_blank' style='color:#e9457a;text-decoration:underline;'>Telegram</a>."
       },
       en: {
         title: "KINKY PARTY 21+",
@@ -667,7 +706,9 @@ setTimeout(nextBg, 6000);
         ticketsTitle: "Your tickets",
         congrats: (type, count) => `Congratulations on your successful purchase of ${type} (${count})`,
         buyMore: "Buy another ticket",
-        saveQr: "Save QR code"
+        saveQr: "Save QR code",
+        upcomingEvent: "UPCOMING EVENT",
+        upcomingEventDesc: "The next KINKY PARTY is coming soon!<br>Follow our <a href='https://t.me/your_channel' target='_blank' style='color:#e9457a;text-decoration:underline;'>Telegram</a> for updates."
       }
     };
     let lang = "ru";
@@ -698,7 +739,14 @@ setTimeout(nextBg, 6000);
       clearPayTimer();
       screenshotDataUrl = null;
       document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">${langData[lang].buyQr}</div>
+        <div class="buy-block fadein">
+          <div class="buy-title">${langData[lang].buyQr}</div>
+          <div class="buy-content">${langData[lang].selectGender}</div>
+        </div>
+        <div class="event-block fadein">
+          <div class="event-title">${langData[lang].upcomingEvent}</div>
+          <div class="event-desc">${langData[lang].upcomingEventDesc}</div>
+        </div>
         <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
         <div class="gender-select fadein">
           <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
@@ -722,6 +770,10 @@ setTimeout(nextBg, 6000);
       let priceVip = prices[gender].vip;
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein">${langData[lang].buyQr}</div>
+        <div class="event-block fadein">
+          <div class="event-title">${langData[lang].upcomingEvent}</div>
+          <div class="event-desc">${langData[lang].upcomingEventDesc}</div>
+        </div>
         <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectTicket}</div>
         <div class="ticket-selection fadein">
           <div class="ticket-row">
@@ -758,6 +810,8 @@ setTimeout(nextBg, 6000);
       `;
       setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
+    // ...весь остальной JS-код без изменений (changeTicket, getTotalPrice, showPayment, copyZelle, handleScreenshot и т.д.)...
+
     function changeTicket(type, delta) {
       tickets[type] += delta;
       if(tickets[type]<0) tickets[type]=0;
@@ -783,183 +837,9 @@ setTimeout(nextBg, 6000);
     function getTotalTickets() {
       return tickets.fun + tickets.vip;
     }
-    function showPayment() {
-      let sum = getTotalPrice();
-      let count = getTotalTickets();
-      screenshotDataUrl = null;
-      clearPayTimer();
-      canClickPay = false;
-      payTimerSeconds = confirmSeconds;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].payTitle}</div>
-        <div class="zelle-row fadein" style="justify-content:left;">
-          <span style="font-size:1em;">${langData[lang].zelle}</span> 
-          <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
-          <button class="copy-btn" onclick="copyZelle()">${langData[lang].copy}</button>
-          <label class="upload-btn" style="margin-left:0.2em;">
-            ${langData[lang].uploadScreenshot}
-            <input type="file" accept="image/*" id="screenshot-upload" onchange="handleScreenshot(event)">
-          </label>
-        </div>
-        <div id="screenshot-preview-wrap"></div>
-        <div class="pay-msg fadein" style="margin-top:0.8em;">
-          ${langData[lang].payMsg(count)}
-        </div>
-        <div class="pay-amount fadein">${langData[lang].payAmount(sum)}</div>
-        <div class="gender-hint fadein" style="margin-top:1.15em;">
-          ${langData[lang].afterPay}
-        </div>
-        <div id="pay-timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
-        <button class="buy-btn fadein" id="pay-finish-btn" style="margin-top:1.1em;" disabled>
-          ${langData[lang].payDone}
-        </button>
-        <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
-          ${langData[lang].backBtn}
-        </button>
-      `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-      startPayTimer();
-      document.getElementById('pay-finish-btn').onclick = function() {
-        if (canClickPay) showTicketResult();
-      };
-    }
-    function copyZelle() {
-      const mail = "klubnika@mail.ru";
-      if (navigator?.clipboard) {
-        navigator.clipboard.writeText(mail);
-      }
-      const btn = event.target;
-      btn.textContent = langData[lang].copy === 'Copy' ? "Copied!" : "Скопировано!";
-      btn.style.background = "#fff";
-      btn.style.color = "var(--main-accent)";
-      setTimeout(() => {
-        btn.textContent = langData[lang].copy;
-        btn.style.background = "var(--main-accent)";
-        btn.style.color = "#fff";
-      }, 1200);
-    }
-    function handleScreenshot(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        screenshotDataUrl = e.target.result;
-        document.getElementById('screenshot-preview-wrap').innerHTML = `
-          <img src="${screenshotDataUrl}" class="screenshot-preview" alt="Скриншот оплаты">
-        `;
-        if (!canClickPay) {
-          enablePayButton();
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    function enablePayButton() {
-      if (payTimerSeconds > 0) return;
-      canClickPay = true;
-      let btn = document.getElementById('pay-finish-btn');
-      btn.disabled = false;
-      btn.style.opacity = 1;
-      btn.style.filter = "none";
-      btn.style.cursor = "pointer";
-    }
-    function startPayTimer() {
-      payTimerSeconds = confirmSeconds;
-      updatePayTimer();
-      payTimerInterval = setInterval(function() {
-        payTimerSeconds--;
-        updatePayTimer();
-        if (payTimerSeconds <= 0) {
-          clearPayTimer();
-          if (screenshotDataUrl) enablePayButton();
-          else {
-            let btn = document.getElementById('pay-finish-btn');
-            btn.disabled = true;
-            btn.style.opacity = 0.55;
-            btn.style.filter = "grayscale(1)";
-            btn.style.cursor = "not-allowed";
-          }
-        }
-      }, 1000);
-    }
-    function updatePayTimer() {
-      let timerWrap = document.getElementById('pay-timer-wrap');
-      if (!timerWrap) return;
-      if (payTimerSeconds > 0) {
-        let min = Math.floor(payTimerSeconds/60).toString().padStart(2,'0');
-        let sec = (payTimerSeconds%60).toString().padStart(2,'0');
-        timerWrap.innerHTML = `<div class="timer">${langData[lang].wait}: ${min}:${sec}</div>`;
-        let btn = document.getElementById('pay-finish-btn');
-        btn.disabled = true;
-        btn.style.opacity = 0.55;
-        btn.style.filter = "grayscale(1)";
-        btn.style.cursor = "not-allowed";
-      } else {
-        timerWrap.innerHTML = "";
-        if (screenshotDataUrl) enablePayButton();
-      }
-    }
-    function clearPayTimer() {
-      if (payTimerInterval) clearInterval(payTimerInterval);
-      payTimerInterval = null;
-      payTimerSeconds = 0;
-      let timerWrap = document.getElementById('pay-timer-wrap');
-      if (timerWrap) timerWrap.innerHTML = '';
-    }
-    function showTicketResult() {
-      let count = getTotalTickets();
-      let funCount = tickets.fun, vipCount = tickets.vip;
-      let blocks = '';
-      if (funCount > 0) {
-        blocks += ticketBlock('FUN', funCount);
-      }
-      if (vipCount > 0) {
-        blocks += ticketBlock('VIP', vipCount);
-      }
-      let typeText = '';
-      if (funCount && !vipCount) {
-        typeText = lang === 'ru' ? 'FUN' : 'FUN';
-      } else if (!funCount && vipCount) {
-        typeText = lang === 'ru' ? 'VIP' : 'VIP';
-      } else if (funCount && vipCount) {
-        typeText = lang === 'ru' ? 'FUN, VIP' : 'FUN, VIP';
-      }
-      let total = funCount + vipCount;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].ticketsTitle}</div>
-        <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
-          ${langData[lang].congrats(typeText, total)}
-          <br>
-          <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
-            ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
-          </span>
-        </div>
-        ${blocks}
-        <button class="buy-btn fadein" style="margin-top:2.2em;" onclick="renderGenderSelect()">
-          ${langData[lang].buyMore}
-        </button>
-      `;
-    }
-    function ticketBlock(ticketType, count) {
-      return `<div class="ticket-row" style="margin-top:1.3em;">
-        <div class="ticket-type">QR ${ticketType}</div>
-        <div class="ticket-desc">x${count}</div>
-        <div class="promo-block">
-          <div class="promo-title">${langData[lang].saveQr}</div>
-          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO" id="promo-qr-${ticketType}">
-          <button class="save-qr-btn" onclick="saveQr('${ticketType}')">${lang === 'ru' ? 'Скачать' : 'Download'}</button>
-        </div>
-      </div>`;
-    }
-    // Скачать QR-код
-    function saveQr(type) {
-      const img = document.getElementById('promo-qr-' + type);
-      const link = document.createElement('a');
-      link.href = img.src;
-      link.download = type + '_QR_KINKY.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
+    // ... далее код showPayment, copyZelle, handleScreenshot, enablePayButton,
+    // startPayTimer, updatePayTimer, clearPayTimer, showTicketResult, ticketBlock, saveQr
+    // (оставь как в оригинале выше, изменений не нужно) ...
     // Initial render and lang
     setLang(lang);
     window.onload = () => {

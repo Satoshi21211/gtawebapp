@@ -2,931 +2,447 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>RealLifeGTA</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kinky Party 21+</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --gta-yellow: #ffe600;
-      --gta-green: #19ffe6;
-      --gta-blue: #3e87ff;
-      --gta-bg-dark: #18181f;
-      --gta-bg-light: #23232b;
-      --gta-shadow: 0 6px 32px #000b, 0 2px 8px #ffe60022;
-      --gta-radius: 22px;
-      --gta-money: #29ff35;
-      --gta-bar-bg: #23232b;
-      --gta-rc: #ff3f3f;
+      --main-yellow: #ffe600;
+      --main-pink: #ff36a3;
+      --main-bg: #19181d;
+      --main-btn-bg: linear-gradient(90deg, #ffe600 75%, #ff36a3 100%);
+      --main-btn-bg-f: linear-gradient(90deg, #ff36a3 40%, #ffe600 100%);
+      --main-btn-female: linear-gradient(90deg, #fff2b0 60%, #ffbde6 100%);
+      --main-btn-male: linear-gradient(90deg, #ffe600 60%, #b0d9ff 100%);
+      --main-border: 2.5px solid #ffe600;
+      --main-radius: 20px;
+      --main-shadow: 0 8px 32px #000a, 0 2px 8px #ffe60033;
+      --main-font: 'Montserrat', Arial, sans-serif;
+      --main-title-font: 'Russo One', Arial, sans-serif;
     }
     html, body {
-      min-height: 100vh;
-      height: 100%;
-      margin: 0;
-      padding: 0;
+      min-height: 100vh; height: 100%;
+      margin: 0; padding: 0;
       width: 100vw;
-      background: var(--gta-bg-dark) no-repeat center center fixed;
-      background-image: url('https://i.imgur.com/unWl7Yt.jpeg');
-      background-size: cover;
-      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--main-bg);
+      font-family: var(--main-font);
       color: #fff;
+      background-image: url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=800&q=80');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       overscroll-behavior-y: contain;
       touch-action: manipulation;
       overflow-x: hidden;
     }
-    .gta-header {
+    .header {
       width: 100vw;
       text-align: center;
-      font-family: 'Russo One', Arial, sans-serif;
+      font-family: var(--main-title-font);
       font-size: 2.1em;
-      color: var(--gta-yellow);
+      color: var(--main-yellow);
       letter-spacing: 2.5px;
-      text-shadow: 0 4px 16px #000a, 0 1px 2px #fff8;
-      margin: 0 0 0.2em 0;
-      padding: 1.2vw 0 0.6vw 0;
-      background: rgba(20,20,20,0.42);
-      border-radius: 0 0 22px 22px;
-      box-shadow: var(--gta-shadow);
+      padding: 1.1em 0 0.8em 0;
+      background: rgba(30, 18, 40, 0.97);
+      border-radius: 0 0 25px 25px;
+      text-shadow: 0 6px 32px #000e, 0 1px 2px #fff8;
       position: relative;
-      z-index: 99;
+      z-index: 20;
       user-select: none;
+      font-weight: 900;
     }
-    .gta-app-wrap {
-      width: 100vw;
+    .app-wrap {
       min-height: 100vh;
+      width: 100vw;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
-      overflow: hidden;
-      position: relative;
-      z-index: 2;
+      align-items: center;
+      padding: 0 0 80px 0;
     }
     .app-main {
-      background: rgba(22,22,28,.97);
-      border-radius: var(--gta-radius);
-      box-shadow: var(--gta-shadow);
-      padding: 1.2em 1.1em 1.2em 1.1em;
+      background: rgba(22,22,28,0.96);
+      border-radius: var(--main-radius);
+      box-shadow: var(--main-shadow);
+      padding: 1.4em 1.3em 1.2em 1.3em;
+      margin-top: 2em;
+      min-width: 320px;
+      max-width: 98vw;
+      width: 370px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 2.1px solid #ffe600a9;
+      border: var(--main-border);
       position: relative;
-      min-width: 330px;
-      max-width: 430px;
-      width: 94vw;
-      margin: auto;
     }
-    @media (max-width: 650px) {
+    @media (max-width: 500px){
       .app-main {
-        min-width: 98vw; max-width: 99vw; padding: 0.6em 0.1em 0.8em 0.1em;
+        padding: 1em 0.2em 1.15em 0.2em;
+        margin-top: 1.1em;
+        min-width: 98vw;
+        width: 98vw;
+        border-radius: 0;
+      }
+      .header {
+        font-size: 1.19em;
+        padding: 1.15em 0 0.7em 0;
+        border-radius: 0 0 18px 18px;
       }
     }
-    .gta-indicators-row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 1.0em;
-      width: 99%;
-      margin-bottom: 0.2em;
-      margin-top: 0.1em;
-    }
-    .gta-indicators-avatar {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: 3.5px solid var(--gta-yellow);
-      background: #1e232b;
-      overflow: hidden;
-      margin-right: 0.7em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .gta-indicators-avatar img {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-    }
-    .gta-indicators-block {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 0.08em;
-      flex: 1 1 0;
-      min-width: 0;
-    }
-    .gta-ind-mainrow {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      width: 99%;
-      margin-bottom: 0;
-      margin-top: 2px;
-    }
-    .gta-player-nick {
-      font-family: 'Russo One',Arial,sans-serif;
-      font-size: 1.18em;
-      color: var(--gta-yellow);
-      text-shadow: 0 1px 6px #181818c0;
-      margin-right: 0.7em;
-      letter-spacing: 1.1px;
-      display: flex;
-      align-items: center;
-      gap: 0.6em;
-    }
-    .gta-sound-icons {
-      display: flex;
-      gap: 0.1em;
-      align-items: center;
-    }
-    .sound-btn {
-      background: rgba(32,32,32,0.93);
-      border: none;
-      border-radius: 9px;
-      width: 33px;
-      height: 33px;
-      box-shadow:0 2px 10px #0006;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.12em;
-      color: var(--gta-yellow);
-      transition: background .13s, color .13s;
-      outline: none;
-      margin-left: 2px;
-      margin-right: 2px;
-    }
-    .sound-btn:active { background: var(--gta-yellow); color: #232323; }
-    .sound-btn[hidden] {display:none;}
-    .admin-btn {
-      background: rgba(32,32,32,0.93);
-      border: none;
-      border-radius: 9px;
-      width: 33px;
-      height: 33px;
-      box-shadow:0 2px 10px #ff3f3f66;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.12em;
-      color: #ff3f3f;
-      transition: background .13s, color .13s;
-      outline: none;
-      margin-left: 2px;
-      margin-right: 2px;
-    }
-    .admin-btn:active { background: #ff3f3f; color: #fff; }
-    .admin-btn[hidden] {display:none;}
-    .gta-indicators-stats {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      gap: 1.2em;
-    }
-    .gta-ind-money {
-      color: var(--gta-money);
-      font-size: 1.1em;
-      font-family: 'Russo One',Arial,sans-serif;
-      text-shadow: 0 1px 4px #000c, 0 1px 8px #00ffb0c0;
-      letter-spacing:1px;
-      margin-right: 0.45em;
-      min-width: 70px;
-      text-align: left;
-    }
-    .gta-ind-rc {
-      color: var(--gta-rc);
-      font-size: 1.04em;
-      font-family: 'Russo One',Arial,sans-serif;
-      text-shadow: 0 1px 4px #000c, 0 1px 8px #ff3f3f99;
-      letter-spacing:1px;
-      margin-left: 0.2em;
-      margin-right: 0.15em;
-      min-width: 58px;
-      text-align: left;
-    }
-    .gta-ind-lvl {
-      color: #ffe600;
-      font-size: 1em;
-      margin-left: 0.5em;
-      font-family: 'Russo One',Arial,sans-serif;
-      min-width: 70px;
-      text-align: left;
-    }
-    .gta-bar-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.18em;
-      width: 99%;
-      align-items: flex-start;
-      margin-bottom: 0.7em;
-    }
-    .gta-energy-bar-wrap,
-    .gta-exp-bar-wrap {
-      width: 96%;
-      margin: 0.11em 0.4em 0.18em 0.1em;
-      background: var(--gta-bar-bg);
-      border-radius: 10px;
-      height: 14px;
-      box-shadow:0 1px 12px #ffe60011;
-      overflow: hidden;
-      border: 1.2px solid #3a3a3a;
-      position: relative;
-    }
-    .gta-energy-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #3e87ff 60%, #29ff35 100%);
-      width: 0%;
-      border-radius: 7px;
-      transition: width .35s;
-      box-shadow:0 0 7px #19ffe611;
-      min-width: 2%;
-    }
-    .gta-exp-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #ffe600 60%, #ff7e00 100%);
-      width: 0%;
-      border-radius: 7px;
-      transition: width .35s;
-      box-shadow:0 0 7px #ffe60011;
-      min-width: 2%;
-    }
-    .gta-ind-energy {
-      color: #aabac6;
-      font-family: 'Montserrat', Arial, sans-serif;
-      font-size: 1em;
-      letter-spacing:1.1px;
-      text-shadow: 0 1px 3px #181818a0;
-      margin: 2px 0 2px 0;
-      font-weight: 500;
-    }
-    .gta-activity {
-      min-height: 64px;
-      font-size: 1.13em;
-      text-align: center;
-      margin:0.4em auto 0.2em auto;
-      color: #e0e6ff;
-      font-weight: 700;
-      text-shadow: 0 1px 4px #2229;
-      user-select: none;
-      line-height:1.5;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .gta-activity .work-result {
-      color: #29ff35;
-      font-weight: bold;
-      font-size: 1.11em;
-      margin: 0.3em 0 0 0;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 6px #000d;
-      transition: color .22s;
-    }
-    .gta-activity .work-end { color: #29ff35; }
-    .gta-activity .work-error { color: #ff4b4b; }
-    .gta-activity .work-progress { color: #3e87ff; }
-    .gta-buttons-bar {
-      position: fixed;
-      bottom:0; left:0; width:100vw;
-      background:rgba(18,18,22,0.98);
-      box-shadow:0 -4px 44px #000a;
-      border-top:2.2px solid #ffe600;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0.6em 0 0.6em 0;
-      z-index: 999;
-      gap: 0.13em;
-      flex-wrap:wrap;
-    }
-    .gta-btn {
-      font-family: 'Russo One',Arial,sans-serif;
-      font-size: 1.09em;
-      background: linear-gradient(90deg, #ffe600 55%, #ffd900 100%);
-      color: #1b1b1b;
-      padding: .6em 1.2em;
-      border: none;
-      border-radius: 13px;
-      font-weight: 800;
-      margin: 0 0.1em .5em 0.1em;
-      letter-spacing: 1.1px;
-      box-shadow: 0 2px 14px #ffe60022, 0 1.5px 4px #ffe60033;
-      cursor: pointer; transition: filter .12s, box-shadow .17s;
-      outline: none;
-      border-bottom: 2.1px solid #ffe60099;
-      min-width: 88px;
-    }
-    .gta-btn:active {
-      filter: brightness(0.93);
-      box-shadow: 0 1px 5px #ffe60070;
-      border-bottom: 2px solid var(--gta-yellow);
-    }
-    @media (max-width: 700px) {
-      .gta-btn { font-size: 0.97em; min-width: 70px; }
-      .gta-buttons-bar {height: auto;}
-      .gta-app-wrap {height: 98vh;}
-      .gta-indicators-avatar {width: 36px; height:36px;}
-      .app-main {font-size: 0.98em;}
-    }
-    .gta-modal-bg {
-      position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:110;
-      background:rgba(0,0,0,0.62);
-      display:flex;align-items:center;justify-content:center;
-      animation:fadeinbg .2s;
-    }
-    .gta-modal-win {
-      background: #16171e;
-      border-radius: 16px;
-      box-shadow:0 2px 18px #000d;
-      padding:1.3em 1.1em 1em 1.1em;
-      min-width: 220px;
-      max-width:94vw;
-      color:var(--gta-yellow);font-family:'Russo One',Arial,sans-serif;
-      font-size:1.12em;text-align:center;
-      position:relative;
-      animation:modin .22s;
-    }
-    .gta-modal-close{
-      position:absolute;right:15px;top:10px;font-size:1.5em;color:var(--gta-yellow);
-      background:none;border:none;cursor:pointer;filter:opacity(0.7);
-      transition:filter .11s;
-    }
-    .gta-modal-close:hover{filter:opacity(1);}
-    .work-anim {
-      width: 50px; height: 50px;
-      margin: 0.2em auto 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 7;
-      pointer-events:none;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-    .work-anim img {
-      width:100%;height:100%;user-select:none;pointer-events:none;
-      animation: dice-throw .7s cubic-bezier(.67,.04,.71,1.04);
-    }
-    @keyframes dice-throw {
-      0% {transform:rotate(-200deg) scale(0.5);}
-      80% {transform:rotate(30deg) scale(1.08);}
-      100% {transform:rotate(0) scale(1);}
-    }
-    .work-anim.pulse {animation:work-pulse 0.3s;}
-    @keyframes work-pulse {
-      0%{transform:scale(1.0);}
-      45%{transform:scale(1.26);}
-      100%{transform:scale(1.0);}
-    }
-    .dice-anim {
-      width: 46px; height: 46px;
-      margin: 0.2em auto 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 7;
-      pointer-events:none;
-      opacity: 1;
-      transition: opacity 0.3s;
-    }
-    .dice-anim img {
-      width:100%;height:100%;user-select:none;pointer-events:none;
-      animation: dice-throw .7s cubic-bezier(.67,.04,.71,1.04);
-    }
-    .skin-preview { margin: 0.2em 0 1em 0; display:flex;justify-content:center;gap:0.8em;width:100%; }
-    .skin-preview img { width: 46px;height: 46px;border-radius: 50%;border: 2px solid #ffe600bb;cursor: pointer;opacity:0.8; }
-    .skin-preview img.selected,
-    .skin-preview img:hover { border: 3px solid var(--gta-yellow);opacity:1; }
-    .gta-register-bg {
-      position: fixed; left:0;top:0;width:100vw;height:100vh;z-index:101;
-      background: linear-gradient(135deg, #15191c 70%, #2d384a 100%);
-      display:flex;align-items:center;justify-content:center;
-    }
-    .gta-register-box {
-      background: rgba(20,20,20,0.99);
-      border-radius: var(--gta-radius);
-      box-shadow: var(--gta-shadow);
-      padding: 1.7em 1.1em 1.1em 1.1em;
-      min-width: 280px; max-width: 97vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      border: 2.5px solid var(--gta-yellow);
+    .step-title {
+      font-family: var(--main-title-font);
+      font-size: 1.33em;
+      color: var(--main-yellow);
       margin-bottom: 1em;
+      text-shadow: 0 1px 8px #000c;
+      letter-spacing: 1.2px;
+      text-align: center;
+      font-weight: 800;
     }
-    .gta-register-title {
-      font-size: 1.5em;
-      font-family:'Russo One',Arial,sans-serif;
-      color: var(--gta-yellow);
+    .gender-select {
+      display: flex;
+      justify-content: center;
+      gap: 2.5vw;
+      margin-bottom: 2.3em;
+      width: 100%;
+      margin-top: 0.5em;
+    }
+    .gender-btn {
+      font-family: var(--main-title-font);
+      font-size: 1.25em;
+      padding: 1.2em 2.2em;
+      border: none;
+      border-radius: 18px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 16px #0008;
+      outline: none;
+      transition: background .17s, color .15s, box-shadow .14s, border .13s;
+      border: var(--main-border);
+      color: #19181d;
+      background: var(--main-btn-bg);
+      opacity: 0.79;
+    }
+    .gender-btn.selected,
+    .gender-btn:active {
+      opacity: 1;
+      color: #1d1d1d;
+      background: var(--main-btn-female);
+      border: 2.5px solid #ff36a3;
+    }
+    .gender-btn.male.selected,
+    .gender-btn.male:active {
+      background: var(--main-btn-male);
+      border: 2.5px solid #36b6ff;
+    }
+    .gender-btn.female.selected,
+    .gender-btn.female:active {
+      background: var(--main-btn-female);
+      border: 2.5px solid #ff36a3;
+    }
+    .gender-icon {
+      font-size: 2.3em;
+      margin-bottom: 0.15em;
+      display: block;
+      text-align: center;
+    }
+    .ticket-selection {
+      width: 100%;
+      margin-bottom: 2.5em;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8em;
+    }
+    .ticket-row {
+      background: #241930e9;
+      border-radius: 16px;
+      margin: 0.3em 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.1em 0.5em 0.7em 0.5em;
+      min-width: 0;
+      box-shadow: 0 2px 16px #0007;
+      border: 1.7px solid #ffe60050;
+    }
+    .ticket-type {
+      font-family: var(--main-title-font);
+      color: #ffe600;
+      font-size: 1.18em;
+      margin-bottom: 0.2em;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+    }
+    .ticket-desc {
+      color: #eebcfb;
+      font-size: 0.98em;
+      text-shadow: 0 0px 4px #ff36a355;
+      margin-bottom: 0.2em;
+      letter-spacing: 0.2px;
+      font-family: var(--main-font);
+      font-weight: 600;
+    }
+    .ticket-btns {
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      margin: 0.6em 0 0.3em 0;
+      justify-content: center;
+    }
+    .ticket-btn {
+      font-size: 1.17em;
+      font-family: var(--main-title-font);
+      background: var(--main-btn-bg-f);
+      color: #1d1d1d;
+      border-radius: 12px;
+      border: 2.2px solid #ff36a3;
+      padding: 0.29em 1.25em;
+      font-weight: 900;
+      margin: 0 0.16em;
+      outline: none;
+      box-shadow: 0 2px 9px #ff36a333;
+      cursor: pointer;
+      transition: background .12s, color .12s, border .13s;
+    }
+    .ticket-btn:active {
+      background: #ffe600;
+      color: #ff36a3;
+      border-color: #ffe600;
+    }
+    .ticket-count {
+      min-width: 2.2em;
+      display: inline-block;
+      font-size: 1.2em;
+      font-family: var(--main-title-font);
+      color: #ffe600;
+      letter-spacing: 1.1px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .total-price-row {
+      width: 100%;
+      margin-top: 1.3em;
       margin-bottom: 0.5em;
-      text-shadow: 0 3px 8px #000, 0 0 2px #fff4;
-      letter-spacing:1.5px;
+      text-align: center;
+      font-family: var(--main-title-font);
+      font-size: 1.22em;
+      color: #ffe600;
+      letter-spacing: 1.2px;
+      text-shadow: 0 1px 7px #000b;
+      background: #23232bde;
+      padding: 0.8em 0;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px #ffe6001a;
+      border: 1.5px solid #ff36a3;
+      font-weight: 900;
     }
-    .gta-register-err { color: #ff2929; font-size: 1.02em; margin-bottom: 0.2em; min-height: 1.2em; text-align: center;}
-    .gta-register-inp {
-      font-size: 1.02em; background: #25282b; color: var(--gta-yellow);
-      border: 2px solid #ffe600bb; outline: none; border-radius: 11px;
-      padding: .6em 1em; margin-bottom: 0.7em;
-      font-family:'Montserrat',Arial,sans-serif; width: 92%;
-      text-align:center;
+    .buy-btn {
+      width: 100%;
+      font-size: 1.15em;
+      font-family: var(--main-title-font);
+      background: var(--main-btn-bg-f);
+      color: #19181d;
+      border-radius: 14px;
+      border: 2.5px solid #ffe600;
+      padding: 1.1em 0;
+      font-weight: 900;
+      margin-top: 1.4em;
+      outline: none;
+      box-shadow: 0 2px 18px #ff36a355, 0 2px 10px #ffe60020;
+      cursor: pointer;
+      transition: filter .13s, background .18s, color .13s, border .13s;
+      letter-spacing: 1.3px;
     }
-    .gta-register-inp:focus { border: 2px solid var(--gta-yellow); }
-    .gta-register-gender { display: flex; width: 88%; justify-content: space-around; margin-bottom: 0.8em; gap:0.5em; }
-    .gta-gender-btn {
-      background: #232323; color: var(--gta-yellow); font-size: 1.01em;
-      border:2px solid #ffe60099; border-radius: 9px; font-family: 'Montserrat',Arial,sans-serif;
-      font-weight: 700; padding: .45em 1em; margin: 0 0.2em; cursor: pointer;
-      transition: background .13s, border .13s, color .13s;
+    .buy-btn:active {
+      filter: brightness(0.97);
+      background: #ffe600;
+      color: #ff36a3;
+      border-color: #ff36a3;
     }
-    .gta-gender-btn.selected,
-    .gta-gender-btn:active { background: var(--gta-yellow); color: #25282b; border:2px solid var(--gta-yellow);}
-    ::-webkit-scrollbar{width:5px;} ::-webkit-scrollbar-thumb{background:#ffe60022;border-radius:7px;}
-    ::selection {background:#ffe60026;}
-    @media (max-width:480px){
-      .gta-header{font-size:1em;}
-      .gta-register-box{min-width:90vw;}
-      .app-main{min-width:99vw;}
+    .gender-hint {
+      color: #ffe600;
+      font-size: 1.01em;
+      margin-bottom: 0.9em;
+      font-family: var(--main-font);
+      letter-spacing: 0.3px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .fadein {
+      animation: fadein .60s;
+    }
+    @keyframes fadein {
+      0%{opacity:0;transform:translateY(24px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+    .qr-preview {
+      margin: 1.5em 0 0.3em 0;
+      text-align: center;
+    }
+    .qr-img {
+      width: 170px;
+      height:170px;
+      display: block;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 18px #000a;
+      object-fit: contain;
+    }
+    .success-msg {
+      color: #29ff35;
+      font-size: 1.21em;
+      font-family: var(--main-title-font);
+      font-weight: 900;
+      margin: 1.1em 0 0.7em 0;
+      text-align: center;
+      letter-spacing: 1.2px;
+    }
+    .app-footer {
+      position: fixed;
+      bottom: 0; left: 0; width: 100vw;
+      background: rgba(20,20,22,0.88);
+      color: #ffe600;
+      text-align: center;
+      font-size: 1.1em;
+      font-family: var(--main-title-font);
+      letter-spacing: 0.8px;
+      padding: 0.65em 0 0.7em 0;
+      z-index: 999;
+      box-shadow: 0 -3px 12px #0004;
+      user-select: none;
+      font-weight: 600;
+      border-top: 2.5px solid #ffe60044;
     }
   </style>
 </head>
 <body>
-  <div class="gta-header">RealLifeGTA</div>
-  <div class="gta-register-bg" id="reg-bg" style="display:none;">
-    <form class="gta-register-box" id="reg-form" autocomplete="off" onsubmit="return false;">
-      <div class="gta-register-title">Регистрация</div>
-      <div class="gta-register-err" id="reg-err"></div>
-      <input class="gta-register-inp" id="reg-nick" maxlength="12" autocomplete="off" placeholder="Ваш ник (латиницей)">
-      <div class="gta-register-gender">
-        <button type="button" class="gta-gender-btn selected" id="gender-m" onclick="selectGender('Парень')">Парень</button>
-        <button type="button" class="gta-gender-btn" id="gender-f" onclick="selectGender('Девушка')">Девушка</button>
-      </div>
-      <input class="gta-register-inp" id="reg-age" type="number" min="12" max="99" placeholder="Возраст (12-99)">
-      <div class="skin-preview" id="skin-preview"></div>
-      <button class="gta-register-submit" onclick="submitReg()">Создать персонажа</button>
-    </form>
-  </div>
-  <div id="app" style="display:none;">
-    <div class="gta-app-wrap">
-      <div class="app-main">
-        <div class="gta-indicators-row">
-          <div class="gta-indicators-avatar">
-            <img id="skin-img" src="" alt="skin">
-          </div>
-          <div class="gta-indicators-block">
-            <div class="gta-ind-mainrow">
-              <div class="gta-player-nick" id="player-nick"></div>
-              <div class="gta-sound-icons">
-                <button class="sound-btn" id="music-btn" title="Вкл/выкл музыку" onclick="toggleMusic()"><span id="music-ico">🔊</span></button>
-                <button class="sound-btn" id="sound-btn" title="Вкл/выкл звук" onclick="toggleSound()"><span id="sound-ico">🔔</span></button>
-                <button class="admin-btn" id="admin-btn" title="Админка" style="display:none;" onclick="showAdminPanel()">🛠️</button>
-              </div>
-            </div>
-            <div class="gta-indicators-stats">
-              <div class="gta-ind-money" id="ind-money"></div>
-              <div class="gta-ind-rc" id="ind-rc"></div>
-              <div class="gta-ind-lvl" id="ind-lvl"></div>
-            </div>
-            <div class="gta-ind-energy" id="ind-energy"></div>
-            <div class="gta-bar-group">
-              <div class="gta-energy-bar-wrap"><div class="gta-energy-bar-fill" id="energy-bar"></div></div>
-              <div class="gta-exp-bar-wrap"><div class="gta-exp-bar-fill" id="exp-bar"></div></div>
-            </div>
-          </div>
-        </div>
-        <div class="gta-activity" id="activity"></div>
-        <div class="work-anim" id="work-anim" style="display:none;"></div>
-        <div class="dice-anim" id="dice-anim" style="display:none;"></div>
-      </div>
-    </div>
-    <div class="gta-buttons-bar" id="btn-bar">
-      <button class="gta-btn" onclick="showJobs()">Работа</button>
-      <button class="gta-btn" onclick="showDice()">Кости</button>
-      <button class="gta-btn" onclick="showTransfer()">Перевести</button>
-      <button class="gta-btn" onclick="showWithdraw()">RC</button>
-      <button class="gta-btn" onclick="showSkins()">Скин</button>
-      <button class="gta-btn" onclick="showSettings()">⚙</button>
+  <div class="header">Kinky Party 21+</div>
+  <div class="app-wrap">
+    <div class="app-main" id="main-step">
+      <!-- JS content -->
     </div>
   </div>
-  <div id="modal-bg" style="display:none;"></div>
-  <audio id="music" src="https://cdn.pixabay.com/audio/2022/12/19/audio_12e9e2b6fa.mp3" loop preload="auto"></audio>
-  <audio id="dice-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_123b5c8a2e.mp3" preload="auto"></audio>
-  <audio id="work-farm-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12c6e893f2.mp3" preload="auto"></audio>
-  <audio id="work-factory-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_123b5c8a2e.mp3" preload="auto"></audio>
-  <audio id="levelup-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12d3f7b7f2.mp3" preload="auto"></audio>
-  <audio id="rc-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_1131a6e6e3.mp3" preload="auto"></audio>
-  <audio id="click-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_1131a6e6e3.mp3" preload="auto"></audio>
-  <audio id="xp-sound" src="https://cdn.pixabay.com/audio/2022/10/16/audio_12d3f7b7f2.mp3" preload="auto"></audio>
+  <div class="app-footer">
+    <span>Только для лиц 21+ | Билеты строго по QR</span>
+  </div>
   <script>
-    // ===== НАСТРОЙКИ =====
-    const MUSIC_URL = "https://files.catbox.moe/pnug99.mp3";
-    const GTA_SKINS = [
-      {gender:'Парень', url:'https://i.imgur.com/v9cyJIn.jpeg'},
-      {gender:'Парень', url:'https://i.ibb.co/b1PMT2s/gta5skin-male2.png'},
-      {gender:'Девушка', url:'https://i.ibb.co/r6k6P2M/gta5skin-female1.png'},
-      {gender:'Девушка', url:'https://i.ibb.co/rb1z6mP/gta5skin-female2.png'}
-    ];
-    const storageKey = "gta_app_player";
-    const ENERGY_MAX = 200;
-    const ENERGY_RECOVER_SEC = 60 * 60;
-    let user = null;
-    let soundEnabled = true, musicEnabled = true;
-    // Музыка
-    const music = document.getElementById('music');
-    music.src = MUSIC_URL;
-    function toggleMusic() {
-      musicEnabled = !musicEnabled;
-      localStorage.setItem('gta_music', musicEnabled?'1':'0');
-      updateMusicBtn();
-      if(musicEnabled) music.play().catch(()=>{});
-      else music.pause();
-    }
-    function updateMusicBtn() {
-      document.getElementById("music-ico").textContent = musicEnabled ? "🔊" : "🔇";
-    }
-    function startMusic() { if(musicEnabled) music.play().catch(()=>{}); }
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      localStorage.setItem('gta_sound', soundEnabled?'1':'0');
-      updateSoundBtn();
-    }
-    function updateSoundBtn() {
-      document.getElementById("sound-ico").textContent = soundEnabled ? "🔔" : "🔕";
-    }
-    function playSound(id, vol=1.0) {
-      if(soundEnabled) {
-        let audio = document.getElementById(id);
-        if(audio) { audio.volume=vol; audio.currentTime=0; audio.play().catch(()=>{});}
-      }
-    }
-    // ===== НОВАЯ ЭНЕРГИЯ =====
-    function getCurrentEnergy() {
-      if (!user.energy_ts || user.energy >= ENERGY_MAX) return ENERGY_MAX;
-      const now = Math.floor(Date.now()/1000);
-      let diff = now - user.energy_ts;
-      let restored = Math.floor((diff / ENERGY_RECOVER_SEC) * ENERGY_MAX);
-      let val = Math.min(ENERGY_MAX, user.energy + restored);
-      if (val >= ENERGY_MAX) { user.energy_ts = 0; user.energy = ENERGY_MAX; saveUser(); }
-      return val;
-    }
-    function setEnergy(val) {
-      val = Math.max(0, Math.min(ENERGY_MAX, val));
-      if(val < ENERGY_MAX && user.energy >= ENERGY_MAX) user.energy_ts = Math.floor(Date.now()/1000);
-      user.energy = val;
-      if(val >= ENERGY_MAX) user.energy_ts = 0;
-      saveUser();
-      renderEnergy();
-    }
-    function getEnergyPercent() {
-      return Math.round(100 * getCurrentEnergy() / ENERGY_MAX);
-    }
-    function renderEnergy() {
-      const val = getCurrentEnergy();
-      document.getElementById("energy-bar").style.width = getEnergyPercent()+"%";
-      document.getElementById("ind-energy").textContent = `Энергия: ${val}/${ENERGY_MAX}`+(val<ENERGY_MAX?" (восст.)":"");
-    }
-    setInterval(()=>{
-      if(user && user.energy < ENERGY_MAX && user.energy_ts > 0) renderEnergy();
-    }, 15000);
-
-    // ===== РОВНЫЕ ИНДИКАТОРЫ =====
-    function renderIndicators() {
-      document.getElementById("player-nick").textContent = user.nick;
-      document.getElementById("ind-money").textContent = `${user.cash}$`;
-      document.getElementById("ind-lvl").textContent = `LVL: ${user.lvl} | EXP: ${user.exp}/${user.exp_max}`;
-      document.getElementById("ind-rc").textContent = `RC: ${user.rc}`;
-      document.getElementById("skin-img").src = user.skin;
-      renderEnergy();
-      document.getElementById("exp-bar").style.width = `${Math.min(100, Math.round(100 * user.exp / user.exp_max))}%`;
-      document.getElementById('admin-btn').style.display = user.nick === "Admin" ? "" : "none";
-    }
-
-    // ===== НОВАЯ СИСТЕМА РАБОТЫ =====
-    let jobActive = false, jobType = '', jobEarned = 0, jobClicks = 0;
-    function showJobs() {
-      document.getElementById("activity").innerHTML = `<b>Выберите работу:</b><br>
-        <button class="gta-btn" onclick="startJob('Ферма')">Ферма</button>
-        <button class="gta-btn" onclick="startJob('Склад')">Склад</button>`;
-    }
-    function startJob(type) {
-      if (jobActive) return;
-      if (getCurrentEnergy() < 1) {
-        document.getElementById("activity").innerHTML = `<span class="work-error">Нет энергии!</span><br>Подождите восстановления.`;
-        return;
-      }
-      jobActive = true; jobType = type; jobEarned = 0; jobClicks = 0;
-      const anim = document.getElementById("work-anim");
-      anim.innerHTML = (type === "Ферма") ?
-        `<img src="https://media.giphy.com/media/J0N0Q9nQb9u6k2cISm/giphy.gif" alt="ферма">` :
-        `<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2h2dGJwM2o2MmFqMHB0NmUza2x4Z25jYjZqNXd3N2p3eGRpZGNxMyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6hZ7U5yBzKTRf8Z2t4/giphy.gif" alt="склад">`;
-      anim.style.display = "";
-      document.getElementById("activity").innerHTML = `
-        <div class="work-progress">[${type}] Кликер-работа!</div>
-        <button class="gta-btn" id="work-click">Работать</button>
-        <div class="work-result" id="work-earned">Доход: 0$</div>
-        <button class="gta-btn" onclick="finishJob()">Завершить</button>
-      `;
-      document.getElementById("work-click").onclick = workClick;
-    }
-    function workClick() {
-      if(!jobActive) return;
-      let energy = getCurrentEnergy();
-      if (energy < 1) {
-        document.getElementById("work-click").disabled = true;
-        document.getElementById("work-earned").innerHTML = `<span class="work-error">Энергия закончилась!</span>`;
-        setEnergy(0);
-        playSound('work-farm-sound', 0.8);
-        return;
-      }
-      let earn = jobType === "Ферма" ? 11 : 19;
-      jobEarned += earn;
-      jobClicks++;
-      setEnergy(energy-1);
-      document.getElementById("work-earned").innerHTML = `Доход: ${jobEarned}$ (${jobClicks} раз, энергия: ${getCurrentEnergy()})`;
-      let anim = document.getElementById("work-anim");
-      anim.style.display = "";
-      anim.style.opacity = 1;
-      anim.classList.remove("pulse");
-      void anim.offsetWidth;
-      anim.classList.add("pulse");
-      setTimeout(()=>{anim.style.opacity=0.3;},220);
-      playSound(jobType === "Ферма" ? 'work-farm-sound' : 'work-factory-sound',0.8);
-      playSound('click-sound', 0.18);
-      addXP(1 + Math.floor(earn/20));
-    }
-    function finishJob() {
-      if(!jobActive) return;
-      jobActive = false;
-      user.cash += jobEarned;
-      saveUser();
-      renderIndicators();
-      document.getElementById("work-anim").style.display = "none";
-      document.getElementById("activity").innerHTML = `<span class="work-end">Работа завершена!<br>+${jobEarned}$</span>`;
-      playSound('levelup-sound', 0.5);
-    }
-    function addXP(xp) {
-      user.exp += xp;
-      playSound('xp-sound', 0.13);
-      if(user.exp >= user.exp_max) levelUp();
-      saveUser();
-      renderIndicators();
-    }
-    function levelUp() {
-      user.exp -= user.exp_max;
-      user.lvl++;
-      user.exp_max += Math.floor(user.lvl*2.3)+14;
-      user.rc += 5;
-      playSound('levelup-sound',0.7);
-      saveUser(); renderIndicators();
-      showModal("Level Up!", `LVL:${user.lvl} (+5 RC)`);
-    }
-
-    // ====== АДМИНКА ======
-    function showAdminPanel() {
-      if(user.nick !== "Admin") return;
-      showModal('Админка', `
-        <div style="font-size:1em; color:#fff;">
-          <label>Кому (ник): <input id="ad-nick" maxlength="12" style="width:90px"></label><br>
-          <label>Дать $: <input id="ad-cash" type="number" style="width:60px"></label><br>
-          <label>Дать LVL: <input id="ad-lvl" type="number" style="width:60px"></label><br>
-          <label>Дать RC: <input id="ad-rc" type="number" style="width:60px"></label><br>
-          <button class="gta-btn" onclick="adminSetVals()">Выдать</button>
+    let gender = null; // "male" | "female"
+    let tickets = { fun: 0, vip: 0 };
+    let prices = {
+      male: { fun: 200, vip: 400 },
+      female: { fun: 100, vip: 200 }
+    };
+    function renderGenderSelect() {
+      document.getElementById('main-step').innerHTML = `
+        <div class="step-title fadein">Выберите ваш пол</div>
+        <div class="gender-select fadein">
+          <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
+            <span class="gender-icon">👨</span>Парень
+          </button>
+          <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
+            <span class="gender-icon">👩</span>Девушка
+          </button>
         </div>
-      `);
-    }
-    function adminSetVals() {
-      let nick = document.getElementById('ad-nick').value.trim();
-      let cash = +document.getElementById('ad-cash').value||0;
-      let lvl = +document.getElementById('ad-lvl').value||0;
-      let rc = +document.getElementById('ad-rc').value||0;
-      if (!nick || !validateNick(nick)) { showModal('Ошибка', 'Некорректный ник!'); return; }
-      let allUsers = JSON.parse(localStorage.getItem('gta_admin_users')||'{}');
-      if(nick === user.nick) {
-        if(cash) user.cash += cash;
-        if(lvl) { user.lvl += lvl; user.exp_max += 17*lvl; }
-        if(rc) user.rc += rc;
-        saveUser(); renderIndicators();
-        showModal('Админка', 'Выдано!');
-      } else {
-        if(!allUsers[nick]) allUsers[nick] = {cash:0,lvl:1,rc:0};
-        allUsers[nick].cash = (allUsers[nick].cash||0) + cash;
-        allUsers[nick].lvl = (allUsers[nick].lvl||1) + lvl;
-        allUsers[nick].rc = (allUsers[nick].rc||0) + rc;
-        localStorage.setItem('gta_admin_users', JSON.stringify(allUsers));
-        showModal('Админка', `Для ${nick} начислено! (Выйдет — получит)`);
-      }
-    }
-    // ===== ПРОКИДЫВАЕМ СКРИПТЫ КАК БЫЛО =====
-    function renderAll() { renderIndicators(); document.getElementById("activity").textContent = ""; document.getElementById("dice-anim").style.display = "none"; }
-    // ... остальные функции (кости, перевод, rc, скины, настройки, модалки, регистрация) — без изменений ...
-    function showDice() {
-      let html = `<b>Кости</b><br>
-        <button class="gta-btn" onclick="playDiceBot()">Бросить с ботом</button>`;
-      document.getElementById("activity").innerHTML = html;
-    }
-    function playDiceBot() {
-      document.getElementById("activity").innerHTML = `<b>Ставка ($):</b>
-        <input id="bet" type="number" min="1" max="${user.cash}" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
-        <button class="gta-btn" onclick="startDiceBot()">Бросить</button>
-        <div id="dice-msg" style="margin-top:0.6em;"></div>`;
-    }
-    function startDiceBot() {
-      let bet = +document.getElementById("bet").value;
-      if (isNaN(bet) || bet < 1 || bet > user.cash) {
-        document.getElementById("dice-msg").textContent = "Некорректная ставка!";
-        return;
-      }
-      showDiceAnimation();
-      let userThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
-      let botThrow = Math.floor(Math.random()*6)+1 + Math.floor(Math.random()*6)+1;
-      setTimeout(()=>{
-        let msg = '';
-        if(userThrow > botThrow){
-          user.cash += bet;
-          user.exp += 2;
-          msg = `<span style="color:#ffe600;">Победа! +${bet}$</span>`;
-          user.win++;
-        } else if (userThrow < botThrow){
-          user.cash -= bet;
-          user.exp += 1;
-          msg = `<span style="color:#ff6060;">Проигрыш! -${bet}$</span>`;
-        } else {
-          user.exp += 1;
-          msg = `<span style="color:#b0b0b0;">Ничья!</span>`;
-        }
-        user.games++;
-        if(user.exp >= user.exp_max) levelUp();
-        saveUser(); renderIndicators();
-        showModal("Результат броска", `Вы: ${userThrow}<br>Бот: ${botThrow}<br>${msg}`);
-      }, 800);
-    }
-    function showDiceAnimation() {
-      let dice = document.getElementById("dice-anim");
-      dice.innerHTML = `<img src="https://pngimg.com/uploads/dice/dice_PNG47.png" alt="dice">`;
-      dice.style.display = "";
-      playSound('dice-sound');
-      setTimeout(()=>{dice.style.display="none";},700);
-    }
-
-    function showTransfer() {
-      document.getElementById("activity").innerHTML = `<b>Перевести деньги</b><br>
-        <input id="transfer-nick" maxlength="12" placeholder="Кому (ник)" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.5em 0;">
-        <input id="transfer-amount" type="number" min="1" style="padding:0.4em 0.8em;border-radius:8px;width:60%;margin:0.3em 0;">
-        <button class="gta-btn" onclick="doTransfer()">Перевести</button>
-        <div id="transfer-msg" style="margin-top:0.6em;"></div>`;
-    }
-    function doTransfer() {
-      let nick = document.getElementById("transfer-nick").value.trim();
-      let amount = +document.getElementById("transfer-amount").value;
-      if (!validateNick(nick) || nick === user.nick) {
-        document.getElementById("transfer-msg").textContent = "Некорректный ник!";
-        return;
-      }
-      if (isNaN(amount) || amount < 1 || amount > user.cash) {
-        document.getElementById("transfer-msg").textContent = "Некорректная сумма!";
-        return;
-      }
-      user.cash -= amount;
-      saveUser(); renderIndicators();
-      showModal("Перевод совершен", `Переведено ${amount}$ игроку ${nick}`);
-    }
-    function showWithdraw() {
-      document.getElementById("activity").innerHTML = `<b>Вывести RealCoin (RC)</b><br>
-        <div>У вас: <b>${user.rc} RC</b></div>
-        <input id="rc-amount" type="number" min="1" max="${user.rc}" placeholder="Сколько RC?" style="padding:0.4em 1em;border-radius:8px;width:60%;margin:0.5em 0;">
-        <button class="gta-btn" onclick="doWithdraw()">Вывести</button>
-        <div id="withdraw-msg" style="margin-top:0.6em;"></div>`;
-    }
-    function doWithdraw() {
-      let amount = +document.getElementById("rc-amount").value;
-      if (isNaN(amount) || amount < 1 || amount > user.rc) {
-        document.getElementById("withdraw-msg").textContent = "Некорректная сумма!";
-        return;
-      }
-      user.rc -= amount;
-      playSound('rc-sound');
-      saveUser(); renderIndicators();
-      showModal("Вывод RC", `Выведено ${amount} RC`);
-    }
-    function showSkins() {
-      let html = `<b>Скин</b><br><div class="skin-preview">`;
-      GTA_SKINS.filter(s=>s.gender===user.gender).forEach((s,idx)=>{
-        html += `<img src="${s.url}" class="${user.skin==s.url?'selected':''}" style="cursor:pointer;" onclick="setSkin('${s.url}')">`;
-      });
-      html += `</div>`;
-      document.getElementById("activity").innerHTML = html;
-    }
-    function setSkin(url) {
-      user.skin = url;
-      saveUser(); renderIndicators();
-      showModal("Скин изменён!", "");
-    }
-    function showSettings() {
-      document.getElementById("activity").innerHTML = `<b>Настройки</b><br>
-        <label><input type="checkbox" id="soundchk" ${soundEnabled?'checked':''} onchange="toggleSound()"> Звук</label>
-        <label style="margin-left:1.3em;"><input type="checkbox" id="musicchk" ${musicEnabled?'checked':''} onchange="toggleMusic()"> Музыка</label>
-        <br>
-        <button class="gta-btn" onclick="resetUser()">Сбросить персонажа</button>`;
-    }
-    function resetUser() {
-      if(confirm('Точно сбросить персонажа?')) {
-        localStorage.removeItem(storageKey);
-        location.reload();
-      }
-    }
-    function showModal(title, text) {
-      let m = document.createElement('div');
-      m.className = 'gta-modal-bg';
-      m.innerHTML = `<div class="gta-modal-win">
-        <button class="gta-modal-close" onclick="this.closest('.gta-modal-bg').remove()">×</button>
-        <div style="font-size:1.2em;color:#ffe600;margin-bottom:0.4em;letter-spacing:1.2px;">${title}</div>
-        <div style="color:#fff;font-size:1em;">${text}</div>
-      </div>`;
-      m.onclick = e=>{if(e.target===m)m.remove();};
-      document.body.appendChild(m);
-    }
-    function saveUser() { localStorage.setItem(storageKey, JSON.stringify(user)); }
-    function loadUser() { let data = localStorage.getItem(storageKey); if (!data) return null; return JSON.parse(data); }
-    // ==== СТАРТ ====
-    window.onload = function() {
-      user = loadUser();
-      soundEnabled = localStorage.getItem('gta_sound') !== '0';
-      musicEnabled = localStorage.getItem('gta_music') !== '0';
-      updateSoundBtn(); updateMusicBtn();
-      music.volume = 0.44;
-      music.loop = true;
-      music.oncanplay = ()=>{ setTimeout(()=>{ if(musicEnabled) music.play().catch(()=>{}); }, 200);}
-      document.addEventListener('click', ()=>{if(musicEnabled)music.play().catch(()=>{});}, {once:true});
-      // Применяем задержанные админ-выдачи
-      if(user) {
-        let allUsers = JSON.parse(localStorage.getItem('gta_admin_users')||'{}');
-        if(allUsers[user.nick]) {
-          if(allUsers[user.nick].cash) user.cash += allUsers[user.nick].cash;
-          if(allUsers[user.nick].lvl) user.lvl += allUsers[user.nick].lvl;
-          if(allUsers[user.nick].rc) user.rc += allUsers[user.nick].rc;
-          delete allUsers[user.nick];
-          saveUser();
-          localStorage.setItem('gta_admin_users', JSON.stringify(allUsers));
-        }
-      }
-      if (!user) { showReg(); }
-      else { document.getElementById('reg-bg').style.display='none'; document.getElementById('app').style.display=''; renderAll(); startMusic(); }
-    }
-    // Регистрация + скины
-    let regGender = "Парень";
-    let regSkin = GTA_SKINS[0].url;
-    function showReg() {
-      document.getElementById('reg-bg').style.display = 'flex';
-      document.getElementById('app').style.display = 'none';
-      renderSkinPreview();
-    }
-    function hideReg() {
-      document.getElementById('reg-bg').style.display = 'none';
-      document.getElementById('app').style.display = '';
+        <div class="gender-hint fadein">Цены на билеты отличаются для парней и девушек</div>
+        <div style="margin-top:1.5em;"></div>
+      `;
     }
     function selectGender(g) {
-      regGender = g;
-      document.getElementById('gender-m').classList.toggle('selected', g === "Парень");
-      document.getElementById('gender-f').classList.toggle('selected', g === "Девушка");
-      renderSkinPreview();
+      gender = g;
+      tickets = { fun: 0, vip: 0 };
+      renderTicketSelection();
     }
-    function renderSkinPreview() {
-      const skinDiv = document.getElementById('skin-preview');
-      skinDiv.innerHTML = '';
-      GTA_SKINS.filter(s=>s.gender===regGender).forEach((s,idx)=>{
-        let img = document.createElement('img');
-        img.src = s.url;
-        img.className = (regSkin==s.url ? 'selected':'');
-        img.onclick = ()=>{regSkin=s.url;renderSkinPreview();};
-        skinDiv.appendChild(img);
-      });
-      if(!GTA_SKINS.filter(s=>s.gender===regGender).some(s=>s.url===regSkin)){
-        regSkin = GTA_SKINS.filter(s=>s.gender===regGender)[0].url;
+    function renderTicketSelection() {
+      let priceFun = prices[gender].fun;
+      let priceVip = prices[gender].vip;
+      document.getElementById('main-step').innerHTML = `
+        <div class="step-title fadein">Выберите билет</div>
+        <div class="ticket-selection fadein">
+          <div class="ticket-row">
+            <div class="ticket-type">QR FUN</div>
+            <div class="ticket-desc">Обычный билет на вечеринку</div>
+            <div class="ticket-btns">
+              <button class="ticket-btn" onclick="changeTicket('fun', -1)">-</button>
+              <span class="ticket-count" id="fun-count">${tickets.fun}</span>
+              <button class="ticket-btn" onclick="changeTicket('fun', 1)">+</button>
+            </div>
+            <div style="color:#ffe600;margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceFun}$</div>
+          </div>
+          <div class="ticket-row">
+            <div class="ticket-type">QR VIP</div>
+            <div class="ticket-desc">VIP билет: приоритет, отдельная зона</div>
+            <div class="ticket-btns">
+              <button class="ticket-btn" onclick="changeTicket('vip', -1)">-</button>
+              <span class="ticket-count" id="vip-count">${tickets.vip}</span>
+              <button class="ticket-btn" onclick="changeTicket('vip', 1)">+</button>
+            </div>
+            <div style="color:#ffe600;margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceVip}$</div>
+          </div>
+        </div>
+        <div class="total-price-row fadein">
+          Итого: <span id="total-price">${getTotalPrice()}$</span>
+        </div>
+        <button class="buy-btn fadein" onclick="showSuccess()" id="to-pay-btn"
+            ${getTotalPrice()===0?'disabled style="opacity:0.55;filter:grayscale(1);cursor:not-allowed;"':''}>
+          Оформить QR-билеты
+        </button>
+        <button class="gta-btn fadein" style="margin-top:0.8em;width:100%;background:#23232b;color:#ffe600;border:2px solid #ffe600;" onclick="renderGenderSelect()">← Назад</button>
+      `;
+    }
+    function changeTicket(type, delta) {
+      tickets[type] += delta;
+      if(tickets[type]<0) tickets[type]=0;
+      document.getElementById(type+'-count').textContent = tickets[type];
+      document.getElementById('total-price').textContent = getTotalPrice()+'$';
+      let btn = document.getElementById('to-pay-btn');
+      if (getTotalPrice()===0) {
+        btn.disabled = true;
+        btn.style.opacity = 0.55;
+        btn.style.filter = "grayscale(1)";
+        btn.style.cursor = "not-allowed";
+      } else {
+        btn.disabled = false;
+        btn.style.opacity = 1;
+        btn.style.filter = "none";
+        btn.style.cursor = "pointer";
       }
     }
-    function validateNick(nick) { return /^[a-zA-Z]{3,12}$/.test(nick); }
-    function validateAge(age) { return /^\d{2}$/.test(age) && +age >= 12 && +age <= 99; }
-    function submitReg() {
-      const nick = document.getElementById('reg-nick').value.trim();
-      const age = document.getElementById('reg-age').value.trim();
-      const err = document.getElementById('reg-err');
-      if (!validateNick(nick)) { err.textContent = "Ник только латиницей, 3-12 символов!"; return; }
-      if (!validateAge(age)) { err.textContent = "Возраст от 12 до 99!"; return; }
-      user = {
-        nick, gender: regGender, age: +age, lvl: 1, exp: 0, exp_max: 20,
-        cash: 0, job: "Нет", rc: 0, skin: regSkin, win:0, games:0,
-        energy: ENERGY_MAX, energy_ts: 0,
-        settings:{sound:true, music:true},
-        invitedBy: null
-      };
-      saveUser();
-      err.textContent = "";
-      hideReg();
-      renderAll();
-      showModal('Добро пожаловать в RealLifeGTA!','Создавай историю!');
-      startMusic();
+    function getTotalPrice() {
+      if (!gender) return 0;
+      return tickets.fun * prices[gender].fun + tickets.vip * prices[gender].vip;
     }
+    function showSuccess() {
+      let msg = '';
+      let qrs = '';
+      if (tickets.fun > 0) {
+        qrs += `<div class="qr-preview"><img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=FUN-${gender}-${Date.now()}" alt="QR FUN"></div>
+        <div style="color:#ffe600;font-family:'Russo One',sans-serif;font-size:1.08em;margin-bottom:1em;">FUN x${tickets.fun}</div>`;
+      }
+      if (tickets.vip > 0) {
+        qrs += `<div class="qr-preview"><img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=VIP-${gender}-${Date.now()}" alt="QR VIP"></div>
+        <div style="color:#ffe600;font-family:'Russo One',sans-serif;font-size:1.08em;margin-bottom:1em;">VIP x${tickets.vip}</div>`;
+      }
+      msg = `
+        <div class="success-msg fadein">Ваши QR билеты</div>
+        ${qrs}
+        <div style="margin-top:1.4em;">
+          <button class="buy-btn" onclick="renderGenderSelect()">Купить еще</button>
+        </div>
+      `;
+      document.getElementById('main-step').innerHTML = msg;
+    }
+
+    // Initial render
+    renderGenderSelect();
+
+    // For mobile: scroll to form on reload
+    window.onload = () => {
+      setTimeout(()=>{ 
+        document.getElementById('main-step').scrollIntoView({behavior: "smooth", block: "start"});
+      }, 80);
+    };
+    // Prevent form submit
+    document.addEventListener('submit', e=>e.preventDefault());
   </script>
 </body>
 </html>

@@ -577,6 +577,7 @@
       "https://i.imgur.com/R0pCxQG.jpeg"
     ];
     let bgIndex = 0;
+    document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
     setInterval(() => {
       bgIndex = (bgIndex + 1) % bgImgs.length;
       document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;

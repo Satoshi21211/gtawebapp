@@ -27,13 +27,13 @@
       background: var(--main-dark);
       font-family: var(--main-font);
       color: var(--main-gray);
-      background-image: url('https://i.imgur.com/KZUhhEH.jpeg');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
       overscroll-behavior-y: contain;
       touch-action: manipulation;
       overflow-x: hidden;
+      transition: background-image 1.2s cubic-bezier(0.4,0,0.2,1);
     }
     body {
       scroll-behavior: smooth;
@@ -42,9 +42,9 @@
       width: 100vw;
       text-align: center;
       font-family: 'Montserrat', Arial, sans-serif !important;
-      font-size: 2em;
+      font-size: 1.19em;
       color: #fff;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       padding: 1.2em 0 0.7em 0;
       background: linear-gradient(90deg, #2e0d16 0%, #7a2331 100%);
       border-radius: 0 0 25px 25px;
@@ -55,7 +55,35 @@
       font-weight: 400 !important;
       border-bottom: 3px solid #a32e2e;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+    }
+    .header .lang-btn {
+      margin-left: 1.1em;
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      font-weight: 400;
+      font-size: 0.90em;
+      letter-spacing: 0.12em;
+      color: var(--main-accent);
+      background: transparent;
+      border: 2px solid var(--main-accent);
+      border-radius: 8px;
+      padding: 0.18em 0.85em;
+      cursor: pointer;
+      transition: background .16s, color .14s, border .13s;
+      outline: none;
+      text-transform: uppercase;
+      box-shadow: 0 2px 10px #e9457a22;
+      position: relative;
+      top: -2px;
+    }
+    .header .lang-btn.selected,
+    .header .lang-btn:active {
+      background: var(--main-accent);
+      color: #fff;
+      border: 2px solid #fff;
     }
     .header span {
       color: #fff;
@@ -66,12 +94,22 @@
       font-family: 'Montserrat', Arial, sans-serif !important;
       text-transform: uppercase;
       letter-spacing: 0.18em;
+      font-size: 1.19em;
+      line-height: 1.2;
     }
     @media (max-width: 500px){
       .header {
         font-size: 1.07em;
         padding: 1.15em 0 0.7em 0;
         border-radius: 0 0 18px 18px;
+        gap: 0.6em;
+      }
+      .header span {
+        font-size: 1.07em;
+      }
+      .header .lang-btn {
+        font-size: 0.87em;
+        padding: 0.18em 0.68em;
       }
     }
     .app-wrap {
@@ -389,7 +427,7 @@
       white-space: nowrap;
       display: inline-block;
     }
-    .copy-btn, .upload-btn {
+    .copy-btn, .upload-btn, .save-qr-btn {
       background: var(--main-accent);
       color: #fff;
       font-family: var(--main-title-font);
@@ -403,7 +441,7 @@
       outline: none;
       margin-left: 0.1em;
     }
-    .copy-btn:active, .upload-btn:active {
+    .copy-btn:active, .upload-btn:active, .save-qr-btn:active {
       background: #fff;
       color: var(--main-accent);
       opacity: 0.7;
@@ -459,6 +497,11 @@
     }
     .promo-block .promo-title {
       margin-bottom: 0.3em;
+      text-transform: none;
+      font-size: 0.98em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      letter-spacing: 0.04em;
+      font-weight: 600;
     }
     .promo-block .promo-qr {
       width: 90px;
@@ -471,13 +514,25 @@
       margin: 0 auto;
       display: block;
     }
+    .promo-block .save-qr-btn {
+      margin: 0.7em 0 0 0;
+      padding: 0.30em 0.9em;
+      font-size: 0.98em;
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      box-shadow: 0 2px 8px #e9457a44;
+      border-radius: 7px;
+      border: 2px solid #fff;
+    }
     .app-footer {
       position: fixed;
       bottom: 0; left: 0; width: 100vw;
       background: rgba(36,14,20,0.93);
       color: #fff;
       text-align: center;
-      font-size: 1.08em;
+      font-size: 1.19em;
       font-family: 'Montserrat', Arial, sans-serif !important;
       letter-spacing: 0.8px;
       padding: 0.58em 0 0.52em 0;
@@ -487,7 +542,6 @@
       font-weight: 400 !important;
       border-top: 2px solid var(--main-accent);
       text-transform: uppercase;
-      font-size: 1.19em;
       letter-spacing: 0.12em;
     }
     .app-footer span {
@@ -505,25 +559,92 @@
 <body>
   <audio id="bg-music" src="https://files.catbox.moe/dt2o9k.mp3" autoplay loop></audio>
   <div class="header">
-    <span>KINKY PARTY 21+</span>
+    <span id="main-title">KINKY PARTY 21+</span>
+    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
   </div>
   <div class="app-wrap">
     <div class="app-main" id="main-step"></div>
   </div>
   <div class="app-footer">
-    <span>A LOT OF SEX</span>
+    <span id="footer-text">A LOT OF SEX</span>
   </div>
   <script>
-    // QR-код PNG в красном стиле (примерное изображение, замени src на свою PNG если нужно)
+    // Слайдшоу фоновые картинки (замени на свои)
+    const bgImgs = [
+      "https://i.imgur.com/KZUhhEH.jpeg",
+      "https://i.imgur.com/8nP1s8P.jpeg",
+      "https://i.imgur.com/r9aUjQz.jpeg",
+      "https://i.imgur.com/0t5J0ud.jpeg"
+    ];
+    let bgIndex = 0;
+    setInterval(() => {
+      bgIndex = (bgIndex + 1) % bgImgs.length;
+      document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
+    }, 6000);
+
+    // QR-код PNG (замени на свой фирменный QR)
     const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";
-    // Можно заменить на свою ссылку, если есть фирменный стиль
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const audio = document.getElementById('bg-music');
-      if (audio) audio.volume = 0.33;
-      setTimeout(()=>{ window.scrollTo({top: 0, behavior: 'smooth'}); }, 30);
-    });
-
+    // Локализация
+    const langData = {
+      ru: {
+        title: "KINKY PARTY 21+",
+        footer: "A LOT OF SEX",
+        buyQr: "Приобрести QR билет",
+        selectGender: "выберите ваш пол",
+        stepGenderHint: "Вы на шаг впереди к незабываемой секс ночи которая пройдет в Chicago",
+        male: "Парень",
+        female: "Девушка",
+        selectTicket: "выберите билет",
+        funDesc: "Проход на мероприятие",
+        vipDesc: "Проход в секс-зону<br>Бесплатные еда/бар",
+        total: "Итого",
+        buyBtn: "Оформить QR билет",
+        backBtn: "← Назад",
+        payTitle: "Оплата QR билета",
+        zelle: "ZELLE:",
+        copy: "Скопировать",
+        uploadScreenshot: "Загрузить скриншот",
+        payMsg: (count) => `Оплатите указанную сумму для получения ${count} ${count === 1 ? "билета" : "билетов"}:`,
+        payAmount: (sum) => `${sum}$`,
+        afterPay: "После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте \"Оплата завершена\" после этого ожидайте 5 минут не покидая эту страницу",
+        wait: "Ожидайте",
+        payDone: "Оплата завершена",
+        ticketsTitle: "Ваши билеты",
+        congrats: (type, count) => `Поздравляем вас с успешной покупкой ${type} (${count})`,
+        buyMore: "Купить ещё билет",
+        saveQr: "Сохраните QR код"
+      },
+      en: {
+        title: "KINKY PARTY 21+",
+        footer: "A LOT OF SEX",
+        buyQr: "Buy QR Ticket",
+        selectGender: "select your gender",
+        stepGenderHint: "You are one step closer to an unforgettable sex night in Chicago",
+        male: "Male",
+        female: "Female",
+        selectTicket: "choose a ticket",
+        funDesc: "Entry to the event",
+        vipDesc: "Access to sex zone<br>Free food/bar",
+        total: "Total",
+        buyBtn: "Order QR Ticket",
+        backBtn: "← Back",
+        payTitle: "QR Ticket Payment",
+        zelle: "ZELLE:",
+        copy: "Copy",
+        uploadScreenshot: "Upload screenshot",
+        payMsg: (count) => `Pay the specified amount to get ${count} ${count === 1 ? "ticket" : "tickets"}:`,
+        payAmount: (sum) => `${sum}$`,
+        afterPay: "After transferring the amount to the ZELLE account, upload a payment screenshot and click \"Payment complete\", then wait 5 minutes without leaving this page",
+        wait: "Please wait",
+        payDone: "Payment complete",
+        ticketsTitle: "Your tickets",
+        congrats: (type, count) => `Congratulations on your successful purchase of ${type} (${count})`,
+        buyMore: "Buy another ticket",
+        saveQr: "Save QR code"
+      }
+    };
+    let lang = "ru";
     let gender = null;
     let tickets = { fun: 0, vip: 0 };
     let prices = {
@@ -536,21 +657,32 @@
     let payTimerSeconds = 0;
     let canClickPay = false;
 
+    function setLang(newLang) {
+      lang = newLang;
+      document.getElementById('main-title').textContent = langData[lang].title;
+      document.getElementById('footer-text').textContent = langData[lang].footer;
+      document.getElementById('lang-btn').textContent = lang === 'ru' ? 'EN' : 'RU';
+      renderGenderSelect();
+    }
+    function toggleLang() {
+      setLang(lang === 'ru' ? 'en' : 'ru');
+    }
+
     function renderGenderSelect() {
       clearPayTimer();
       screenshotDataUrl = null;
       document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">Приобрести QR билет</div>
-        <div class="step-title fadein" style="margin-bottom:1.3em;">выберите ваш пол</div>
+        <div class="big-title fadein">${langData[lang].buyQr}</div>
+        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
         <div class="gender-select fadein">
           <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
-            <span class="gender-icon">👨</span>Парень
+            <span class="gender-icon">👨</span>${langData[lang].male}
           </button>
           <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
-            <span class="gender-icon">👩</span>Девушка
+            <span class="gender-icon">👩</span>${langData[lang].female}
           </button>
         </div>
-        <div class="gender-hint fadein">Вы на шаг впереди к незабываемой секс ночи которая пройдет в Chicago</div>
+        <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
       `;
       setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
@@ -563,12 +695,12 @@
       let priceFun = prices[gender].fun;
       let priceVip = prices[gender].vip;
       document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">Приобрести QR билет</div>
-        <div class="step-title fadein" style="margin-bottom:1.3em;">выберите билет</div>
+        <div class="big-title fadein">${langData[lang].buyQr}</div>
+        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectTicket}</div>
         <div class="ticket-selection fadein">
           <div class="ticket-row">
             <div class="ticket-type">QR FUN</div>
-            <div class="ticket-desc">Проход на мероприятие</div>
+            <div class="ticket-desc">${langData[lang].funDesc}</div>
             <div class="ticket-btns">
               <button class="ticket-btn" onclick="changeTicket('fun', -1)">-</button>
               <span class="ticket-count" id="fun-count">${tickets.fun}</span>
@@ -578,7 +710,7 @@
           </div>
           <div class="ticket-row">
             <div class="ticket-type">QR VIP</div>
-            <div class="ticket-desc">Проход в секс-зону<br>Бесплатные еда/бар</div>
+            <div class="ticket-desc">${langData[lang].vipDesc}</div>
             <div class="ticket-btns">
               <button class="ticket-btn" onclick="changeTicket('vip', -1)">-</button>
               <span class="ticket-count" id="vip-count">${tickets.vip}</span>
@@ -588,14 +720,14 @@
           </div>
         </div>
         <div class="total-price-row fadein">
-          Итого: <span id="total-price">${getTotalPrice()}$</span>
+          ${langData[lang].total}: <span id="total-price">${getTotalPrice()}$</span>
         </div>
         <button class="buy-btn fadein" onclick="showPayment()" id="to-pay-btn"
             ${getTotalPrice()===0?'disabled style="opacity:0.55;filter:grayscale(1);cursor:not-allowed;"':''}>
-          Оформить QR билет
+          ${langData[lang].buyBtn}
         </button>
         <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
-          ← Назад
+          ${langData[lang].backBtn}
         </button>
       `;
       setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
@@ -633,30 +765,30 @@
       canClickPay = false;
       payTimerSeconds = confirmSeconds;
       document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">Оплата QR билета</div>
+        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].payTitle}</div>
         <div class="zelle-row fadein" style="justify-content:left;">
-          <span style="font-size:1em;">ZELLE:</span> 
+          <span style="font-size:1em;">${langData[lang].zelle}</span> 
           <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
-          <button class="copy-btn" onclick="copyZelle()">Скопировать</button>
+          <button class="copy-btn" onclick="copyZelle()">${langData[lang].copy}</button>
           <label class="upload-btn" style="margin-left:0.2em;">
-            Загрузить скриншот
+            ${langData[lang].uploadScreenshot}
             <input type="file" accept="image/*" id="screenshot-upload" onchange="handleScreenshot(event)">
           </label>
         </div>
         <div id="screenshot-preview-wrap"></div>
         <div class="pay-msg fadein" style="margin-top:0.8em;">
-          ${getPayMsg(count)}
+          ${langData[lang].payMsg(count)}
         </div>
-        <div class="pay-amount fadein">${sum}$</div>
+        <div class="pay-amount fadein">${langData[lang].payAmount(sum)}</div>
         <div class="gender-hint fadein" style="margin-top:1.15em;">
-          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут не покидая эту страницу
+          ${langData[lang].afterPay}
         </div>
         <div id="pay-timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
         <button class="buy-btn fadein" id="pay-finish-btn" style="margin-top:1.1em;" disabled>
-          Оплата завершена
+          ${langData[lang].payDone}
         </button>
         <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
-          ← Назад
+          ${langData[lang].backBtn}
         </button>
       `;
       setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
@@ -665,22 +797,17 @@
         if (canClickPay) showTicketResult();
       };
     }
-    function getPayMsg(count) {
-      // 1 билет, 2/3/4 билета, 5+ билетов
-      let word = (count === 1) ? 'билета' : 'билетов';
-      return `Оплатите указанную сумму для получения ${count} ${word}:`;
-    }
     function copyZelle() {
       const mail = "klubnika@mail.ru";
       if (navigator?.clipboard) {
         navigator.clipboard.writeText(mail);
       }
       const btn = event.target;
-      btn.textContent = "Скопировано!";
+      btn.textContent = langData[lang].copy === 'Copy' ? "Copied!" : "Скопировано!";
       btn.style.background = "#fff";
       btn.style.color = "var(--main-accent)";
       setTimeout(() => {
-        btn.textContent = "Скопировать";
+        btn.textContent = langData[lang].copy;
         btn.style.background = "var(--main-accent)";
         btn.style.color = "#fff";
       }, 1200);
@@ -734,7 +861,7 @@
       if (payTimerSeconds > 0) {
         let min = Math.floor(payTimerSeconds/60).toString().padStart(2,'0');
         let sec = (payTimerSeconds%60).toString().padStart(2,'0');
-        timerWrap.innerHTML = `<div class="timer">Ожидайте: ${min}:${sec}</div>`;
+        timerWrap.innerHTML = `<div class="timer">${langData[lang].wait}: ${min}:${sec}</div>`;
         let btn = document.getElementById('pay-finish-btn');
         btn.disabled = true;
         btn.style.opacity = 0.55;
@@ -755,39 +882,60 @@
     function showTicketResult() {
       let count = getTotalTickets();
       let funCount = tickets.fun, vipCount = tickets.vip;
-      let funBlock = funCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
-        <div class="ticket-type">QR FUN</div>
-        <div class="ticket-desc">x${funCount}</div>
-        <div class="promo-block">
-          <div class="promo-title">PROMO: KINKY-LOVE</div>
-          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO">
-        </div>
-      </div>` : '';
-      let vipBlock = vipCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
-        <div class="ticket-type">QR VIP</div>
-        <div class="ticket-desc">x${vipCount}</div>
-        <div class="promo-block">
-          <div class="promo-title">PROMO: KINKY-LOVE</div>
-          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO">
-        </div>
-      </div>` : '';
+      let blocks = '';
+      if (funCount > 0) {
+        blocks += ticketBlock('FUN', funCount);
+      }
+      if (vipCount > 0) {
+        blocks += ticketBlock('VIP', vipCount);
+      }
+      let typeText = '';
+      if (funCount && !vipCount) {
+        typeText = lang === 'ru' ? 'FUN' : 'FUN';
+      } else if (!funCount && vipCount) {
+        typeText = lang === 'ru' ? 'VIP' : 'VIP';
+      } else if (funCount && vipCount) {
+        typeText = lang === 'ru' ? 'FUN, VIP' : 'FUN, VIP';
+      }
+      let total = funCount + vipCount;
       document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">Ваши билеты</div>
+        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].ticketsTitle}</div>
         <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
-          Поздравляем вас с успешной покупкой!
+          ${langData[lang].congrats(typeText, total)}
           <br>
           <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
             ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
           </span>
         </div>
-        ${funBlock}${vipBlock}
+        ${blocks}
         <button class="buy-btn fadein" style="margin-top:2.2em;" onclick="renderGenderSelect()">
-          Купить ещё билет
+          ${langData[lang].buyMore}
         </button>
       `;
     }
-    // Initial render
-    renderGenderSelect();
+    function ticketBlock(ticketType, count) {
+      return `<div class="ticket-row" style="margin-top:1.3em;">
+        <div class="ticket-type">QR ${ticketType}</div>
+        <div class="ticket-desc">x${count}</div>
+        <div class="promo-block">
+          <div class="promo-title">${langData[lang].saveQr}</div>
+          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO" id="promo-qr-${ticketType}">
+          <button class="save-qr-btn" onclick="saveQr('${ticketType}')">${lang === 'ru' ? 'Скачать' : 'Download'}</button>
+        </div>
+      </div>`;
+    }
+    // Скачать QR-код
+    function saveQr(type) {
+      const img = document.getElementById('promo-qr-' + type);
+      const link = document.createElement('a');
+      link.href = img.src;
+      link.download = type + '_QR_KINKY.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    // Initial render and lang
+    setLang(lang);
     window.onload = () => {
       setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
     };

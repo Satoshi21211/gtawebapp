@@ -576,19 +576,17 @@
   "https://i.imgur.com/5EIbN30.jpeg",
   "https://i.imgur.com/R0pCxQG.jpeg"
 ];
-// Прелоад картинок
-bgImgs.forEach(src => { const img = new Image(); img.src = src; });
-
 let bgIndex = 0;
+// Показываем первую картинку сразу
 document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
-
+// Прелоадим картинки
+bgImgs.forEach(src => { const img = new Image(); img.src = src; });
 function nextBg() {
   bgIndex = (bgIndex + 1) % bgImgs.length;
   document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
   setTimeout(nextBg, 6000);
 }
 setTimeout(nextBg, 6000);
-
     // QR-код PNG (замени на свой фирменный QR)
     const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";
 

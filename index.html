@@ -571,17 +571,23 @@
   <script>
     // Слайдшоу фоновые картинки (замени на свои)
     const bgImgs = [
-      "https://i.imgur.com/KZUhhEH.jpeg",
-      "https://i.imgur.com/4G2EBns.jpeg",
-      "https://i.imgur.com/5EIbN30.jpeg",
-      "https://i.imgur.com/R0pCxQG.jpeg"
-    ];
-    let bgIndex = 0;
-    document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
-    setInterval(() => {
-      bgIndex = (bgIndex + 1) % bgImgs.length;
-      document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
-    }, 6000);
+  "https://i.imgur.com/KZUhhEH.jpeg",
+  "https://i.imgur.com/4G2EBns.jpeg",
+  "https://i.imgur.com/5EIbN30.jpeg",
+  "https://i.imgur.com/R0pCxQG.jpeg"
+];
+// Прелоад картинок
+bgImgs.forEach(src => { const img = new Image(); img.src = src; });
+
+let bgIndex = 0;
+document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
+
+function nextBg() {
+  bgIndex = (bgIndex + 1) % bgImgs.length;
+  document.body.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
+  setTimeout(nextBg, 6000);
+}
+setTimeout(nextBg, 6000);
 
     // QR-код PNG (замени на свой фирменный QR)
     const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";

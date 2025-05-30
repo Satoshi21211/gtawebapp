@@ -35,6 +35,10 @@
       touch-action: manipulation;
       overflow-x: hidden;
     }
+    body {
+      /* Всегда скроллит вверх при загрузке, чтобы показать хедер */
+      scroll-behavior: smooth;
+    }
     .header {
       width: 100vw;
       text-align: center;
@@ -234,7 +238,7 @@
       display: inline-block;
       font-size: 1.15em;
       font-family: var(--main-title-font);
-      color: var(--main-accent);
+      color: #fff !important;
       letter-spacing: 1px;
       text-align: center;
       font-weight: bold;
@@ -246,7 +250,7 @@
       text-align: center;
       font-family: var(--main-title-font);
       font-size: 1.11em;
-      color: var(--main-accent);
+      color: #fff;
       letter-spacing: 1.1px;
       text-shadow: 0 1px 7px #e9457a99;
       background: #2e0d16e9;
@@ -256,6 +260,9 @@
       border: 1.5px solid var(--main-accent);
       font-weight: 900;
       margin-bottom: 1.2em;
+    }
+    .total-price-row span {
+      color: #fff !important;
     }
     .buy-btn {
       width: 100%;
@@ -323,7 +330,7 @@
       letter-spacing: 1.1px;
     }
     .pay-amount {
-      color: #fff;
+      color: #fff !important;
       background: var(--main-accent);
       border-radius: 8px;
       font-size: 1.13em;
@@ -372,7 +379,7 @@
       white-space: nowrap;
       display: inline-block;
     }
-    .copy-btn {
+    .copy-btn, .upload-btn {
       background: var(--main-accent);
       color: #fff;
       font-family: var(--main-title-font);
@@ -386,10 +393,39 @@
       outline: none;
       margin-left: 0.1em;
     }
-    .copy-btn:active {
+    .copy-btn:active, .upload-btn:active {
       background: #fff;
       color: var(--main-accent);
       opacity: 0.7;
+    }
+    .upload-btn input[type="file"] {
+      display: none;
+    }
+    .screenshot-preview {
+      display: block;
+      max-width: 240px;
+      margin: 1.1em auto 0.4em auto;
+      border-radius: 9px;
+      box-shadow: 0 2px 12px #e9457a33, 0 2px 9px #0005;
+      border: 2px solid var(--main-accent);
+      background: #fff;
+      object-fit: contain;
+    }
+    .timer {
+      color: #fff;
+      font-family: var(--main-title-font);
+      font-size: 1.18em;
+      margin: 0.9em 0 0 0;
+      text-align: center;
+      letter-spacing: 1.1px;
+      font-weight: 900;
+      background: #a32e2e55;
+      border-radius: 8px;
+      padding: 0.25em 0.6em;
+      display: inline-block;
+      min-width: 68px;
+      box-shadow: 0 2px 10px #e9457a22;
+      border: 1.2px solid var(--main-accent);
     }
     .app-footer {
       position: fixed;
@@ -406,26 +442,63 @@
       user-select: none;
       font-weight: 600;
       border-top: 2px solid var(--main-accent);
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 1.19em;
+      letter-spacing: 0.12em;
+      /* "A LOT OF SEX" footer, thin caps */
+    }
+    .app-footer span {
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      font-weight: 200 !important;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      font-size: 1.1em;
+      color: #fff;
+      opacity: 0.7;
+      letter-spacing: 0.2em;
     }
   </style>
 </head>
 <body>
+  <audio id="bg-music" src="YOUR_MUSIC_LINK_HERE.mp3" autoplay loop></audio>
   <div class="header"><span>Kinky Party 21+</span></div>
   <div class="app-wrap">
     <div class="app-main" id="main-step"></div>
   </div>
   <div class="app-footer">
-    Только для лиц 21+
+    <span>A LOT OF SEX</span>
   </div>
   <script>
+    // --- MUSIC VOLUME ---
+    document.addEventListener('DOMContentLoaded', function() {
+      const audio = document.getElementById('bg-music');
+      if (audio) {
+        audio.volume = 0.33;
+        // Для автозапуска на мобильных нужен пользовательский ввод,
+        // но если возможно — играет при загрузке.
+      }
+      // Скролл вверх сразу при загрузке, чтобы хедер был виден!
+      setTimeout(()=>{
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }, 30);
+    });
+
     let gender = null; // "male" | "female"
     let tickets = { fun: 0, vip: 0 };
     let prices = {
       male: { fun: 200, vip: 400 },
       female: { fun: 100, vip: 200 }
     };
+    let screenshotDataUrl = null;
+    let timerInterval = null;
+    let timerSeconds = 300; // 5 minutes
 
     function renderGenderSelect() {
+      clearTimer();
+      screenshotDataUrl = null;
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein">Приобрести QR билет</div>
         <div class="step-title fadein" style="margin-bottom:1.3em;">выберите ваш пол</div>
@@ -439,6 +512,7 @@
         </div>
         <div class="gender-hint fadein">Вы на шаг впереди к незабываемой секс ночи которая пройдет в Chicago</div>
       `;
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function selectGender(g) {
       gender = g;
@@ -454,7 +528,7 @@
         <div class="ticket-selection fadein">
           <div class="ticket-row">
             <div class="ticket-type">QR FUN</div>
-            <div class="ticket-desc">Обычный билет на вечеринку</div>
+            <div class="ticket-desc">Проход на мероприятие</div>
             <div class="ticket-btns">
               <button class="ticket-btn" onclick="changeTicket('fun', -1)">-</button>
               <span class="ticket-count" id="fun-count">${tickets.fun}</span>
@@ -464,7 +538,7 @@
           </div>
           <div class="ticket-row">
             <div class="ticket-type">QR VIP</div>
-            <div class="ticket-desc">VIP билет: приоритет, отдельная зона</div>
+            <div class="ticket-desc">Проход в секс-зону<br>Бесплатные еда/бар</div>
             <div class="ticket-btns">
               <button class="ticket-btn" onclick="changeTicket('vip', -1)">-</button>
               <span class="ticket-count" id="vip-count">${tickets.vip}</span>
@@ -484,6 +558,7 @@
           ← Назад
         </button>
       `;
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function changeTicket(type, delta) {
       tickets[type] += delta;
@@ -513,18 +588,28 @@
     function showPayment() {
       let sum = getTotalPrice();
       let count = getTotalTickets();
+      screenshotDataUrl = null;
+      clearTimer();
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein" style="margin-bottom:0.8em;">Оплата QR билета</div>
         <div class="zelle-row fadein" style="justify-content:left;">
           <span style="font-size:1em;">ZELLE:</span> 
           <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
           <button class="copy-btn" onclick="copyZelle()">Скопировать</button>
+          <label class="upload-btn" style="margin-left:0.2em;">
+            Загрузить скриншот
+            <input type="file" accept="image/*" id="screenshot-upload" onchange="handleScreenshot(event)">
+          </label>
         </div>
-        <div class="pay-msg fadein" style="margin-top:0.8em;">Оплатите на ZELLE такую сумму для получения ${count} ${getLabel(count)}:</div>
+        <div id="screenshot-preview-wrap"></div>
+        <div class="pay-msg fadein" style="margin-top:0.8em;">
+          Оплатите на ZELLE указанную сумму для получения ${count} билет${(count===1?'':'ов')}:
+        </div>
         <div class="pay-amount fadein">${sum}$</div>
         <div class="gender-hint fadein" style="margin-top:1.15em;">
-          После того как оплатите $ на zelle нажмите кнопку Оплата завершена, после вы сразу получите ${count} ${getLabel(count)}
+          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут
         </div>
+        <div id="timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
         <button class="buy-btn fadein" style="margin-top:1.1em;" onclick="showTicketResult()">
           Оплата завершена
         </button>
@@ -532,6 +617,7 @@
           ← Назад
         </button>
       `;
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function getLabel(count) {
       if (count === 1) return "билет";
@@ -552,6 +638,18 @@
         btn.style.background = "var(--main-accent)";
         btn.style.color = "#fff";
       }, 1200);
+    }
+    function handleScreenshot(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        screenshotDataUrl = e.target.result;
+        document.getElementById('screenshot-preview-wrap').innerHTML = `
+          <img src="${screenshotDataUrl}" class="screenshot-preview" alt="Скриншот оплаты">
+        `;
+      };
+      reader.readAsDataURL(file);
     }
     function showTicketResult() {
       let count = getTotalTickets();
@@ -577,14 +675,49 @@
           Купить ещё билет
         </button>
       `;
+      startTimer();
+    }
+    // Таймер ожидания 5 минут
+    function startTimer() {
+      timerSeconds = 300;
+      updateTimer();
+      timerInterval = setInterval(function() {
+        timerSeconds--;
+        updateTimer();
+        if (timerSeconds <= 0) {
+          clearTimer();
+        }
+      }, 1000);
+    }
+    function updateTimer() {
+      let timerWrap = document.getElementById('timer-wrap');
+      if (!timerWrap) {
+        // Добавляем таймер если его нет (например, после возврата)
+        let div = document.createElement('div');
+        div.id = 'timer-wrap';
+        document.getElementById('main-step').appendChild(div);
+        timerWrap = div;
+      }
+      if (timerSeconds > 0) {
+        let min = Math.floor(timerSeconds/60).toString().padStart(2,'0');
+        let sec = (timerSeconds%60).toString().padStart(2,'0');
+        timerWrap.innerHTML = `<div class="timer">Ожидайте: ${min}:${sec}</div>`;
+      } else {
+        timerWrap.innerHTML = `<div class="timer" style="color:var(--main-accent);">Готово!</div>`;
+      }
+    }
+    function clearTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+      timerSeconds = 0;
+      let timerWrap = document.getElementById('timer-wrap');
+      if (timerWrap) timerWrap.innerHTML = '';
     }
     // Initial render
     renderGenderSelect();
-    // For mobile: scroll to form on reload
+    // Для мобильных: скролл вверх всегда, чтобы хедер был виден!
     window.onload = () => {
-      setTimeout(()=>{ 
-        document.getElementById('main-step').scrollIntoView({behavior: "smooth", block: "start"});
-      }, 80);
+      setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
     };
     document.addEventListener('submit', e=>e.preventDefault());
   </script>

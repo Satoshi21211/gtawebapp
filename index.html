@@ -801,7 +801,7 @@ setTimeout(nextBg, 6000);
         </div>
         <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
       `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function selectGender(g) {
       gender = g;
@@ -847,7 +847,7 @@ setTimeout(nextBg, 6000);
           ${langData[lang].backBtn}
         </button>
       `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function changeTicket(type, delta) {
       tickets[type] += delta;
@@ -908,7 +908,7 @@ setTimeout(nextBg, 6000);
           ${langData[lang].backBtn}
         </button>
       `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
       startPayTimer();
       document.getElementById('pay-finish-btn').onclick = function() {
         if (canClickPay) showTicketResult();

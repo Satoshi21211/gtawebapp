@@ -6,6 +6,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
+.event-bottom-title {
+  color: var(--main-accent);
+  font-size: 1.07em;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  margin-bottom: 0.8em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px #a32e2e77;
+  font-family: var(--main-title-font);
+}
+.event-bottom-desc {
+  color: #fff;
+  font-size: 1.01em;
+  text-align: center;
+  font-family: var(--main-font);
+  font-weight: 500;
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+.event-bottom-img {
+  max-width: 260px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 0.6em;
+  box-shadow: 0 2px 16px #e9457a55, 0 2px 9px #0004;
+  border: 2px solid #e9457a;
+  background: #fff;
+  object-fit: cover;
+}
+.event-bottom-block {
+  background: #23111aeb;
+  border-radius: 16px;
+  box-shadow: 0 2px 13px #e9457a33;
+  border: 2px solid #e9457a;
+  padding: 1.2em 1em 1.2em 1em;
+  margin: 2.1em 0 1.5em 0;
+  width: 92%;
+  max-width: 340px;
+  font-family: 'Russo One', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadein .70s;
+  position: relative;
+  z-index: 1;
+}
+.event-bottom-title {
+  color: var(--main-accent);
+  font-size: 1.07em;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  margin-bottom: 0.8em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px #a32e2e77;
+  font-family: var(--main-title-font);
+}
+.event-bottom-desc {
+  color: #fff;
+  font-size: 1.01em;
+  text-align: center;
+  font-family: var(--main-font);
+  font-weight: 500;
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+.event-bottom-img {
+  max-width: 260px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 0.6em;
+  box-shadow: 0 2px 16px #e9457a55, 0 2px 9px #0004;
+  border: 2px solid #e9457a;
+  background: #fff;
+  object-fit: cover;
+}
 .bg-slideshow {
   position: fixed;
   top: 0; left: 0; width: 100vw; height: 100vh;
@@ -581,6 +658,15 @@
   <div class="app-wrap">
     <div class="app-main" id="main-step"></div>
   </div>
+<div class="event-bottom-block">
+    <div class="event-bottom-title">ПРЕДСТОЯЩИЙ ИВЕНТ</div>
+    <img src="https://i.imgur.com/KZUhhEH.jpeg" class="event-bottom-img" alt="Kinky Party Event">
+    <div class="event-bottom-desc">
+      Следующая KINKY PARTY уже скоро!<br>
+      Следите за новостями в нашем 
+      <a href="https://t.me/your_channel" target="_blank" style="color:#e9457a;text-decoration:underline;">Telegram</a>.
+    </div>
+  </div>
   <div class="app-footer">
     <span id="footer-text">A LOT OF SEX</span>
   </div>
@@ -695,33 +781,23 @@ setTimeout(nextBg, 6000);
     }
 
     function renderGenderSelect() {
-  clearPayTimer();
-  screenshotDataUrl = null;
-  document.getElementById('main-step').innerHTML = `
-    <div class="big-title fadein">${langData[lang].buyQr}</div>
-    <div class="event-block fadein" style="margin-top:0.7em;margin-bottom:1.2em;max-width:310px;width:92%;">
-      <div class="event-title" style="color:var(--main-accent);font-family:'Russo One',Arial,sans-serif;font-size:1.07em;font-weight:800;letter-spacing:1.1px;margin-bottom:0.6em;text-align:center;text-transform:uppercase;text-shadow:0 1px 8px #a32e2e77;">
-        ПРЕДСТОЯЩИЙ ИВЕНТ
-      </div>
-      <div class="event-desc" style="color:#fff;font-size:0.98em;text-align:center;font-family:'Montserrat',Arial,sans-serif;font-weight:500;margin-bottom:0.1em;line-height:1.5;">
-        Следующая KINKY PARTY уже скоро!<br>
-        Следите за новостями в нашем
-        <a href="https://t.me/your_channel" target="_blank" style="color:#e9457a;text-decoration:underline;">Telegram</a>.
-      </div>
-    </div>
-    <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
-    <div class="gender-select fadein">
-      <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
-        <span class="gender-icon">👨</span>${langData[lang].male}
-      </button>
-      <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
-        <span class="gender-icon">👩</span>${langData[lang].female}
-      </button>
-    </div>
-    <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
-  `;
-  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-}
+      clearPayTimer();
+      screenshotDataUrl = null;
+      document.getElementById('main-step').innerHTML = `
+        <div class="big-title fadein">${langData[lang].buyQr}</div>
+        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
+        <div class="gender-select fadein">
+          <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
+            <span class="gender-icon">👨</span>${langData[lang].male}
+          </button>
+          <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
+            <span class="gender-icon">👩</span>${langData[lang].female}
+          </button>
+        </div>
+        <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
+      `;
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+    }
     function selectGender(g) {
       gender = g;
       tickets = { fun: 0, vip: 0 };

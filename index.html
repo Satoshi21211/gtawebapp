@@ -215,6 +215,12 @@
       padding: 0 0 80px 0;
     }
     .app-main {
+  margin-top: 0.5em; 
+  margin-bottom: 0.5em; 
+}
+.event-bottom-block {
+  margin: 0.2em 0 0.7em 0; 
+}
       background: rgba(28,15,21,0.99);
       border-radius: var(--main-radius);
       box-shadow: var(--main-shadow);
@@ -1054,7 +1060,7 @@ setTimeout(nextBg, 6000);
     // Initial render and lang
     setLang(lang);
     window.onload = () => {
-      setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
+      //setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
     };
     document.addEventListener('submit', e=>e.preventDefault());
   </script>

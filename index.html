@@ -27,7 +27,7 @@
       background: var(--main-dark);
       font-family: var(--main-font);
       color: var(--main-gray);
-      background-image: url('https://i.imgur.com/KZUhhEH.jpeg');
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -45,7 +45,7 @@
       padding: 1.2em 0 0.7em 0;
       background: linear-gradient(90deg, #2e0d16 0%, #7a2331 100%);
       border-radius: 0 0 25px 25px;
-      text-shadow: 0 8px 30px #000e, 0 1px 2px #ff4777;
+      text-shadow: 0 8px 30px #000e, 0 1px 2px #fff;
       position: relative;
       z-index: 20;
       user-select: none;
@@ -53,13 +53,12 @@
       border-bottom: 3px solid #a32e2e;
     }
     .header span {
-      background: linear-gradient(90deg,#e9457a 0%, #ff3c3c 60%,#fff 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
+      color: #fff;
       font-weight: 900;
       letter-spacing: 0.04em;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      -webkit-text-fill-color: unset !important;
     }
     .app-wrap {
       min-height: 100vh;
@@ -274,6 +273,7 @@
       cursor: pointer;
       transition: filter .13s, background .18s, color .13s, border .13s;
       letter-spacing: 1.2px;
+      display: block;
     }
     .buy-btn:active {
       filter: brightness(0.97);
@@ -330,54 +330,61 @@
       font-family: var(--main-title-font);
       font-weight: 900;
       margin: 1.1em auto 1.2em auto;
-      padding: 0.8em 0.8em;
-      max-width: 260px;
+      padding: 0.6em 0.7em;
+      max-width: 150px;
       letter-spacing: 1.2px;
       border: 2px solid #fff;
       box-shadow: 0 2px 10px #e9457a33;
       text-align: center;
       user-select: all;
+      display: inline-block;
     }
     .zelle-row {
       background: #2e0d16e9;
       color: #fff;
       border-radius: 9px;
-      padding: 0.7em 1em 0.7em 1em;
+      padding: 0.45em 0.7em;
       margin: 1.2em 0 0.7em 0;
       font-family: var(--main-title-font);
-      font-size: 1.08em;
+      font-size: 1.02em;
       border: 1.5px solid var(--main-accent);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1.1em;
+      gap: 0.8em;
       user-select: all;
       position: relative;
+      max-width: 99vw;
+      flex-wrap: wrap;
     }
     .zelle-addr {
       font-family: monospace;
       color: #fff;
       background: #1a1116;
-      padding: 0.2em 0.7em;
+      padding: 0.13em 0.42em;
       border-radius: 6px;
-      font-size: 1em;
+      font-size: 0.98em;
       letter-spacing: 0.5px;
       user-select: all;
-      margin-right: 0.5em;
+      margin-right: 0.2em;
+      max-width: 125px;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: inline-block;
     }
     .copy-btn {
       background: var(--main-accent);
       color: #fff;
       font-family: var(--main-title-font);
-      font-size: 1em;
+      font-size: 0.98em;
       border: none;
-      border-radius: 7px;
-      padding: 0.18em 0.95em;
-      margin-left: 0.3em;
+      border-radius: 6px;
+      padding: 0.14em 0.65em;
       cursor: pointer;
       font-weight: 800;
       transition: background .13s, color .12s, opacity .12s;
       outline: none;
+      margin-left: 0.1em;
     }
     .copy-btn:active {
       background: #fff;
@@ -388,7 +395,7 @@
       position: fixed;
       bottom: 0; left: 0; width: 100vw;
       background: rgba(36,14,20,0.93);
-      color: var(--main-accent);
+      color: #fff;
       text-align: center;
       font-size: 1.08em;
       font-family: var(--main-title-font);
@@ -408,7 +415,7 @@
     <div class="app-main" id="main-step"></div>
   </div>
   <div class="app-footer">
-    Только для лиц 21+ | Билеты строго по QR
+    Только для лиц 21+
   </div>
   <script>
     let gender = null; // "male" | "female"
@@ -508,23 +515,26 @@
       let count = getTotalTickets();
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein" style="margin-bottom:0.8em;">Оплата QR билета</div>
-        <div class="zelle-row fadein">
-          ZELLE: <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
+        <div class="zelle-row fadein" style="justify-content:left;">
+          <span style="font-size:1em;">ZELLE:</span> 
+          <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
           <button class="copy-btn" onclick="copyZelle()">Скопировать</button>
         </div>
-        <div class="pay-msg fadein">Оплатите на ZELLE такую сумму для получения ${count} ${getLabel(count)}:</div>
+        <div class="pay-msg fadein" style="margin-top:0.8em;">Оплатите на ZELLE такую сумму для получения ${count} ${getLabel(count)}:</div>
         <div class="pay-amount fadein">${sum}$</div>
-        <div class="qr-preview fadein" style="margin-top:1.1em;">
-          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=KINKY-${gender}-${Date.now()}" alt="QR">
+        <div class="gender-hint fadein" style="margin-top:1.15em;">
+          После того как оплатите $ на zelle нажмите кнопку Оплата завершена, после вы сразу получите ${count} ${getLabel(count)}
         </div>
-        <div class="gender-hint fadein" style="margin-top:1.15em;">После оплаты покажите этот QR и чек оплаты на входе</div>
-        <button class="buy-btn fadein" style="margin-top:1.1em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
+        <button class="buy-btn fadein" style="margin-top:1.1em;" onclick="showTicketResult()">
+          Оплата завершена
+        </button>
+        <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
           ← Назад
         </button>
       `;
     }
     function getLabel(count) {
-      if (count === 1) return "билета";
+      if (count === 1) return "билет";
       if (count > 1 && count < 5) return "билета";
       return "билетов";
     }
@@ -542,6 +552,31 @@
         btn.style.background = "var(--main-accent)";
         btn.style.color = "#fff";
       }, 1200);
+    }
+    function showTicketResult() {
+      let count = getTotalTickets();
+      let funCount = tickets.fun, vipCount = tickets.vip;
+      let funBlock = funCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
+        <div class="ticket-type">QR FUN</div>
+        <div class="ticket-desc">x${funCount}</div>
+      </div>` : '';
+      let vipBlock = vipCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
+        <div class="ticket-type">QR VIP</div>
+        <div class="ticket-desc">x${vipCount}</div>
+      </div>` : '';
+      document.getElementById('main-step').innerHTML = `
+        <div class="big-title fadein" style="margin-bottom:0.8em;">Ваши билеты</div>
+        <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
+          Покажите это сообщение на входе<br>
+          <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
+            ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
+          </span>
+        </div>
+        ${funBlock}${vipBlock}
+        <button class="buy-btn fadein" style="margin-top:2.2em;" onclick="renderGenderSelect()">
+          Купить ещё билет
+        </button>
+      `;
     }
     // Initial render
     renderGenderSelect();

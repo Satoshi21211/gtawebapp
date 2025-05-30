@@ -37,10 +37,6 @@
   object-fit: cover;
 }
 .event-bottom-block {
-  ...
-  margin: 0.6em 0 1.5em 0;
-  ...
-}
   background: #23111aeb;
   border-radius: 16px;
   box-shadow: 0 2px 13px #e9457a33;
@@ -215,12 +211,6 @@
       padding: 0 0 80px 0;
     }
     .app-main {
-  margin-top: 0.5em; 
-  margin-bottom: 0.5em; 
-}
-.event-bottom-block {
-  margin: 0.2em 0 0.7em 0; 
-}
       background: rgba(28,15,21,0.99);
       border-radius: var(--main-radius);
       box-shadow: var(--main-shadow);
@@ -807,7 +797,7 @@ setTimeout(nextBg, 6000);
         </div>
         <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
       `;
-      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function selectGender(g) {
       gender = g;
@@ -853,7 +843,7 @@ setTimeout(nextBg, 6000);
           ${langData[lang].backBtn}
         </button>
       `;
-      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
     }
     function changeTicket(type, delta) {
       tickets[type] += delta;
@@ -914,7 +904,7 @@ setTimeout(nextBg, 6000);
           ${langData[lang].backBtn}
         </button>
       `;
-      //setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
       startPayTimer();
       document.getElementById('pay-finish-btn').onclick = function() {
         if (canClickPay) showTicketResult();
@@ -1060,7 +1050,7 @@ setTimeout(nextBg, 6000);
     // Initial render and lang
     setLang(lang);
     window.onload = () => {
-      //setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
+      setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
     };
     document.addEventListener('submit', e=>e.preventDefault());
   </script>

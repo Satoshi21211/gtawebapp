@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Kinky Party 21+</title>
+  <title>KINKY PARTY 21+</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
@@ -41,10 +41,10 @@
     .header {
       width: 100vw;
       text-align: center;
-      font-family: var(--main-title-font);
+      font-family: 'Montserrat', Arial, sans-serif !important;
       font-size: 2em;
       color: #fff;
-      letter-spacing: 2.5px;
+      letter-spacing: 0.16em;
       padding: 1.2em 0 0.7em 0;
       background: linear-gradient(90deg, #2e0d16 0%, #7a2331 100%);
       border-radius: 0 0 25px 25px;
@@ -52,29 +52,27 @@
       position: relative;
       z-index: 20;
       user-select: none;
-      font-weight: 900;
+      font-weight: 400 !important;
       border-bottom: 3px solid #a32e2e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.7em;
-    }
-    .header .tg-ico {
-      display: inline-block;
-      vertical-align: middle;
-      margin-right: 0.09em;
-      margin-bottom: -0.11em;
-      width: 1.18em;
-      height: 1.18em;
-      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
     }
     .header span {
       color: #fff;
-      font-weight: 900;
-      letter-spacing: 0.04em;
+      font-weight: 400 !important;
       background: none !important;
       -webkit-background-clip: unset !important;
       -webkit-text-fill-color: unset !important;
+      font-family: 'Montserrat', Arial, sans-serif !important;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+    @media (max-width: 500px){
+      .header {
+        font-size: 1.07em;
+        padding: 1.15em 0 0.7em 0;
+        border-radius: 0 0 18px 18px;
+      }
     }
     .app-wrap {
       min-height: 100vh;
@@ -106,16 +104,6 @@
         min-width: 98vw;
         width: 98vw;
         border-radius: 0;
-      }
-      .header {
-        font-size: 1.07em;
-        padding: 1.15em 0 0.7em 0;
-        border-radius: 0 0 18px 18px;
-      }
-      .header .tg-ico {
-        width: 1.1em;
-        height: 1.1em;
-        font-size: 0.93em;
       }
     }
     .big-title {
@@ -464,6 +452,24 @@
       border: 2px solid #fff;
       text-transform: uppercase;
       user-select: all;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6em;
+    }
+    .promo-block .promo-title {
+      margin-bottom: 0.3em;
+    }
+    .promo-block .promo-qr {
+      width: 90px;
+      height: 90px;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px #e9457a88;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
     }
     .app-footer {
       position: fixed;
@@ -472,17 +478,14 @@
       color: #fff;
       text-align: center;
       font-size: 1.08em;
-      font-family: var(--main-title-font);
+      font-family: 'Montserrat', Arial, sans-serif !important;
       letter-spacing: 0.8px;
       padding: 0.58em 0 0.52em 0;
       z-index: 999;
       box-shadow: 0 -3px 12px #0004;
       user-select: none;
-      font-weight: 600;
-      border-top: 2px solid var(--main-accent);
-      font-family: 'Montserrat', Arial, sans-serif !important;
       font-weight: 400 !important;
-      letter-spacing: 0.14em;
+      border-top: 2px solid var(--main-accent);
       text-transform: uppercase;
       font-size: 1.19em;
       letter-spacing: 0.12em;
@@ -500,10 +503,9 @@
   </style>
 </head>
 <body>
-  <audio id="bg-music" src="YOUR_MUSIC_LINK_HERE.mp3" autoplay loop></audio>
+  <audio id="bg-music" src="https://files.catbox.moe/dt2o9k.mp3" autoplay loop></audio>
   <div class="header">
-    <svg class="tg-ico" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#37aee2"/><circle cx="120" cy="120" r="110" fill="#fff"/><circle cx="120" cy="120" r="100" fill="#37aee2"/><path fill="#c8daea" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28-16 15c-1 1-3 1-4 0l6-24 68-76z"/><path fill="#a9c6d8" d="M88 182l7-26 14 11c1 1 2 2 1 3l-3 15-19-3z"/><path fill="#fff" d="M98 170l49-49c1-1-1-3-2-2l-59 37c-1 1 0 3 1 4l11 10z"/><path fill="#c8daea" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28 57-98z"/><path fill="#fff" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28 57-98z"/></svg>
-    <span>Kinky Party 21+</span>
+    <span>KINKY PARTY 21+</span>
   </div>
   <div class="app-wrap">
     <div class="app-main" id="main-step"></div>
@@ -512,6 +514,10 @@
     <span>A LOT OF SEX</span>
   </div>
   <script>
+    // QR-код PNG в красном стиле (примерное изображение, замени src на свою PNG если нужно)
+    const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";
+    // Можно заменить на свою ссылку, если есть фирменный стиль
+
     document.addEventListener('DOMContentLoaded', function() {
       const audio = document.getElementById('bg-music');
       if (audio) audio.volume = 0.33;
@@ -525,15 +531,13 @@
       female: { fun: 100, vip: 200 }
     };
     let screenshotDataUrl = null;
-    let timerInterval = null;
-    let waitSeconds = 300; // 5 minutes ожидания
-    let confirmSeconds = 120; // 2 минуты для кнопки оплаты
+    let confirmSeconds = 120;
     let payTimerInterval = null;
     let payTimerSeconds = 0;
     let canClickPay = false;
 
     function renderGenderSelect() {
-      clearTimer();
+      clearPayTimer();
       screenshotDataUrl = null;
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein">Приобрести QR билет</div>
@@ -625,7 +629,7 @@
       let sum = getTotalPrice();
       let count = getTotalTickets();
       screenshotDataUrl = null;
-      clearTimer();
+      clearPayTimer();
       canClickPay = false;
       payTimerSeconds = confirmSeconds;
       document.getElementById('main-step').innerHTML = `
@@ -641,11 +645,11 @@
         </div>
         <div id="screenshot-preview-wrap"></div>
         <div class="pay-msg fadein" style="margin-top:0.8em;">
-          Оплатите указанную сумму для получения ${count} билет${getCountWord(count)}:
+          ${getPayMsg(count)}
         </div>
         <div class="pay-amount fadein">${sum}$</div>
         <div class="gender-hint fadein" style="margin-top:1.15em;">
-          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут не покидая эту страницу!
+          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут не покидая эту страницу
         </div>
         <div id="pay-timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
         <button class="buy-btn fadein" id="pay-finish-btn" style="margin-top:1.1em;" disabled>
@@ -661,10 +665,10 @@
         if (canClickPay) showTicketResult();
       };
     }
-    function getCountWord(count) {
-      if (count === 1) return '';
-      if (count > 1 && count < 5) return 'а';
-      return 'ов';
+    function getPayMsg(count) {
+      // 1 билет, 2/3/4 билета, 5+ билетов
+      let word = (count === 1) ? 'билета' : 'билетов';
+      return `Оплатите указанную сумму для получения ${count} ${word}:`;
     }
     function copyZelle() {
       const mail = "klubnika@mail.ru";
@@ -697,7 +701,6 @@
       reader.readAsDataURL(file);
     }
     function enablePayButton() {
-      // Если идет таймер, ждем его завершения
       if (payTimerSeconds > 0) return;
       canClickPay = true;
       let btn = document.getElementById('pay-finish-btn');
@@ -755,17 +758,23 @@
       let funBlock = funCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
         <div class="ticket-type">QR FUN</div>
         <div class="ticket-desc">x${funCount}</div>
-        <div class="promo-block">PROMO: KINKY-LOVE</div>
+        <div class="promo-block">
+          <div class="promo-title">PROMO: KINKY-LOVE</div>
+          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO">
+        </div>
       </div>` : '';
       let vipBlock = vipCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
         <div class="ticket-type">QR VIP</div>
         <div class="ticket-desc">x${vipCount}</div>
-        <div class="promo-block">PROMO: KINKY-LOVE</div>
+        <div class="promo-block">
+          <div class="promo-title">PROMO: KINKY-LOVE</div>
+          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO">
+        </div>
       </div>` : '';
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein" style="margin-bottom:0.8em;">Ваши билеты</div>
         <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
-          Поздравляем с успешной покупкой!
+          Поздравляем вас с успешной покупкой!
           <br>
           <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
             ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
@@ -776,9 +785,6 @@
           Купить ещё билет
         </button>
       `;
-    }
-    function clearTimer() {
-      clearPayTimer();
     }
     // Initial render
     renderGenderSelect();

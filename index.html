@@ -8,12 +8,13 @@
   <style>
     :root {
       --main-red: #5c1818;
-      --main-dark: #191013;
-      --main-yellow: #eecb13;
-      --main-btn-red: #7a2323;
-      --main-btn-red-hover: #a32e2e;
+      --main-dark: #161014;
+      --main-accent: #e9457a;
+      --main-accent-hover: #b71e40;
+      --main-gray: #e5e3ef;
+      --main-btn-red: #a32e2e;
       --main-btn-black: #221217;
-      --main-border: 2px solid #a32e2e;
+      --main-border: 2.5px solid #a32e2e;
       --main-radius: 18px;
       --main-shadow: 0 8px 32px #000a, 0 2px 8px #a32e2e66;
       --main-font: 'Montserrat', Arial, sans-serif;
@@ -25,7 +26,7 @@
       width: 100vw;
       background: var(--main-dark);
       font-family: var(--main-font);
-      color: #fff;
+      color: var(--main-gray);
       background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80');
       background-size: cover;
       background-position: center center;
@@ -42,17 +43,17 @@
       color: #fff;
       letter-spacing: 2.5px;
       padding: 1.2em 0 0.7em 0;
-      background: linear-gradient(90deg, #3a0d12 0%, #6a1d1d 100%);
+      background: linear-gradient(90deg, #2e0d16 0%, #7a2331 100%);
       border-radius: 0 0 25px 25px;
-      text-shadow: 0 8px 30px #000e, 0 1px 2px #a32e2e;
+      text-shadow: 0 8px 30px #000e, 0 1px 2px #ff4777;
       position: relative;
       z-index: 20;
       user-select: none;
       font-weight: 900;
-      border-bottom: 3px solid #6a1d1d;
+      border-bottom: 3px solid #a32e2e;
     }
     .header span {
-      background: linear-gradient(90deg,#eecb13 0%, #ff3c3c 60%,#fff 100%);
+      background: linear-gradient(90deg,#e9457a 0%, #ff3c3c 60%,#fff 100%);
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
@@ -69,7 +70,7 @@
       padding: 0 0 80px 0;
     }
     .app-main {
-      background: rgba(38,20,24,0.97);
+      background: rgba(28,15,21,0.99);
       border-radius: var(--main-radius);
       box-shadow: var(--main-shadow);
       padding: 1.4em 1.3em 1.2em 1.3em;
@@ -97,57 +98,71 @@
         border-radius: 0 0 18px 18px;
       }
     }
+    .big-title {
+      font-family: var(--main-title-font);
+      font-size: 1.3em;
+      color: var(--main-accent);
+      margin-bottom: 0.7em;
+      text-shadow: 0 1px 12px #7a2331bb, 0 2px 6px #000c;
+      letter-spacing: 1.4px;
+      text-align: center;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-top: 0.1em;
+    }
     .step-title {
       font-family: var(--main-title-font);
-      font-size: 1.19em;
-      color: #fff;
-      margin-bottom: 1.1em;
-      text-shadow: 0 1px 8px #a32e2e88;
+      font-size: 1.09em;
+      color: var(--main-gray);
+      margin-bottom: 1.2em;
+      text-shadow: 0 1px 8px #a32e2e99;
       letter-spacing: 1.3px;
       text-align: center;
-      font-weight: 800;
-      border-bottom: 1.5px solid #a32e2e;
+      font-weight: 700;
+      border-bottom: 2px solid #e9457a;
       padding-bottom: 0.3em;
+      margin-top: 0.1em;
+      text-transform: none;
     }
     .gender-select {
       display: flex;
       justify-content: center;
       gap: 3vw;
-      margin-bottom: 2.1em;
+      margin-bottom: 1.8em;
       width: 100%;
-      margin-top: 0.5em;
+      margin-top: 0.2em;
     }
     .gender-btn {
       font-family: var(--main-title-font);
-      font-size: 1.01em;
-      padding: 0.65em 1.3em;
-      border: 2.2px solid #a32e2e;
-      border-radius: 15px;
+      font-size: 1em;
+      padding: 0.49em 1.09em;
+      border: 2.2px solid #e9457a;
+      border-radius: 13px;
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 3px 16px #0008;
+      box-shadow: 0 3px 12px #0007;
       outline: none;
       transition: background .14s, color .13s, box-shadow .13s, border .13s;
       color: #fff;
-      background: #3a141a;
-      opacity: 0.87;
+      background: #2e0d16;
+      opacity: 0.89;
       margin: 0 0.06em;
       display: flex;
       align-items: center;
-      gap: 0.55em;
-      min-width: 85px;
-      min-height: 48px;
+      gap: 0.45em;
+      min-width: 75px;
+      min-height: 40px;
     }
     .gender-btn.selected,
     .gender-btn:active {
       opacity: 1;
-      background: #a32e2e;
-      border: 2.2px solid #eecb13;
-      color: #eecb13;
-      box-shadow: 0 2px 8px #a32e2e66;
+      background: var(--main-accent);
+      border: 2.2px solid #fff;
+      color: #fff;
+      box-shadow: 0 2px 8px #e9457a77;
     }
     .gender-icon {
-      font-size: 1.65em;
+      font-size: 1.5em;
       margin-bottom: 0;
       display: block;
       text-align: center;
@@ -160,7 +175,7 @@
       gap: 1.4em;
     }
     .ticket-row {
-      background: #31151d;
+      background: #2e0d16ef;
       border-radius: 14px;
       margin: 0.3em 0;
       display: flex;
@@ -168,24 +183,24 @@
       align-items: center;
       padding: 1.05em 0.5em 0.6em 0.5em;
       min-width: 0;
-      box-shadow: 0 2px 13px #6a1d1d66;
-      border: 1.3px solid #a32e2e;
+      box-shadow: 0 2px 13px #e9457a44;
+      border: 1.5px solid #e9457a;
     }
     .ticket-type {
       font-family: var(--main-title-font);
-      color: #eecb13;
-      font-size: 1.11em;
+      color: var(--main-accent);
+      font-size: 1.09em;
       margin-bottom: 0.19em;
       letter-spacing: 1.3px;
       font-weight: 800;
     }
     .ticket-desc {
-      color: #ffe3f3;
+      color: #fff;
       font-size: 0.97em;
-      text-shadow: 0 0px 4px #6a1d1d33;
+      text-shadow: 0 0px 4px #e9457a33;
       margin-bottom: 0.2em;
       font-family: var(--main-font);
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
     }
     .ticket-btns {
@@ -198,29 +213,29 @@
     .ticket-btn {
       font-size: 1.07em;
       font-family: var(--main-title-font);
-      background: #a32e2e;
+      background: var(--main-accent);
       color: #fff;
       border-radius: 10px;
-      border: 2px solid #eecb13;
-      padding: 0.15em 1em;
+      border: 2px solid #fff;
+      padding: 0.13em 0.9em;
       font-weight: 900;
       margin: 0 0.09em;
       outline: none;
-      box-shadow: 0 2px 9px #2d0e0e33;
+      box-shadow: 0 2px 9px #e9457a33;
       cursor: pointer;
       transition: background .13s, color .12s, border .13s;
     }
     .ticket-btn:active {
-      background: #eecb13;
-      color: #a32e2e;
-      border-color: #a32e2e;
+      background: #fff;
+      color: var(--main-accent);
+      border-color: var(--main-accent);
     }
     .ticket-count {
       min-width: 2.2em;
       display: inline-block;
-      font-size: 1.18em;
+      font-size: 1.15em;
       font-family: var(--main-title-font);
-      color: #eecb13;
+      color: var(--main-accent);
       letter-spacing: 1px;
       text-align: center;
       font-weight: bold;
@@ -231,48 +246,50 @@
       margin-bottom: 0.5em;
       text-align: center;
       font-family: var(--main-title-font);
-      font-size: 1.13em;
-      color: #eecb13;
+      font-size: 1.11em;
+      color: var(--main-accent);
       letter-spacing: 1.1px;
-      text-shadow: 0 1px 7px #a32e2e99;
-      background: #2c1015de;
+      text-shadow: 0 1px 7px #e9457a99;
+      background: #2e0d16e9;
       padding: 0.7em 0;
       border-radius: 12px;
-      box-shadow: 0 2px 10px #a32e2e1f;
-      border: 1.5px solid #a32e2e;
+      box-shadow: 0 2px 10px #e9457a11;
+      border: 1.5px solid var(--main-accent);
       font-weight: 900;
+      margin-bottom: 1.2em;
     }
     .buy-btn {
       width: 100%;
-      font-size: 1.13em;
+      font-size: 1.11em;
       font-family: var(--main-title-font);
-      background: #a32e2e;
+      background: var(--main-accent);
       color: #fff;
       border-radius: 13px;
-      border: 2.3px solid #eecb13;
+      border: 2.3px solid #fff;
       padding: 1em 0;
       font-weight: 900;
       margin-top: 1.1em;
       outline: none;
-      box-shadow: 0 2px 18px #a32e2e44, 0 2px 10px #eecb1315;
+      box-shadow: 0 2px 18px #e9457a44, 0 2px 10px #fff2;
       cursor: pointer;
       transition: filter .13s, background .18s, color .13s, border .13s;
       letter-spacing: 1.2px;
     }
     .buy-btn:active {
       filter: brightness(0.97);
-      background: #eecb13;
-      color: #a32e2e;
-      border-color: #a32e2e;
+      background: #fff;
+      color: var(--main-accent);
+      border-color: var(--main-accent);
     }
     .gender-hint {
-      color: #eecb13;
+      color: #fff;
       font-size: 0.93em;
       margin-bottom: 0.7em;
       font-family: var(--main-font);
       letter-spacing: 0.2px;
-      font-weight: 600;
+      font-weight: 500;
       text-align: center;
+      margin-top: 0.6em;
     }
     .fadein {
       animation: fadein .60s;
@@ -286,18 +303,18 @@
       text-align: center;
     }
     .qr-img {
-      width: 140px;
-      height:140px;
+      width: 120px;
+      height:120px;
       display: block;
       margin: 0 auto;
       background: #fff;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 2px 16px #000a;
       object-fit: contain;
-      border:2px solid #a32e2e;
+      border:2px solid var(--main-accent);
     }
     .success-msg, .pay-msg {
-      color: #eecb13;
+      color: var(--main-accent);
       font-size: 1.13em;
       font-family: var(--main-title-font);
       font-weight: 900;
@@ -307,24 +324,71 @@
     }
     .pay-amount {
       color: #fff;
-      background: #a32e2e;
+      background: var(--main-accent);
       border-radius: 8px;
-      font-size: 1.15em;
+      font-size: 1.13em;
       font-family: var(--main-title-font);
       font-weight: 900;
       margin: 1.1em auto 1.2em auto;
       padding: 0.8em 0.8em;
-      max-width: 270px;
-      letter-spacing: 1.3px;
-      border: 2px solid #eecb13;
-      box-shadow: 0 2px 10px #a32e2e33;
+      max-width: 260px;
+      letter-spacing: 1.2px;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 10px #e9457a33;
       text-align: center;
+      user-select: all;
+    }
+    .zelle-row {
+      background: #2e0d16e9;
+      color: #fff;
+      border-radius: 9px;
+      padding: 0.7em 1em 0.7em 1em;
+      margin: 1.2em 0 0.7em 0;
+      font-family: var(--main-title-font);
+      font-size: 1.08em;
+      border: 1.5px solid var(--main-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.1em;
+      user-select: all;
+      position: relative;
+    }
+    .zelle-addr {
+      font-family: monospace;
+      color: #fff;
+      background: #1a1116;
+      padding: 0.2em 0.7em;
+      border-radius: 6px;
+      font-size: 1em;
+      letter-spacing: 0.5px;
+      user-select: all;
+      margin-right: 0.5em;
+    }
+    .copy-btn {
+      background: var(--main-accent);
+      color: #fff;
+      font-family: var(--main-title-font);
+      font-size: 1em;
+      border: none;
+      border-radius: 7px;
+      padding: 0.18em 0.95em;
+      margin-left: 0.3em;
+      cursor: pointer;
+      font-weight: 800;
+      transition: background .13s, color .12s, opacity .12s;
+      outline: none;
+    }
+    .copy-btn:active {
+      background: #fff;
+      color: var(--main-accent);
+      opacity: 0.7;
     }
     .app-footer {
       position: fixed;
       bottom: 0; left: 0; width: 100vw;
       background: rgba(36,14,20,0.93);
-      color: #a32e2e;
+      color: var(--main-accent);
       text-align: center;
       font-size: 1.08em;
       font-family: var(--main-title-font);
@@ -334,19 +398,17 @@
       box-shadow: 0 -3px 12px #0004;
       user-select: none;
       font-weight: 600;
-      border-top: 2px solid #a32e2e;
+      border-top: 2px solid var(--main-accent);
     }
   </style>
 </head>
 <body>
   <div class="header"><span>Kinky Party 21+</span></div>
   <div class="app-wrap">
-    <div class="app-main" id="main-step">
-      <!-- JS content -->
-    </div>
+    <div class="app-main" id="main-step"></div>
   </div>
   <div class="app-footer">
-    <span>Только для лиц 21+ | Билеты строго по QR</span>
+    Только для лиц 21+ | Билеты строго по QR
   </div>
   <script>
     let gender = null; // "male" | "female"
@@ -355,9 +417,11 @@
       male: { fun: 200, vip: 400 },
       female: { fun: 100, vip: 200 }
     };
+
     function renderGenderSelect() {
       document.getElementById('main-step').innerHTML = `
-        <div class="step-title fadein">Выберите ваш пол</div>
+        <div class="big-title fadein">Приобрести QR билет</div>
+        <div class="step-title fadein" style="margin-bottom:1.3em;">выберите ваш пол</div>
         <div class="gender-select fadein">
           <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
             <span class="gender-icon">👨</span>Парень
@@ -366,8 +430,7 @@
             <span class="gender-icon">👩</span>Девушка
           </button>
         </div>
-        <div class="gender-hint fadein">Цены на билеты отличаются для парней и девушек</div>
-        <div style="margin-top:1.2em;"></div>
+        <div class="gender-hint fadein">Вы на шаг впереди к незабываемой секс ночи которая пройдет в Chicago</div>
       `;
     }
     function selectGender(g) {
@@ -379,7 +442,8 @@
       let priceFun = prices[gender].fun;
       let priceVip = prices[gender].vip;
       document.getElementById('main-step').innerHTML = `
-        <div class="step-title fadein">Выберите билет</div>
+        <div class="big-title fadein">Приобрести QR билет</div>
+        <div class="step-title fadein" style="margin-bottom:1.3em;">выберите билет</div>
         <div class="ticket-selection fadein">
           <div class="ticket-row">
             <div class="ticket-type">QR FUN</div>
@@ -389,7 +453,7 @@
               <span class="ticket-count" id="fun-count">${tickets.fun}</span>
               <button class="ticket-btn" onclick="changeTicket('fun', 1)">+</button>
             </div>
-            <div style="color:#eecb13;margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceFun}$</div>
+            <div style="color:var(--main-accent);margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceFun}$</div>
           </div>
           <div class="ticket-row">
             <div class="ticket-type">QR VIP</div>
@@ -399,7 +463,7 @@
               <span class="ticket-count" id="vip-count">${tickets.vip}</span>
               <button class="ticket-btn" onclick="changeTicket('vip', 1)">+</button>
             </div>
-            <div style="color:#eecb13;margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceVip}$</div>
+            <div style="color:var(--main-accent);margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceVip}$</div>
           </div>
         </div>
         <div class="total-price-row fadein">
@@ -407,9 +471,11 @@
         </div>
         <button class="buy-btn fadein" onclick="showPayment()" id="to-pay-btn"
             ${getTotalPrice()===0?'disabled style="opacity:0.55;filter:grayscale(1);cursor:not-allowed;"':''}>
-          Оформить QR-билеты
+          Оформить QR билет
         </button>
-        <button class="gta-btn fadein" style="margin-top:0.7em;width:100%;background:#3a141a;color:#eecb13;border:2px solid #a32e2e;font-family:'Russo One',sans-serif;" onclick="renderGenderSelect()">← Назад</button>
+        <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
+          ← Назад
+        </button>
       `;
     }
     function changeTicket(type, delta) {
@@ -434,17 +500,48 @@
       if (!gender) return 0;
       return tickets.fun * prices[gender].fun + tickets.vip * prices[gender].vip;
     }
+    function getTotalTickets() {
+      return tickets.fun + tickets.vip;
+    }
     function showPayment() {
       let sum = getTotalPrice();
+      let count = getTotalTickets();
       document.getElementById('main-step').innerHTML = `
-        <div class="pay-msg fadein">Оплатите на ZELLE вот такую сумму:</div>
-        <div class="pay-amount fadein">${sum}$</div>
-        <div class="qr-preview fadein" style="margin-top:1.3em;">
-          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=KINKY-${gender}-${Date.now()}" alt="QR">
+        <div class="big-title fadein" style="margin-bottom:0.8em;">Оплата QR билета</div>
+        <div class="zelle-row fadein">
+          ZELLE: <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
+          <button class="copy-btn" onclick="copyZelle()">Скопировать</button>
         </div>
-        <div class="gender-hint fadein" style="margin-top:1.2em;">После оплаты покажите этот QR и чек оплаты на входе</div>
-        <button class="buy-btn" style="margin-top:1.3em;" onclick="renderGenderSelect()">Купить еще</button>
+        <div class="pay-msg fadein">Оплатите на ZELLE такую сумму для получения ${count} ${getLabel(count)}:</div>
+        <div class="pay-amount fadein">${sum}$</div>
+        <div class="qr-preview fadein" style="margin-top:1.1em;">
+          <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=KINKY-${gender}-${Date.now()}" alt="QR">
+        </div>
+        <div class="gender-hint fadein" style="margin-top:1.15em;">После оплаты покажите этот QR и чек оплаты на входе</div>
+        <button class="buy-btn fadein" style="margin-top:1.1em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
+          ← Назад
+        </button>
       `;
+    }
+    function getLabel(count) {
+      if (count === 1) return "билета";
+      if (count > 1 && count < 5) return "билета";
+      return "билетов";
+    }
+    function copyZelle() {
+      const mail = "klubnika@mail.ru";
+      if (navigator?.clipboard) {
+        navigator.clipboard.writeText(mail);
+      }
+      const btn = event.target;
+      btn.textContent = "Скопировано!";
+      btn.style.background = "#fff";
+      btn.style.color = "var(--main-accent)";
+      setTimeout(() => {
+        btn.textContent = "Скопировать";
+        btn.style.background = "var(--main-accent)";
+        btn.style.color = "#fff";
+      }, 1200);
     }
     // Initial render
     renderGenderSelect();
@@ -454,7 +551,6 @@
         document.getElementById('main-step').scrollIntoView({behavior: "smooth", block: "start"});
       }, 80);
     };
-    // Prevent form submit
     document.addEventListener('submit', e=>e.preventDefault());
   </script>
 </body>

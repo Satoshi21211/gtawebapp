@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
     body {
-      /* Всегда скроллит вверх при загрузке, чтобы показать хедер */
       scroll-behavior: smooth;
     }
     .header {
@@ -55,6 +54,19 @@
       user-select: none;
       font-weight: 900;
       border-bottom: 3px solid #a32e2e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7em;
+    }
+    .header .tg-ico {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 0.09em;
+      margin-bottom: -0.11em;
+      width: 1.18em;
+      height: 1.18em;
+      font-size: 1em;
     }
     .header span {
       color: #fff;
@@ -99,6 +111,11 @@
         font-size: 1.07em;
         padding: 1.15em 0 0.7em 0;
         border-radius: 0 0 18px 18px;
+      }
+      .header .tg-ico {
+        width: 1.1em;
+        height: 1.1em;
+        font-size: 0.93em;
       }
     }
     .big-title {
@@ -288,6 +305,11 @@
       color: var(--main-accent);
       border-color: var(--main-accent);
     }
+    .buy-btn[disabled] {
+      opacity: 0.55 !important;
+      filter: grayscale(1) !important;
+      cursor: not-allowed !important;
+    }
     .gender-hint {
       color: #fff;
       font-size: 0.93em;
@@ -427,6 +449,22 @@
       box-shadow: 0 2px 10px #e9457a22;
       border: 1.2px solid var(--main-accent);
     }
+    .promo-block {
+      margin-top: 1.2em;
+      text-align: center;
+      padding: 0.7em 0.8em 0.65em 0.8em;
+      background: linear-gradient(90deg, #e9457a 30%, #a32e2e 100%);
+      border-radius: 11px;
+      box-shadow: 0 2px 10px #e9457a55, 0 2px 9px #0003;
+      font-family: var(--main-title-font);
+      color: #fff;
+      font-size: 1.08em;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      border: 2px solid #fff;
+      text-transform: uppercase;
+      user-select: all;
+    }
     .app-footer {
       position: fixed;
       bottom: 0; left: 0; width: 100vw;
@@ -448,7 +486,6 @@
       text-transform: uppercase;
       font-size: 1.19em;
       letter-spacing: 0.12em;
-      /* "A LOT OF SEX" footer, thin caps */
     }
     .app-footer span {
       font-family: 'Montserrat', Arial, sans-serif !important;
@@ -463,8 +500,11 @@
   </style>
 </head>
 <body>
-  <audio id="bg-music" src="https://files.catbox.moe/dt2o9k.mp3" autoplay loop></audio>
-  <div class="header"><span>Kinky Party 21+</span></div>
+  <audio id="bg-music" src="YOUR_MUSIC_LINK_HERE.mp3" autoplay loop></audio>
+  <div class="header">
+    <svg class="tg-ico" viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#37aee2"/><circle cx="120" cy="120" r="110" fill="#fff"/><circle cx="120" cy="120" r="100" fill="#37aee2"/><path fill="#c8daea" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28-16 15c-1 1-3 1-4 0l6-24 68-76z"/><path fill="#a9c6d8" d="M88 182l7-26 14 11c1 1 2 2 1 3l-3 15-19-3z"/><path fill="#fff" d="M98 170l49-49c1-1-1-3-2-2l-59 37c-1 1 0 3 1 4l11 10z"/><path fill="#c8daea" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28 57-98z"/><path fill="#fff" d="M164 69c2-1 4 0 4 2l-21 124c0 2-3 3-4 2l-36-28 57-98z"/></svg>
+    <span>Kinky Party 21+</span>
+  </div>
   <div class="app-wrap">
     <div class="app-main" id="main-step"></div>
   </div>
@@ -472,21 +512,13 @@
     <span>A LOT OF SEX</span>
   </div>
   <script>
-    // --- MUSIC VOLUME ---
     document.addEventListener('DOMContentLoaded', function() {
       const audio = document.getElementById('bg-music');
-      if (audio) {
-        audio.volume = 0.33;
-        // Для автозапуска на мобильных нужен пользовательский ввод,
-        // но если возможно — играет при загрузке.
-      }
-      // Скролл вверх сразу при загрузке, чтобы хедер был виден!
-      setTimeout(()=>{
-        window.scrollTo({top: 0, behavior: 'smooth'});
-      }, 30);
+      if (audio) audio.volume = 0.33;
+      setTimeout(()=>{ window.scrollTo({top: 0, behavior: 'smooth'}); }, 30);
     });
 
-    let gender = null; // "male" | "female"
+    let gender = null;
     let tickets = { fun: 0, vip: 0 };
     let prices = {
       male: { fun: 200, vip: 400 },
@@ -494,7 +526,11 @@
     };
     let screenshotDataUrl = null;
     let timerInterval = null;
-    let timerSeconds = 300; // 5 minutes
+    let waitSeconds = 300; // 5 minutes ожидания
+    let confirmSeconds = 120; // 2 минуты для кнопки оплаты
+    let payTimerInterval = null;
+    let payTimerSeconds = 0;
+    let canClickPay = false;
 
     function renderGenderSelect() {
       clearTimer();
@@ -590,6 +626,8 @@
       let count = getTotalTickets();
       screenshotDataUrl = null;
       clearTimer();
+      canClickPay = false;
+      payTimerSeconds = confirmSeconds;
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein" style="margin-bottom:0.8em;">Оплата QR билета</div>
         <div class="zelle-row fadein" style="justify-content:left;">
@@ -603,14 +641,14 @@
         </div>
         <div id="screenshot-preview-wrap"></div>
         <div class="pay-msg fadein" style="margin-top:0.8em;">
-          Оплатите на ZELLE указанную сумму для получения ${count} билет${(count===1?'':'ов')}:
+          Оплатите указанную сумму для получения ${count} билет${getCountWord(count)}:
         </div>
         <div class="pay-amount fadein">${sum}$</div>
         <div class="gender-hint fadein" style="margin-top:1.15em;">
-          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут
+          После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте "Оплата завершена" после этого ожидайте 5 минут не покидая эту страницу!
         </div>
-        <div id="timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
-        <button class="buy-btn fadein" style="margin-top:1.1em;" onclick="showTicketResult()">
+        <div id="pay-timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
+        <button class="buy-btn fadein" id="pay-finish-btn" style="margin-top:1.1em;" disabled>
           Оплата завершена
         </button>
         <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
@@ -618,11 +656,15 @@
         </button>
       `;
       setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+      startPayTimer();
+      document.getElementById('pay-finish-btn').onclick = function() {
+        if (canClickPay) showTicketResult();
+      };
     }
-    function getLabel(count) {
-      if (count === 1) return "билет";
-      if (count > 1 && count < 5) return "билета";
-      return "билетов";
+    function getCountWord(count) {
+      if (count === 1) return '';
+      if (count > 1 && count < 5) return 'а';
+      return 'ов';
     }
     function copyZelle() {
       const mail = "klubnika@mail.ru";
@@ -648,8 +690,64 @@
         document.getElementById('screenshot-preview-wrap').innerHTML = `
           <img src="${screenshotDataUrl}" class="screenshot-preview" alt="Скриншот оплаты">
         `;
+        if (!canClickPay) {
+          enablePayButton();
+        }
       };
       reader.readAsDataURL(file);
+    }
+    function enablePayButton() {
+      // Если идет таймер, ждем его завершения
+      if (payTimerSeconds > 0) return;
+      canClickPay = true;
+      let btn = document.getElementById('pay-finish-btn');
+      btn.disabled = false;
+      btn.style.opacity = 1;
+      btn.style.filter = "none";
+      btn.style.cursor = "pointer";
+    }
+    function startPayTimer() {
+      payTimerSeconds = confirmSeconds;
+      updatePayTimer();
+      payTimerInterval = setInterval(function() {
+        payTimerSeconds--;
+        updatePayTimer();
+        if (payTimerSeconds <= 0) {
+          clearPayTimer();
+          if (screenshotDataUrl) enablePayButton();
+          else {
+            let btn = document.getElementById('pay-finish-btn');
+            btn.disabled = true;
+            btn.style.opacity = 0.55;
+            btn.style.filter = "grayscale(1)";
+            btn.style.cursor = "not-allowed";
+          }
+        }
+      }, 1000);
+    }
+    function updatePayTimer() {
+      let timerWrap = document.getElementById('pay-timer-wrap');
+      if (!timerWrap) return;
+      if (payTimerSeconds > 0) {
+        let min = Math.floor(payTimerSeconds/60).toString().padStart(2,'0');
+        let sec = (payTimerSeconds%60).toString().padStart(2,'0');
+        timerWrap.innerHTML = `<div class="timer">Ожидайте: ${min}:${sec}</div>`;
+        let btn = document.getElementById('pay-finish-btn');
+        btn.disabled = true;
+        btn.style.opacity = 0.55;
+        btn.style.filter = "grayscale(1)";
+        btn.style.cursor = "not-allowed";
+      } else {
+        timerWrap.innerHTML = "";
+        if (screenshotDataUrl) enablePayButton();
+      }
+    }
+    function clearPayTimer() {
+      if (payTimerInterval) clearInterval(payTimerInterval);
+      payTimerInterval = null;
+      payTimerSeconds = 0;
+      let timerWrap = document.getElementById('pay-timer-wrap');
+      if (timerWrap) timerWrap.innerHTML = '';
     }
     function showTicketResult() {
       let count = getTotalTickets();
@@ -657,15 +755,18 @@
       let funBlock = funCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
         <div class="ticket-type">QR FUN</div>
         <div class="ticket-desc">x${funCount}</div>
+        <div class="promo-block">PROMO: KINKY-LOVE</div>
       </div>` : '';
       let vipBlock = vipCount > 0 ? `<div class="ticket-row" style="margin-top:1.3em;">
         <div class="ticket-type">QR VIP</div>
         <div class="ticket-desc">x${vipCount}</div>
+        <div class="promo-block">PROMO: KINKY-LOVE</div>
       </div>` : '';
       document.getElementById('main-step').innerHTML = `
         <div class="big-title fadein" style="margin-bottom:0.8em;">Ваши билеты</div>
         <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
-          Покажите это сообщение на входе<br>
+          Поздравляем с успешной покупкой!
+          <br>
           <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
             ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
           </span>
@@ -675,47 +776,12 @@
           Купить ещё билет
         </button>
       `;
-      startTimer();
-    }
-    // Таймер ожидания 5 минут
-    function startTimer() {
-      timerSeconds = 300;
-      updateTimer();
-      timerInterval = setInterval(function() {
-        timerSeconds--;
-        updateTimer();
-        if (timerSeconds <= 0) {
-          clearTimer();
-        }
-      }, 1000);
-    }
-    function updateTimer() {
-      let timerWrap = document.getElementById('timer-wrap');
-      if (!timerWrap) {
-        // Добавляем таймер если его нет (например, после возврата)
-        let div = document.createElement('div');
-        div.id = 'timer-wrap';
-        document.getElementById('main-step').appendChild(div);
-        timerWrap = div;
-      }
-      if (timerSeconds > 0) {
-        let min = Math.floor(timerSeconds/60).toString().padStart(2,'0');
-        let sec = (timerSeconds%60).toString().padStart(2,'0');
-        timerWrap.innerHTML = `<div class="timer">Ожидайте: ${min}:${sec}</div>`;
-      } else {
-        timerWrap.innerHTML = `<div class="timer" style="color:var(--main-accent);">Готово!</div>`;
-      }
     }
     function clearTimer() {
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = null;
-      timerSeconds = 0;
-      let timerWrap = document.getElementById('timer-wrap');
-      if (timerWrap) timerWrap.innerHTML = '';
+      clearPayTimer();
     }
     // Initial render
     renderGenderSelect();
-    // Для мобильных: скролл вверх всегда, чтобы хедер был виден!
     window.onload = () => {
       setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
     };

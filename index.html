@@ -695,23 +695,33 @@ setTimeout(nextBg, 6000);
     }
 
     function renderGenderSelect() {
-      clearPayTimer();
-      screenshotDataUrl = null;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">${langData[lang].buyQr}</div>
-        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
-        <div class="gender-select fadein">
-          <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
-            <span class="gender-icon">👨</span>${langData[lang].male}
-          </button>
-          <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
-            <span class="gender-icon">👩</span>${langData[lang].female}
-          </button>
-        </div>
-        <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
-      `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-    }
+  clearPayTimer();
+  screenshotDataUrl = null;
+  document.getElementById('main-step').innerHTML = `
+    <div class="big-title fadein">${langData[lang].buyQr}</div>
+    <div class="event-block fadein" style="margin-top:0.7em;margin-bottom:1.2em;max-width:310px;width:92%;">
+      <div class="event-title" style="color:var(--main-accent);font-family:'Russo One',Arial,sans-serif;font-size:1.07em;font-weight:800;letter-spacing:1.1px;margin-bottom:0.6em;text-align:center;text-transform:uppercase;text-shadow:0 1px 8px #a32e2e77;">
+        ПРЕДСТОЯЩИЙ ИВЕНТ
+      </div>
+      <div class="event-desc" style="color:#fff;font-size:0.98em;text-align:center;font-family:'Montserrat',Arial,sans-serif;font-weight:500;margin-bottom:0.1em;line-height:1.5;">
+        Следующая KINKY PARTY уже скоро!<br>
+        Следите за новостями в нашем
+        <a href="https://t.me/your_channel" target="_blank" style="color:#e9457a;text-decoration:underline;">Telegram</a>.
+      </div>
+    </div>
+    <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
+    <div class="gender-select fadein">
+      <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
+        <span class="gender-icon">👨</span>${langData[lang].male}
+      </button>
+      <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
+        <span class="gender-icon">👩</span>${langData[lang].female}
+      </button>
+    </div>
+    <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
+  `;
+  setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
+}
     function selectGender(g) {
       gender = g;
       tickets = { fun: 0, vip: 0 };

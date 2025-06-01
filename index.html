@@ -42,51 +42,56 @@
       background: var(--fields-bg);
       border-radius: 0 0 20px 20px;
       box-shadow: 0 4px 28px #000c;
-      padding: 16px 0 0 0;
+      padding: 18px 0 0 0;
       position: relative;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: flex-end;
+      min-height: 136px;
     }
     .header-flex {
       display: flex;
       flex-direction: row;
       align-items: flex-end;
       width: 100%;
-      gap: 10px;
-      margin-left: 14px;
+      justify-content: flex-end;
+      gap: 0;
+      position: relative;
     }
     .profile-photo-wrap {
-      width: 68px; height: 68px;
-      margin-right: 10px;
-      margin-bottom: 2px;
+      width: 110px; height: 110px;
+      margin-right: 18px;
+      margin-bottom: 0;
+      margin-top: 0;
       display: flex;
-      align-items: flex-start;
+      align-items: flex-end;
       justify-content: flex-end;
-      flex-shrink: 0;
+      z-index: 2;
     }
     .profile-photo {
-      width: 64px; height: 64px;
-      border-radius: 13px;
+      width: 110px; height: 110px;
+      border-radius: 18px;
       object-fit: cover;
       background: #fff;
-      box-shadow: 0 2px 10px #ffe66d65;
+      box-shadow: 0 2px 18px #ffe66d88;
       cursor: pointer;
-      border: 2.5px solid var(--main-yellow-dark);
+      border: 4px solid var(--main-yellow-dark);
       outline: none;
       display: block;
     }
     .profile-titles-block {
+      position: absolute;
+      right: 130px;
+      bottom: 20px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      flex: 1 1 100px;
-      gap: 0;
+      align-items: flex-end;
+      z-index: 3;
       min-width: 0;
     }
     .stats-title {
       font-family: var(--title-font);
-      font-size: 1.07em;
+      font-size: 1.05em;
       color: #fff;
       font-weight: 900;
       letter-spacing: 1.1px;
@@ -95,21 +100,20 @@
       background: none;
       z-index: 5;
       text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
-      line-height: 1.12em;
-      margin: 0 0 0px 0;
-      padding: 0 0 0 2px;
-      text-align: left;
+      line-height: 1.1em;
+      margin: 0;
+      padding: 0 0 6px 0;
+      text-align: right;
       min-width: 0;
     }
     .exp-bar-wrap {
-      width: 100%;
-      margin-top: 6px;
+      width: 170px;
       display: flex;
       align-items: center;
       position: relative;
-      height: 24px;
-      justify-content: flex-start;
+      height: 18px;
       gap: 7px;
+      justify-content: flex-end;
     }
     .exp-lvl-badge {
       min-width: 26px;
@@ -121,7 +125,7 @@
       align-items: center;
       justify-content: center;
       font-family: var(--title-font);
-      font-size: 1em;
+      font-size: 0.99em;
       font-weight: bold;
       box-shadow: 0 2px 8px #ffe66d55;
       border: 2px solid #fff;
@@ -140,6 +144,7 @@
       display: flex;
       align-items: center;
       min-width: 80px;
+      max-width: 140px;
     }
     .exp-bar-inner {
       height: 100%;
@@ -179,7 +184,7 @@
       border: var(--fields-border);
       display: flex;
       flex-direction: column;
-      gap: 0.12em;
+      gap: 0.15em;
       font-size: 1.04em;
       position: relative;
       max-width: 99vw;
@@ -225,7 +230,7 @@
       outline: none;
       line-height: 1.10em;
     }
-    .field-indicator-block, .cash-value {
+    .cash-value {
       color: var(--main-green);
       border-color: rgba(33,232,123,0.17);
       background: var(--indicator-bg);
@@ -392,18 +397,20 @@
       .main-container { max-width: 100vw; border-radius: 0; }
       .fields-block { max-width: 98vw; }
       .header-block { border-radius: 0 0 16px 16px; }
-      .header-flex { margin-left: 7px; }
+      .header-flex { margin-left: 2px; }
       .main-btns { min-height: 0; }
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
       .field-label, .cash-label, .crypto-label { min-width: 40px; font-size: 0.94em;}
-      .field-indicator-block, .cash-value, .crypto-value { padding: 5px 7px; min-width: 32px; }
+      .field-indicator-block, .cash-value, .crypto-value { padding: 5px 7px; min-width: 32px;}
       .fields-completed-label { font-size: 0.93em;}
       .completed-number { padding: 3px 7px; min-width: 22px;}
-      .profile-photo-wrap { width: 48px; height: 48px;}
-      .profile-photo { width: 44px; height: 44px;}
+      .profile-photo-wrap { width: 62px; height: 62px;}
+      .profile-photo { width: 60px; height: 60px;}
       .exp-lvl-badge { min-width: 18px; height: 18px; font-size: 0.83em;}
       .exp-bar { height: 7px;}
-      .stats-title { font-size: 0.9em; }
+      .profile-titles-block { right: 75px; }
+      .exp-bar-wrap { width: 120px; }
+      .stats-title { font-size: 0.91em; }
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -415,10 +422,6 @@
   <div class="main-container">
     <div class="header-block">
       <div class="header-flex">
-        <div class="profile-photo-wrap">
-          <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
-          <input type="file" id="photo-upload" accept="image/*" style="display:none;">
-        </div>
         <div class="profile-titles-block">
           <span class="stats-title">СТАТИСТИКА: ЕГОР</span>
           <div class="exp-bar-wrap">
@@ -428,6 +431,10 @@
               <span class="exp-bar-text" id="progress-text">0/8 EXP</span>
             </div>
           </div>
+        </div>
+        <div class="profile-photo-wrap">
+          <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
+          <input type="file" id="photo-upload" accept="image/*" style="display:none;">
         </div>
       </div>
     </div>

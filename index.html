@@ -19,7 +19,7 @@
     }
     body {
       background: var(--main-bg);
-      color: #181824;
+      color: #fff;
       font-family: var(--font-main);
       margin: 0;
       padding: 0;
@@ -146,7 +146,6 @@
       justify-content: flex-end;
       white-space: nowrap;
     }
-
     .fields-block {
       width: 92%;
       background: var(--fields-bg);
@@ -157,9 +156,9 @@
       border: var(--fields-border);
       display: flex;
       flex-direction: column;
-      gap: 0.4em;
+      gap: 0.7em;
       color: #fff;
-      font-size: 1.03em;
+      font-size: 1.09em;
       position: relative;
       max-width: 350px;
       left: 0;
@@ -168,73 +167,81 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.4em;
       min-width: 0;
-      margin-bottom: 0.12em;
+      margin-bottom: 0.07em;
     }
     .field-label {
-      min-width: 102px;
       font-family: var(--font-title);
       font-weight: 700;
-      color: var(--main-yellow);
-      letter-spacing: 1px;
-      font-size: 1.00em;
+      color: #fff;
+      letter-spacing: 1.1px;
+      font-size: 1.01em;
       margin-right: 0.7em;
       text-align: left;
+      text-transform: uppercase;
+      min-width: 140px;
     }
-    .field-val {
-      background: rgba(255,255,255,0.10);
-      color: #fff;
-      border: 1.6px solid #29282d;
-      border-radius: 7px;
-      padding: 4px 13px;
-      min-width: 62px;
-      max-width: 120px;
-      text-align: left;
-      font-size: 1.01em;
-      font-family: var(--font-main);
+    .field-val,
+    .completed-number {
+      background: none;
+      color: var(--main-yellow);
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      min-width: 0;
+      max-width: 170px;
+      text-align: right;
+      font-size: 1.09em;
+      font-family: var(--font-title);
       font-weight: 700;
       outline: none;
-      transition: box-shadow .14s, background .16s;
-      cursor: pointer;
       box-sizing: border-box;
       flex: 1 1 auto;
+      letter-spacing: 1.2px;
+      display: inline-block;
+      vertical-align: middle;
+      transition: color .14s;
+      cursor: pointer;
+    }
+    .field-val[contenteditable="true"]:focus {
+      color: #ffd800;
+      background: none;
+      box-shadow: none;
     }
     .field-val.static {
       cursor: default;
-      background: rgba(255,255,255,0.07);
-      opacity: 0.93;
-    }
-    .field-val[contenteditable="true"]:focus {
-      box-shadow: 0 0 0 2px var(--main-yellow-dark);
-      background: rgba(255,255,255,0.15);
-      color: #ffe66d;
+      background: none;
     }
     .fields-completed {
       margin-top: 1.1em;
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
-      color: #ffe66d;
+      gap: 0.4em;
+      font-size: 1.09em;
       font-family: var(--font-title);
-      font-size: 1.04em;
-      font-weight: 700;
       letter-spacing: 1.1px;
       text-align: left;
-      padding-left: 1px;
+      padding-left: 0;
       padding-bottom: 0.2em;
     }
-    .fields-completed span {
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-weight: 900;
-      font-size: 1.04em;
-      letter-spacing: 1.2px;
+    .fields-completed-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.09em;
     }
-    .fields-completed .completed-number {
+    .fields-completed-label {
       color: #fff;
       font-family: var(--font-title);
-      font-size: 1.06em;
+      font-weight: 800;
+      font-size: 1.01em;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .completed-number {
+      color: #ffe;
+      font-family: var(--font-title);
+      font-size: 1.09em;
       margin-left: 7px;
       letter-spacing: 1px;
     }
@@ -419,32 +426,42 @@
     </div>
     <div class="fields-block">
       <div class="field-row">
-        <span class="field-label">ЛОКАЦИЯ:</span>
+        <span class="field-label">ЛОКАЦИЯ</span>
         <span class="field-val static" id="location">USA, LA</span>
       </div>
       <div class="field-row">
-        <span class="field-label">СТАТУС:</span>
+        <span class="field-label">СТАТУС</span>
         <span class="field-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
       </div>
       <div class="field-row">
-        <span class="field-label">РАБОТА:</span>
+        <span class="field-label">РАБОТА</span>
         <span class="field-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
       </div>
       <div class="field-row">
-        <span class="field-label">РЕПУТАЦИЯ:</span>
+        <span class="field-label">МАШИНА</span>
+        <span class="field-val" id="car" contenteditable="true" spellcheck="false">НЕТУ</span>
+      </div>
+      <div class="field-row">
+        <span class="field-label">РЕПУТАЦИЯ</span>
         <span class="field-val" id="rep" contenteditable="true">2</span>
       </div>
       <div class="field-row">
-        <span class="field-label">ДЕНЬГИ:</span>
+        <span class="field-label">ДЕНЬГИ</span>
         <span class="field-val" id="money" contenteditable="true">0</span>
       </div>
       <div class="field-row">
-        <span class="field-label">CRYPTO:</span>
+        <span class="field-label">CRYPTO</span>
         <span class="field-val" id="crypto" contenteditable="true"></span>
       </div>
       <div class="fields-completed">
-        <span>ВЫПОЛНЕНО КВЕСТОВ:<span class="completed-number" id="quests-completed">13</span></span>
-        <span>ВЫПОЛНЕНО МИСИЙ:<span class="completed-number" id="missions-completed">4</span></span>
+        <div class="fields-completed-row">
+          <span class="fields-completed-label">ВЫПОЛНЕНО КВЕСТОВ</span>
+          <span class="completed-number" id="quests-completed">13</span>
+        </div>
+        <div class="fields-completed-row">
+          <span class="fields-completed-label">ВЫПОЛНЕНО МИСИЙ</span>
+          <span class="completed-number" id="missions-completed">4</span>
+        </div>
       </div>
     </div>
     <div class="main-btns">
@@ -474,6 +491,7 @@
       expMax: 8,
       status: "NO LEGAL",
       job: "НЕТУ",
+      car: "НЕТУ",
       rep: "2",
       money: "0",
       crypto: "",
@@ -521,6 +539,7 @@
       document.getElementById('location').textContent = state.location;
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
+      document.getElementById('car').textContent = state.car;
       document.getElementById('rep').textContent = state.rep;
       document.getElementById('money').textContent = state.money;
       document.getElementById('crypto').textContent = state.crypto;
@@ -531,7 +550,7 @@
       else img.src = "https://i.imgur.com/1vA0Q2z.png";
     }
     function setupEditable() {
-      ["status", "job", "rep", "money", "crypto"].forEach(id => {
+      ["status", "job", "car", "rep", "money", "crypto"].forEach(id => {
         let el = document.getElementById(id);
         el.addEventListener("input", function () {
           state[id] = el.textContent.trim();

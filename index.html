@@ -11,12 +11,12 @@
       --main-yellow-dark: #ffd800;
       --main-bg: #181824;
       --panel-dark: #19191e;
-      --font-title: 'Russo One', Arial, sans-serif;
-      --font-main: 'Montserrat', Arial, sans-serif;
-      --fields-bg: #23232a;
+      --grey-panel: rgba(32,32,36,0.92);
+      --fields-bg: rgba(32,32,36,0.92);
       --fields-border: 1.8px solid #23232a;
       --fields-shadow: 0 1px 14px #18182440;
       --indicator-bg: rgba(255,255,255,0.07);
+      --white: #fff;
     }
     body {
       background: var(--main-bg);
@@ -38,13 +38,27 @@
     .header-block {
       position: relative;
       z-index: 2;
-      padding: 36px 0 10px 0;
+      padding: 36px 0 18px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: var(--main-yellow);
+      background: var(--grey-panel);
       border-radius: 0 0 28px 28px;
-      box-shadow: 0 4px 28px #ffe66d44;
+      box-shadow: 0 4px 28px #000c;
+    }
+    .profile-title {
+      font-family: var(--font-title);
+      font-size: 1.27em;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 2.2px;
+      margin-bottom: 0.16em;
+      margin-top: 0.1em;
+      text-shadow: 0 3px 20px #fff8, 0 1.5px 8px #ffe66d44;
+      text-transform: uppercase;
+      text-align: center;
+      user-select: none;
+      background: none;
     }
     .profile-photo-wrap {
       width: 108px; height: 108px;
@@ -65,19 +79,6 @@
       outline: none;
       transition: box-shadow .19s, border .19s;
       display: block;
-    }
-    .profile-title {
-      font-family: var(--font-title);
-      font-size: 1.23em;
-      color: #181824;
-      font-weight: 900;
-      letter-spacing: 2.2px;
-      margin-bottom: 0.12em;
-      margin-top: 0.1em;
-      text-shadow: 0 3px 20px #fff8, 0 1.5px 8px #ffe66d77;
-      text-transform: uppercase;
-      text-align: center;
-      user-select: none;
     }
     .exp-bar-wrap {
       width: 91%;
@@ -148,10 +149,10 @@
       white-space: nowrap;
     }
     .fields-block {
-      width: 92%;
+      width: 94%;
       background: var(--fields-bg);
       border-radius: 18px;
-      margin: 1.1em auto 0.5em auto;
+      margin: 1.2em auto 0.5em auto;
       padding: 1.1em 1.25em 1.1em 1.25em;
       box-shadow: var(--fields-shadow);
       border: var(--fields-border);
@@ -160,7 +161,7 @@
       gap: 0.7em;
       font-size: 1.09em;
       position: relative;
-      max-width: 350px;
+      max-width: 370px;
       left: 0;
     }
     .field-row {
@@ -169,6 +170,7 @@
       justify-content: space-between;
       min-width: 0;
       margin-bottom: 0.07em;
+      gap: 0.3em;
     }
     .field-label {
       font-family: var(--font-title);
@@ -179,14 +181,16 @@
       margin-right: 0.7em;
       text-align: left;
       text-transform: uppercase;
-      min-width: 140px;
+      min-width: 120px;
+      flex: 1 1 55%;
+      background: none;
     }
     .field-indicator-block {
       background: var(--indicator-bg);
       border-radius: 8px;
       padding: 5px 13px;
-      min-width: 80px;
-      max-width: 170px;
+      min-width: 75px;
+      max-width: 180px;
       text-align: right;
       font-size: 1.09em;
       font-family: var(--font-title);
@@ -199,6 +203,8 @@
       border: 1.4px solid rgba(255,230,109,0.13);
       transition: color .14s, background .17s;
       cursor: pointer;
+      flex: 1 1 45%;
+      outline: none;
     }
     .field-indicator-block[contenteditable="true"]:focus {
       color: #ffd800;
@@ -226,6 +232,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 0.09em;
+      gap: 0.3em;
     }
     .fields-completed-label {
       color: #fff;
@@ -234,6 +241,8 @@
       font-size: 1.01em;
       text-transform: uppercase;
       letter-spacing: 1.2px;
+      background: none;
+      flex: 1 1 55%;
     }
     .completed-number {
       background: var(--indicator-bg);
@@ -250,13 +259,15 @@
       display: inline-block;
       vertical-align: middle;
       font-weight: 700;
+      flex: 1 1 45%;
     }
     .main-btns {
       width: 100%;
       display: flex;
-      gap: 1.2em;
+      flex-wrap: wrap;
+      gap: 0.8em;
       justify-content: center;
-      margin: 1.5em 0 0.9em 0;
+      margin: 1.4em 0 0.9em 0;
       z-index: 2;
       position: relative;
     }
@@ -267,18 +278,22 @@
       color: #181824;
       border-radius: 13px;
       border: none;
-      padding: 0.79em 2.1em;
+      padding: 0.79em 1.6em;
       font-weight: 900;
       box-shadow: 0 2px 18px #ffe66d55, 0 2px 9px #0004;
       cursor: pointer;
-      transition: background .16s, color .13s, box-shadow .14s;
+      transition: background .16s, color .13s, box-shadow .14s, transform .07s;
       letter-spacing: 1.2px;
       outline: none;
+      margin-bottom: 0.2em;
+      min-width: 133px;
+      max-width: 47vw;
     }
     .main-btn:active, .main-btn.selected {
       background: var(--main-yellow);
       color: #181824;
       filter: brightness(1.10) drop-shadow(0 2px 10px #ffe66d77);
+      transform: scale(0.96);
     }
     /* MODAL */
     .modal {
@@ -405,16 +420,28 @@
       text-align: center;
       font-weight: 700;
     }
-    @media (max-width: 500px) {
-      .main-container { max-width: 99vw;}
-      .fields-block { left: 0; margin-left: auto; margin-right: auto;}
+    @media (max-width: 600px) {
+      .main-container { max-width: 99vw; }
+      .fields-block { max-width: 99vw; }
       .exp-bar-wrap { width: 98%; margin-left: 0.5em;}
       .header-block { padding-bottom: 10px; }
-      .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}
+      .main-btn { min-width: 120px; max-width: 100vw; font-size: 1.02em;}
+      .field-label { min-width: 90px; font-size: 0.98em;}
+      .field-indicator-block { padding: 5px 7px; min-width: 60px;}
+      .fields-completed-label { font-size: 0.97em;}
+      .completed-number { padding: 4px 7px; min-width: 40px;}
+    }
+    @media (max-width: 420px) {
+      .main-container { border-radius: 0;}
+      .fields-block { margin: 0.8em auto 0.3em auto; padding: 0.8em 0.4em 0.9em 0.6em;}
+      .profile-photo-wrap { width: 87px; height: 87px;}
+      .profile-photo { width: 87px; height: 87px;}
+      .profile-title { font-size: 1.01em;}
     }
   </style>
 </head>
 <body>
+  <audio id="click-sound" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa6c2d.mp3" preload="auto"></audio>
   <div class="main-container">
     <div class="header-block">
       <div class="profile-photo-wrap">
@@ -441,7 +468,7 @@
       </div>
       <div class="field-row">
         <span class="field-label">РАБОТА</span>
-        <span class="field-indicator-block" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
+        <span class="field-indicator-block" id="job" contenteditable="true" spellcheck="false">McDonald</span>
       </div>
       <div class="field-row">
         <span class="field-label">МАШИНА</span>
@@ -472,7 +499,9 @@
     </div>
     <div class="main-btns">
       <button class="main-btn" id="open-quests">КВЕСТЫ</button>
+      <button class="main-btn" id="open-stats">СТАТИСТИКА</button>
       <button class="main-btn" id="open-missions">МИСИИ</button>
+      <button class="main-btn" id="open-shop">МАГАЗИН</button>
     </div>
   </div>
   <!-- MODALS -->
@@ -490,13 +519,27 @@
       <div class="list" id="missions-list"></div>
     </div>
   </div>
+  <div class="modal" id="modal-stats">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('modal-stats')">&times;</button>
+      <div class="modal-title">СТАТИСТИКА</div>
+      <div style="text-align:center; color:#181824; font-family:var(--font-main)">Ваша статистика скоро появится здесь!</div>
+    </div>
+  </div>
+  <div class="modal" id="modal-shop">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('modal-shop')">&times;</button>
+      <div class="modal-title">МАГАЗИН</div>
+      <div style="text-align:center; color:#181824; font-family:var(--font-main)">Магазин в разработке!</div>
+    </div>
+  </div>
   <script>
     let state = {
       level: 1,
       exp: 0,
       expMax: 8,
       status: "NO LEGAL",
-      job: "НЕТУ",
+      job: "McDonald",
       car: "НЕТУ",
       rep: "2",
       money: "0",
@@ -505,24 +548,8 @@
       photo: "",
       questsCompleted: 13,
       missionsCompleted: 4,
-      quests: [
-        { text: "Заработать 200$ [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Гигиена 30 дней [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Не курить 7 дней [+2 EXP]", exp: 2, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Сдать на права [+3 EXP]", exp: 3, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Отложить 1000$ [+3 EXP]", exp: 3, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Заняться зубами [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Получить машину [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Настроить работу [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Выплатить кредит [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Набрать слегка вес [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null }
-      ],
-      missions: [
-        { text: "Начнем знакомство, Mr.DIOR<br><small>Выполни: 3 начальных квеста [+1 REP]</small>", rep: 1, done: false, type: "quests", needQuests: 3 },
-        { text: "Не пора бы поработать?<br><small>Запусти свой проект и заработай первые 200$ [+1 REP]</small>", rep: 1, done: false, type: "custom" },
-        { text: "Ты в деле! Поехали уже…<br><small>Полностью сдать на вод. права [+ 🔑]</small>", rep: 0, done: false, type: "custom" },
-        { text: "Легальность мое второе имя.<br><small>Найти легальную работу за кэш</small>", rep: 0, done: false, type: "custom" }
-      ]
+      quests: [],
+      missions: []
     };
     function saveState() {
       localStorage.setItem("profile_dior_state", JSON.stringify(state));
@@ -584,157 +611,49 @@
     function closeModal(id) {
       document.getElementById(id).style.display = "none";
     }
+    // Звук щелчка
+    function playClick() {
+      const audio = document.getElementById('click-sound');
+      audio.currentTime = 0; // Перемотать в начало
+      audio.play();
+    }
+    // Назначить звук на все кнопки основного меню
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.main-btn').forEach(btn => {
+        btn.addEventListener('click', playClick);
+      });
+    });
+
     document.getElementById('open-quests').onclick = function() {
+      playClick();
       renderQuests();
       document.getElementById('modal-quests').style.display = "block";
     };
     document.getElementById('open-missions').onclick = function() {
+      playClick();
       renderMissions();
       document.getElementById('modal-missions').style.display = "block";
     };
+    document.getElementById('open-stats').onclick = function() {
+      playClick();
+      document.getElementById('modal-stats').style.display = "block";
+    };
+    document.getElementById('open-shop').onclick = function() {
+      playClick();
+      document.getElementById('modal-shop').style.display = "block";
+    };
+
+    // Заглушки для квестов и миссий (если нужно — вставь свой функционал)
     function renderQuests() {
-      let activeCount = state.quests.filter(q => q.active && !q.done).length;
-      let html = "";
-      state.quests.forEach((q, i) => {
-        let questClass = "list-item";
-        if (q.done) questClass += " done";
-        else if (q.active) questClass += " active";
-        html += `<div class="${questClass}">
-          <div class="item-text">${q.text}</div>
-          <div class="item-controls">`;
-        if (!q.done && !q.active && activeCount < 3) {
-          html += `<button class="item-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
-        }
-        if (q.active && !q.done) {
-          html += `<span class="timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
-          if (q.timer <= 0) {
-            html += `<button class="item-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
-            <button class="item-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
-          }
-        }
-        html += `</div></div>`;
-      });
-      document.getElementById('quests-list').innerHTML = html;
-    }
-    function formatTimer(q) {
-      if (q.timer <= 0) return "Готово!";
-      let min = Math.floor(q.timer / 60).toString().padStart(2, '0');
-      let sec = (q.timer % 60).toString().padStart(2, '0');
-      return `${min}:${sec}`;
-    }
-    function takeQuest(i) {
-      let q = state.quests[i];
-      if (q.active || q.done) return;
-      let activeCount = state.quests.filter(q => q.active && !q.done).length;
-      if (activeCount >= 3) return;
-      q.active = true;
-      q.timer = 60;
-      q.started = Date.now();
-      q.timerID = setInterval(function(){
-        q.timer--;
-        if (q.timer <= 0) {
-          clearInterval(q.timerID);
-          q.timerID = null;
-        }
-        renderQuests();
-        saveState();
-      }, 1000);
-      renderQuests();
-      saveState();
-    }
-    function completeQuest(i) {
-      let q = state.quests[i];
-      if (q.done || !q.active || q.timer > 0) return;
-      q.done = true;
-      q.active = false;
-      q.started = null;
-      if (q.timerID) clearInterval(q.timerID);
-      state.questsCompleted++;
-      addExp(q.exp);
-      checkMissions();
-      renderQuests();
-      renderProfile();
-      saveState();
-    }
-    function cancelQuest(i) {
-      let q = state.quests[i];
-      if (!q.active || q.done) return;
-      q.active = false;
-      q.timer = 60;
-      q.started = null;
-      if (q.timerID) clearInterval(q.timerID);
-      renderQuests();
-      saveState();
-    }
-    function tickQuests() {
-      state.quests.forEach((q, i) => {
-        if (q.active && !q.done && !q.timerID && q.timer>0 && q.started) {
-          let passed = Math.floor((Date.now() - q.started)/1000);
-          q.timer -= passed;
-          if(q.timer < 0) q.timer = 0;
-          q.started = Date.now();
-          q.timerID = setInterval(function(){
-            q.timer--;
-            if (q.timer <= 0) {
-              clearInterval(q.timerID);
-              q.timerID = null;
-            }
-            renderQuests();
-            saveState();
-          }, 1000);
-        }
-      });
+      document.getElementById('quests-list').innerHTML = '<div style="color:#181824;text-align:center;">Квесты скоро будут!</div>';
     }
     function renderMissions() {
-      let html = "";
-      state.missions.forEach((m, i) => {
-        let mClass = "list-item";
-        if (m.done) mClass += " done";
-        html += `<div class="${mClass}">
-          <div class="item-text">${m.text}</div>
-          <div class="item-controls">`;
-        if (!m.done && canCompleteMission(i)) {
-          html += `<button class="item-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
-        }
-        html += `</div></div>`;
-      });
-      document.getElementById('missions-list').innerHTML = html;
+      document.getElementById('missions-list').innerHTML = '<div style="color:#181824;text-align:center;">Миссии скоро будут!</div>';
     }
-    function canCompleteMission(i) {
-      let m = state.missions[i];
-      if (m.type === "quests") {
-        return state.questsCompleted >= m.needQuests && !m.done;
-      }
-      return !m.done;
-    }
-    function completeMission(i) {
-      let m = state.missions[i];
-      if (m.done) return;
-      m.done = true;
-      state.missionsCompleted++;
-      state.rep = (parseInt(state.rep) || 0) + (m.rep || 0);
-      renderMissions();
-      renderProfile();
-      saveState();
-    }
-    function addExp(amount) {
-      let prevLevel = state.level;
-      state.exp += amount;
-      while (state.level < 100 && state.exp >= state.expMax) {
-        state.exp -= state.expMax;
-        state.level++;
-        state.expMax += 2;
-      }
-      renderProfile();
-      saveState();
-    }
-    function checkMissions() {
-      renderMissions();
-    }
+
     loadState();
     renderProfile();
     setupEditable();
-    tickQuests();
     setInterval(renderProfile, 2000);
   </script>
 </body>

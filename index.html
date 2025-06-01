@@ -14,7 +14,7 @@
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
       /* Заменить ссылку ниже на свой фон, если надо */
-      --profile-bg: url('https://i.imgur.com/lexKDN9.jpeg');
+      --profile-bg: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80');
       --fields-bg: rgba(32,32,36,0.85);
       --fields-border: 1.8px solid #23232a;
       --fields-shadow: 0 1px 14px #18182440;
@@ -154,7 +154,7 @@
       width: 92%;
       background: rgba(30, 30, 34, 0.85);
       border-radius: 18px;
-      margin: 1.1em 0 0.5em 1.9em;
+      margin: 1.1em auto 0.5em auto;
       padding: 1.1em 1.25em 1.1em 1.25em;
       box-shadow: var(--fields-shadow);
       border: var(--fields-border);
@@ -164,8 +164,8 @@
       color: #fff;
       font-size: 1.03em;
       position: relative;
-      left: 18px;
       max-width: 350px;
+      left: 0;
     }
     .field-row {
       display: flex;
@@ -397,7 +397,7 @@
     }
     @media (max-width: 500px) {
       .main-container { max-width: 99vw; }
-      .fields-block { left: 0; margin-left: 0.5em; max-width: 99vw; }
+      .fields-block { left: 0; margin-left: auto; margin-right: auto; }
       .exp-bar-wrap { width: 98%; margin-left: 0.5em;}
       .header-block { padding-bottom: 10px; }
       .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}

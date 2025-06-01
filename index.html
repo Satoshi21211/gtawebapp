@@ -2,1056 +2,207 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>KINKY PARTY 21+</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css?family=Russo+One|Montserrat:400,700&display=swap" rel="stylesheet">
+  <title>DIOR RPG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-.event-bottom-title {
-  color: var(--main-accent);
-  font-size: 1.07em;
-  font-weight: 800;
-  letter-spacing: 1.1px;
-  margin-bottom: 0.8em;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 1px 8px #a32e2e77;
-  font-family: var(--main-title-font);
-}
-.event-bottom-desc {
-  color: #fff;
-  font-size: 1.01em;
-  text-align: center;
-  font-family: var(--main-font);
-  font-weight: 500;
-  margin-bottom: 1em;
-  line-height: 1.5;
-}
-.event-bottom-img {
-  max-width: 260px;
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 0.6em;
-  box-shadow: 0 2px 16px #e9457a55, 0 2px 9px #0004;
-  border: 2px solid #e9457a;
-  background: #fff;
-  object-fit: cover;
-}
-.event-bottom-block {
-  background: #23111aeb;
-  border-radius: 16px;
-  box-shadow: 0 2px 13px #e9457a33;
-  padding: 1.2em 1em 1.2em 1em;
-  margin: 2.1em 0 1.5em 0;
-  width: 92%;
-  max-width: 340px;
-  font-family: 'Russo One', Arial, sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: fadein .70s;
-  position: relative;
-  z-index: 1;
-}
-.event-bottom-title {
-  color: var(--main-accent);
-  font-size: 1.07em;
-  font-weight: 800;
-  letter-spacing: 1.1px;
-  margin-bottom: 0.8em;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 1px 8px #a32e2e77;
-  font-family: var(--main-title-font);
-}
-.event-bottom-desc {
-  color: #fff;
-  font-size: 1.01em;
-  text-align: center;
-  font-family: var(--main-font);
-  font-weight: 500;
-  margin-bottom: 1em;
-  line-height: 1.5;
-}
-.event-bottom-img {
-  max-width: 260px;
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 0.6em;
-  box-shadow: 0 2px 16px #e9457a55, 0 2px 9px #0004;
-  border: 2px solid #e9457a;
-  background: #fff;
-  object-fit: cover;
-}
-.bg-slideshow {
-  position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  z-index: 0;
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
-  transition: opacity 1.3s cubic-bezier(0.4,0,0.2,1);
-  will-change: opacity, background-image;
-  opacity: 1;
-  pointer-events: none;
-}
-.bg-slideshow.fade {
-  opacity: 0;
-}
-    :root {
-      --main-red: #5c1818;
-      --main-dark: #161014;
-      --main-accent: #e9457a;
-      --main-accent-hover: #b71e40;
-      --main-gray: #e5e3ef;
-      --main-btn-red: #a32e2e;
-      --main-btn-black: #221217;
-      --main-border: 2.5px solid #a32e2e;
-      --main-radius: 18px;
-      --main-shadow: 0 8px 32px #000a, 0 2px 8px #a32e2e66;
-      --main-font: 'Montserrat', Arial, sans-serif;
-      --main-title-font: 'Russo One', Arial, sans-serif;
-    }
-    html, body {
-      min-height: 100vh; height: 100%;
-      margin: 0; padding: 0;
-      width: 100vw;
-      background: var(--main-dark);
-      font-family: var(--main-font);
-      color: var(--main-gray);
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      overscroll-behavior-y: contain;
-      touch-action: manipulation;
-      overflow-x: hidden;
-      transition: background-image 1.2s cubic-bezier(0.4,0,0.2,1);
-    }
-    body {
-      scroll-behavior: smooth;
-    }
-    .header {
-      width: 100vw;
-      text-align: center;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      font-size: 1.19em;
-      color: #fff;
-      letter-spacing: 0.18em;
-      padding: 1.2em 0 0.7em 0;
-      background: linear-gradient(90deg, #2e0d16 0%, #7a2331 100%);
-      border-radius: 0 0 25px 25px;
-      text-shadow: none !important;
-      position: relative;
-      z-index: 20;
-      user-select: none;
-      font-weight: 400 !important;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1em;
-    }
-    .header .lang-btn {
-      margin-left: 1.1em;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      font-weight: 400;
-      font-size: 0.90em;
-      letter-spacing: 0.12em;
-      color: var(--main-accent);
-      background: transparent;
-      border: 2px solid var(--main-accent);
-      border-radius: 8px;
-      padding: 0.18em 0.85em;
-      cursor: pointer;
-      transition: background .16s, color .14s, border .13s;
-      outline: none;
-      text-transform: uppercase;
-      box-shadow: 0 2px 10px #e9457a22;
-      position: relative;
-      top: -2px;
-    }
-    .header .lang-btn.selected,
-    .header .lang-btn:active {
-      background: var(--main-accent);
-      color: #fff;
-      border: 2px solid #fff;
-    }
-    .header span {
-      color: #fff;
-      font-weight: 400 !important;
-      background: none !important;
-      -webkit-background-clip: unset !important;
-      -webkit-text-fill-color: unset !important;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 1.19em;
-      line-height: 1.2;
-    }
-    @media (max-width: 500px){
-      .header {
-        font-size: 1.07em;
-        padding: 1.15em 0 0.7em 0;
-        border-radius: 0 0 18px 18px;
-        gap: 0.6em;
-      }
-      .header span {
-  color: #fff;
-  font-weight: 400 !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  -webkit-text-fill-color: unset !important;
-  font-family: 'Montserrat', Arial, sans-serif !important;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 1.19em;
-  line-height: 1.2;
-}
-      .header .lang-btn {
-        font-size: 0.87em;
-        padding: 0.18em 0.68em;
-      }
-    }
-    .app-wrap {
-      min-height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 0 80px 0;
-    }
-    .app-main {
-      background: rgba(28,15,21,0.99);
-      border-radius: var(--main-radius);
-      box-shadow: var(--main-shadow);
-      padding: 1.4em 1.3em 1.2em 1.3em;
-      margin-top: 2em;
-      min-width: 320px;
-      max-width: 98vw;
-      width: 370px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-    }
-    @media (max-width: 500px){
-      .app-main {
-        padding: 1em 0.2em 1.15em 0.2em;
-        margin-top: 1.1em;
-        min-width: 98vw;
-        width: 98vw;
-        border-radius: 0;
-      }
-    }
-    .big-title {
-      font-family: var(--main-title-font);
-      font-size: 1.3em;
-      color: var(--main-accent);
-      margin-bottom: 0.7em;
-      text-shadow: 0 1px 12px #7a2331bb, 0 2px 6px #000c;
-      letter-spacing: 1.4px;
-      text-align: center;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-top: 0.1em;
-    }
-    .step-title {
-  font-family: var(--main-title-font);
-  font-size: 1.09em;
-  color: var(--main-gray);
-  margin-bottom: 1.2em;
-  text-shadow: 0 1px 8px #a32e2e99;
-  letter-spacing: 1.3px;
-  text-align: center;
-  font-weight: 700;
-  border-bottom: 2px solid #e9457a;   /* ← ВОТ ЭТА СТРОКА */
-  padding-bottom: 0.3em;
-  margin-top: 0.1em;
-  text-transform: none;
-}
-    .gender-select {
-      display: flex;
-      justify-content: center;
-      gap: 3vw;
-      margin-bottom: 1.8em;
-      width: 100%;
-      margin-top: 0.2em;
-    }
-    .gender-btn {
-      font-family: var(--main-title-font);
-      font-size: 1em;
-      padding: 0.49em 1.09em;
-      border: 2.2px solid #e9457a;
-      border-radius: 13px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 3px 12px #0007;
-      outline: none;
-      transition: background .14s, color .13s, box-shadow .13s, border .13s;
-      color: #fff;
-      background: #2e0d16;
-      opacity: 0.89;
-      margin: 0 0.06em;
-      display: flex;
-      align-items: center;
-      gap: 0.45em;
-      min-width: 75px;
-      min-height: 40px;
-    }
-    .gender-btn.selected,
-    .gender-btn:active {
-      opacity: 1;
-      background: var(--main-accent);
-      border: 2.2px solid #fff;
-      color: #fff;
-      box-shadow: 0 2px 8px #e9457a77;
-    }
-    .gender-icon {
-      font-size: 1.5em;
-      margin-bottom: 0;
-      display: block;
-      text-align: center;
-    }
-    .ticket-selection {
-      width: 100%;
-      margin-bottom: 2.2em;
-      display: flex;
-      flex-direction: column;
-      gap: 1.4em;
-    }
-    .ticket-row {
-      background: #2e0d16ef;
-      border-radius: 14px;
-      margin: 0.3em 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1.05em 0.5em 0.6em 0.5em;
-      min-width: 0;
-      box-shadow: 0 2px 13px #e9457a44;
-      border: none;
-    }
-    .ticket-type {
-      font-family: var(--main-title-font);
-      color: var(--main-accent);
-      font-size: 1.09em;
-      margin-bottom: 0.19em;
-      letter-spacing: 1.3px;
-      font-weight: 800;
-    }
-    .ticket-desc {
-      color: #fff;
-      font-size: 0.97em;
-      text-shadow: 0 0px 4px #e9457a33;
-      margin-bottom: 0.2em;
-      font-family: var(--main-font);
-      font-weight: 500;
-      text-align: center;
-    }
-    .ticket-btns {
-      display: flex;
-      gap: 1em;
-      align-items: center;
-      margin: 0.6em 0 0.3em 0;
-      justify-content: center;
-    }
-    .ticket-btn {
-      font-size: 1.07em;
-      font-family: var(--main-title-font);
-      background: var(--main-accent);
-      color: #fff;
-      border-radius: 10px;
-      border: 2px solid #fff;
-      padding: 0.13em 0.9em;
-      font-weight: 900;
-      margin: 0 0.09em;
-      outline: none;
-      box-shadow: 0 2px 9px #e9457a33;
-      cursor: pointer;
-      transition: background .13s, color .12s, border .13s;
-    }
-    .ticket-btn:active {
-      background: #fff;
-      color: var(--main-accent);
-      border-color: var(--main-accent);
-    }
-    .ticket-count {
-      min-width: 2.2em;
-      display: inline-block;
-      font-size: 1.15em;
-      font-family: var(--main-title-font);
-      color: #fff !important;
-      letter-spacing: 1px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .total-price-row {
-      width: 100%;
-      margin-top: 0.8em;
-      margin-bottom: 0.5em;
-      text-align: center;
-      font-family: var(--main-title-font);
-      font-size: 1.11em;
-      color: #fff;
-      letter-spacing: 1.1px;
-      text-shadow: 0 1px 7px #e9457a99;
-      background: #2e0d16e9;
-      padding: 0.7em 0;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px #e9457a11;
-      border: none;
-      font-weight: 900;
-      margin-bottom: 1.2em;
-    }
-    .total-price-row {
-  color: #fff !important;
-  text-shadow: none !important;
-  border: 1.5px solid var(--main-accent);
-}
-.total-price-row span {
-  color: #fff !important;
-}
-    .buy-btn {
-      width: 100%;
-      font-size: 1.11em;
-      font-family: var(--main-title-font);
-      background: var(--main-accent);
-      color: #fff;
-      border-radius: 13px;
-      border: 2.3px solid #fff;
-      padding: 1em 0;
-      font-weight: 900;
-      margin-top: 1.1em;
-      outline: none;
-      box-shadow: 0 2px 18px #e9457a44, 0 2px 10px #fff2;
-      cursor: pointer;
-      transition: filter .13s, background .18s, color .13s, border .13s;
-      letter-spacing: 1.2px;
-      display: block;
-    }
-    .buy-btn:active {
-      filter: brightness(0.97);
-      background: #fff;
-      color: var(--main-accent);
-      border-color: var(--main-accent);
-    }
-    .buy-btn[disabled] {
-      opacity: 0.55 !important;
-      filter: grayscale(1) !important;
-      cursor: not-allowed !important;
-    }
-    .gender-hint {
-      color: #fff;
-      font-size: 0.93em;
-      margin-bottom: 0.7em;
-      font-family: var(--main-font);
-      letter-spacing: 0.2px;
-      font-weight: 500;
-      text-align: center;
-      margin-top: 0.6em;
-    }
-    .fadein {
-      animation: fadein .60s;
-    }
-    @keyframes fadein {
-      0%{opacity:0;transform:translateY(24px);}
-      100%{opacity:1;transform:translateY(0);}
-    }
-    .qr-preview {
-      margin: 1.2em 0 0.25em 0;
-      text-align: center;
-    }
-    .qr-img {
-      width: 120px;
-      height:120px;
-      display: block;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 16px #000a;
-      object-fit: contain;
-      border:2px solid var(--main-accent);
-    }
-    .success-msg, .pay-msg {
-      color: var(--main-accent);
-      font-size: 1.13em;
-      font-family: var(--main-title-font);
-      font-weight: 900;
-      margin: 1.1em 0 0.7em 0;
-      text-align: center;
-      letter-spacing: 1.1px;
-    }
-    .pay-amount {
-      color: #fff !important;
-      background: var(--main-accent);
-      border-radius: 8px;
-      font-size: 1.13em;
-      font-family: var(--main-title-font);
-      font-weight: 900;
-      margin: 1.1em auto 1.2em auto;
-      padding: 0.6em 0.7em;
-      max-width: 150px;
-      letter-spacing: 1.2px;
-      border: 2px solid #fff;
-      box-shadow: 0 2px 10px #e9457a33;
-      text-align: center;
-      user-select: all;
-      display: inline-block;
-    }
-    .zelle-row {
-      background: #2e0d16e9;
-      color: #fff;
-      border-radius: 9px;
-      padding: 0.45em 0.7em;
-      margin: 1.2em 0 0.7em 0;
-      font-family: var(--main-title-font);
-      font-size: 1.02em;
-      border: 1.2px solid var(--main-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8em;
-      user-select: all;
-      position: relative;
-      max-width: 99vw;
-      flex-wrap: wrap;
-    }
-    .zelle-addr {
-      font-family: monospace;
-      color: #fff;
-      background: #1a1116;
-      padding: 0.13em 0.42em;
-      border-radius: 6px;
-      font-size: 0.98em;
-      letter-spacing: 0.5px;
-      user-select: all;
-      margin-right: 0.2em;
-      max-width: 125px;
-      overflow-x: auto;
-      white-space: nowrap;
-      display: inline-block;
-    }
-    .copy-btn, .upload-btn, .save-qr-btn {
-      background: var(--main-accent);
-      color: #fff;
-      font-family: var(--main-title-font);
-      font-size: 0.98em;
-      border: none;
-      border-radius: 6px;
-      padding: 0.14em 0.65em;
-      cursor: pointer;
-      font-weight: 800;
-      transition: background .13s, color .12s, opacity .12s;
-      outline: none;
-      margin-left: 0.1em;
-    }
-    .copy-btn:active, .upload-btn:active, .save-qr-btn:active {
-      background: #fff;
-      color: var(--main-accent);
-      opacity: 0.7;
-    }
-    .upload-btn input[type="file"] {
-      display: none;
-    }
-    .screenshot-preview {
-      display: block;
-      max-width: 240px;
-      margin: 1.1em auto 0.4em auto;
-      border-radius: 9px;
-      box-shadow: 0 2px 12px #e9457a33, 0 2px 9px #0005;
-      border: 2px solid var(--main-accent);
-      background: #fff;
-      object-fit: contain;
-    }
-    .timer {
-      color: #fff;
-      font-family: var(--main-title-font);
-      font-size: 1.18em;
-      margin: 0.9em 0 0 0;
-      text-align: center;
-      letter-spacing: 1.1px;
-      font-weight: 900;
-      background: #a32e2e55;
-      border-radius: 8px;
-      padding: 0.25em 0.6em;
-      display: inline-block;
-      min-width: 68px;
-      box-shadow: 0 2px 10px #e9457a22;
-      border: 1.2px solid var(--main-accent);
-    }
-    .promo-block {
-      margin-top: 1.2em;
-      text-align: center;
-      padding: 0.7em 0.8em 0.65em 0.8em;
-      background: linear-gradient(90deg, #e9457a 30%, #a32e2e 100%);
-      border-radius: 11px;
-      box-shadow: 0 2px 10px #e9457a55, 0 2px 9px #0003;
-      font-family: var(--main-title-font);
-      color: #fff;
-      font-size: 1.08em;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      border: 2px solid #fff;
-      text-transform: uppercase;
-      user-select: all;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6em;
-    }
-    .promo-block .promo-title {
-      margin-bottom: 0.3em;
-      text-transform: none;
-      font-size: 0.98em;
-      font-family: 'Montserrat', Arial, sans-serif;
-      letter-spacing: 0.04em;
-      font-weight: 600;
-    }
-    .promo-block .promo-qr {
-      width: 90px;
-      height: 90px;
-      border-radius: 8px;
-      background: #fff;
-      border: 2px solid #fff;
-      box-shadow: 0 2px 8px #e9457a88;
-      object-fit: contain;
-      margin: 0 auto;
-      display: block;
-    }
-    .promo-block .save-qr-btn {
-      margin: 0.7em 0 0 0;
-      padding: 0.30em 0.9em;
-      font-size: 0.98em;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      box-shadow: 0 2px 8px #e9457a44;
-      border-radius: 7px;
-      border: 2px solid #fff;
-    }
-    .app-footer {
-      position: fixed;
-      bottom: 0; left: 0; width: 100vw;
-      background: rgba(36,14,20,0.93);
-      color: #fff;
-      text-align: center;
-      font-size: 1.19em;
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      letter-spacing: 0.8px;
-      padding: 0.58em 0 0.52em 0;
-      z-index: 999;
-      box-shadow: 0 -3px 12px #0004;
-      user-select: none;
-      font-weight: 400 !important;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-    .app-footer span {
-      font-family: 'Montserrat', Arial, sans-serif !important;
-      font-weight: 200 !important;
-      text-transform: uppercase;
-      letter-spacing: 0.13em;
-      font-size: 1.1em;
-      color: #fff;
-      opacity: 0.7;
-      letter-spacing: 0.2em;
-    }
+    body { background: #181824; color: #fff; font-family: 'Montserrat', Arial, sans-serif; margin: 0; padding: 0; }
+    .game-box { max-width: 400px; margin: 40px auto; background: #23233a; border-radius: 16px; box-shadow: 0 4px 20px #0008; padding: 24px 18px 28px 18px; }
+    .title { font-size: 1.44em; font-weight: bold; letter-spacing: 2px; margin-bottom: 1em; text-align: center; }
+    .row { margin-bottom: 0.7em; display: flex; justify-content: space-between; align-items: center; }
+    .label { color: #b7b8e7; font-weight: 500; }
+    .val, .edit-input { background: #2d2d45; color: #fff; border: 1px solid #393963; border-radius: 8px; padding: 4px 9px; min-width: 60px; text-align: right; font-size: 1.08em;}
+    .val[contenteditable="true"] { outline: 2px solid #e9457a; }
+    .stat-btn { margin-left: 7px; padding: 2px 9px; font-size: 1.05em; background: #e9457a; color: #fff; border: none; border-radius: 7px; cursor: pointer; }
+    .stat-btn:active { background: #af2654; }
+    .section-title { color: #e9457a; font-size: 1.16em; font-weight: 700; margin: 1em 0 0.4em 0; }
+    .quests, .missions, .progress { margin: 1em 0 1em 0; }
+    .quest, .mission { margin-bottom: 0.67em; background: #1c1c32; border-radius: 8px; padding: 7px 10px 7px 10px; display: flex; align-items: center; justify-content: space-between;}
+    .quest.done, .mission.done { opacity: 0.5; text-decoration: line-through; }
+    .quest-title, .mission-title { flex: 1 1 auto; }
+    .complete-btn { margin-left: 10px; padding: 2px 8px; font-size: 0.94em; background: #b7b8e7; color: #23233a; border: none; border-radius: 6px; cursor: pointer; }
+    .complete-btn:active { background: #e9457a; color: #fff; }
+    .stat-row { display: flex; align-items: center; margin-bottom: 0.5em;}
+    .stat-row label { flex: 1; }
+    .stat-num { width: 50px; margin-left: 7px; }
+    .divider { border-bottom: 1px solid #2c2c44; margin: 1.2em 0; }
   </style>
 </head>
 <body>
-<div class="bg-slideshow" id="bgSlideshow"></div>
-  <audio id="bg-music" src="https://files.catbox.moe/dt2o9k.mp3" autoplay loop></audio>
-  <div class="header">
-    <span id="main-title">KINKY PARTY 21+</span>
-    <button class="lang-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+  <div class="game-box">
+    <div class="title">DIOR || УРОВЕНЬ: <span id="level">1</span> || EXP: <span id="exp">0</span>/<span id="expMax">8</span></div>
+    <div class="row"><span class="label">ЛОКАЦИЯ:</span><span class="val" contenteditable="true" id="location">USA, LA</span></div>
+    <div class="row"><span class="label">PASS:</span><span class="val" contenteditable="true" id="pass">NO LEGAL</span></div>
+    <div class="row"><span class="label">РАБОТА:</span><span class="val" contenteditable="true" id="job">НЕТУ</span></div>
+    <div class="row"><span class="label">РЕПУТАЦИЯ:</span>
+      <span class="val" id="rep">0</span>
+      <button class="stat-btn" onclick="addRep(1)">+1</button>
+      <button class="stat-btn" onclick="addRep(-1)">-1</button>
+    </div>
+    <div class="row"><span class="label">ДЕНЬГИ:</span><span class="val" contenteditable="true" id="money">0$</span></div>
+    <div class="row"><span class="label">CRYPTO:</span><span class="val" contenteditable="true" id="crypto">0$</span></div>
+
+    <div class="divider"></div>
+    <div class="row"><span class="label">ПРОЙДЕНО КВЕСТОВ:</span><span class="val" id="questsDone">0</span></div>
+    <div class="row"><span class="label">ПРОЙДЕНО МИСИЙ:</span><span class="val" id="missionsDone">0</span></div>
+    <div class="divider"></div>
+
+    <div class="section-title">СДЕЛАНО ОТЖИМАНИЯ:</div>
+    <div class="stat-row"><label>Отжимания</label><input class="stat-num" type="number" id="pushups" min="0" value="0"></div>
+    <div class="section-title">СДЕЛАНО ПРЕССА:</div>
+    <div class="stat-row"><label>Пресс</label><input class="stat-num" type="number" id="abs" min="0" value="0"></div>
+
+    <div class="section-title">КВЕСТЫ</div>
+    <div class="quests" id="quests"></div>
+    <div class="section-title">🧠 ПРОКАЧАТЬ АККАУНТ</div>
+    <div class="progress" id="progress"></div>
+    <div class="section-title">🪫🔋 МИСИИ</div>
+    <div class="missions" id="missions"></div>
   </div>
-  <div class="app-wrap">
-    <div class="app-main" id="main-step"></div>
-  <div class="app-footer">
-    <span id="footer-text">A LOT OF SEX</span>
-  </div>
+
   <script>
-    // Слайдшоу фоновые картинки (замени на свои)
-    const bgImgs = [
-  "https://i.imgur.com/KZUhhEH.jpeg",
-  "https://i.imgur.com/4G2EBns.jpeg",
-  "https://i.imgur.com/5EIbN30.jpeg",
-  "https://i.imgur.com/R0pCxQG.jpeg"
-];
-bgImgs.forEach(src => { const img = new Image(); img.src = src; });
-
-let bgIndex = 0;
-const bgDiv = document.getElementById('bgSlideshow');
-bgDiv.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
-
-function nextBg() {
-  bgDiv.classList.add('fade');
-  setTimeout(() => {
-    bgIndex = (bgIndex + 1) % bgImgs.length;
-    bgDiv.style.backgroundImage = `url('${bgImgs[bgIndex]}')`;
-    bgDiv.classList.remove('fade');
-  }, 1200); // 1200 должно совпадать с transition: opacity 1.3s ...
-  setTimeout(nextBg, 6000);
-}
-setTimeout(nextBg, 6000);
-    // QR-код PNG (замени на свой фирменный QR)
-    const KINKY_QR_PNG = "https://i.imgur.com/3eyz0hE.png";
-
-    // Локализация
-    const langData = {
-      ru: {
-        title: "KINKY PARTY 21+",
-        footer: "A LOT OF SEX",
-        buyQr: "Приобрести QR билет",
-        selectGender: "выберите ваш пол",
-        stepGenderHint: "Вы на шаг впереди к незабываемой секс ночи которая пройдет в Chicago",
-        male: "Парень",
-        female: "Девушка",
-        selectTicket: "выберите билет",
-        funDesc: "Проход на мероприятие",
-        vipDesc: "Проход в секс-зону<br>Бесплатные еда/бар",
-        total: "Итого",
-        buyBtn: "Оформить QR билет",
-        backBtn: "← Назад",
-        payTitle: "Оплата QR билета",
-        zelle: "ZELLE:",
-        copy: "Скопировать",
-        uploadScreenshot: "Загрузить скриншот",
-        payMsg: (count) => `Оплатите указанную сумму для получения ${count} ${count === 1 ? "билета" : "билетов"}:`,
-        payAmount: (sum) => `${sum}$`,
-        afterPay: "После того как переведете указанную сумму на ZELLE счет, загрузите скриншот оплаты и нажимайте \"Оплата завершена\" после этого ожидайте 5 минут не покидая эту страницу",
-        wait: "Ожидайте",
-        payDone: "Оплата завершена",
-        ticketsTitle: "Ваши билеты",
-        congrats: (type, count) => `Поздравляем вас с успешной покупкой ${type} (${count})`,
-        buyMore: "Купить ещё билет",
-        saveQr: "Сохраните QR код"
-      },
-      en: {
-        title: "KINKY PARTY 21+",
-        footer: "A LOT OF SEX",
-        buyQr: "Buy QR Ticket",
-        selectGender: "select your gender",
-        stepGenderHint: "You are one step closer to an unforgettable sex night in Chicago",
-        male: "Male",
-        female: "Female",
-        selectTicket: "choose a ticket",
-        funDesc: "Entry to the event",
-        vipDesc: "Access to sex zone<br>Free food/bar",
-        total: "Total",
-        buyBtn: "Order QR Ticket",
-        backBtn: "← Back",
-        payTitle: "QR Ticket Payment",
-        zelle: "ZELLE:",
-        copy: "Copy",
-        uploadScreenshot: "Upload screenshot",
-        payMsg: (count) => `Pay the specified amount to get ${count} ${count === 1 ? "ticket" : "tickets"}:`,
-        payAmount: (sum) => `${sum}$`,
-        afterPay: "After transferring the amount to the ZELLE account, upload a payment screenshot and click \"Payment complete\", then wait 5 minutes without leaving this page",
-        wait: "Please wait",
-        payDone: "Payment complete",
-        ticketsTitle: "Your tickets",
-        congrats: (type, count) => `Congratulations on your successful purchase of ${type} (${count})`,
-        buyMore: "Buy another ticket",
-        saveQr: "Save QR code"
-      }
+    // Данные игрока
+    let state = {
+      level: 1,
+      exp: 0,
+      expMax: 8,
+      rep: 0,
+      questsDone: 0,
+      missionsDone: 0,
+      quests: [
+        { text: "Заработать 200$ [+1 EXP]", exp: 1, done: false },
+        { text: "Гигиена 30 дней [+1 EXP]", exp: 1, done: false },
+        { text: "Не курить 7 дней [+2 EXP]", exp: 2, done: false },
+        { text: "Сдать на права [+3 EXP]", exp: 3, done: false },
+        { text: "Отложить 1000$ [+3 EXP]", exp: 3, done: false },
+        { text: "Заняться зубами [+5 EXP]", exp: 5, done: false },
+        { text: "Получить машину [+5 EXP]", exp: 5, done: false },
+        { text: "Настроить работу [+5 EXP]", exp: 5, done: false },
+        { text: "Выплатить кредит [+5 EXP]", exp: 5, done: false },
+        { text: "Набрать слегка вес [+5 EXP]", exp: 5, done: false },
+      ],
+      progress: [
+        { text: "Прогулка далеко от дома [+2 EXP]", exp: 2, done: false },
+        { text: "Каждая прочитанная книга [+3 EXP]", exp: 3, done: false },
+        { text: "Каждый спортивный день [+2 EXP]", exp: 2, done: false },
+      ],
+      missions: [
+        { text: "Начнем знакомство, Mr.DIOR<br><small>Выполни: 3 начальных квеста [+1 REP]</small>", rep: 1, needQuests: 3, done: false, type: "quests" },
+        { text: "Не пора бы поработать?<br><small>Запустить свой проект в работу, и по мимо заработай первые 200$ [+1 REP]</small>", rep: 1, done: false, type: "custom" },
+        { text: "Ты в деле! Поехали уже…<br><small>Полностью сдать на вод. права [+🔑]</small>", rep: 0, done: false, type: "custom" },
+        { text: "Легальность мое второе имя.<br><small>Найти легальную работу за кэш</small>", rep: 0, done: false, type: "custom" },
+      ]
     };
-    let lang = "ru";
-    let gender = null;
-    let tickets = { fun: 0, vip: 0 };
-    let prices = {
-      male: { fun: 200, vip: 400 },
-      female: { fun: 100, vip: 200 }
-    };
-    let screenshotDataUrl = null;
-    let confirmSeconds = 120;
-    let payTimerInterval = null;
-    let payTimerSeconds = 0;
-    let canClickPay = false;
 
-    function setLang(newLang) {
-      lang = newLang;
-      document.getElementById('main-title').textContent = langData[lang].title;
-      document.getElementById('footer-text').textContent = langData[lang].footer;
-      document.getElementById('lang-btn').textContent = lang === 'ru' ? 'EN' : 'RU';
-      renderGenderSelect();
-    }
-    function toggleLang() {
-      setLang(lang === 'ru' ? 'en' : 'ru');
+    function render() {
+      document.getElementById('level').textContent = state.level;
+      document.getElementById('exp').textContent = state.exp;
+      document.getElementById('expMax').textContent = state.expMax;
+      document.getElementById('rep').textContent = state.rep;
+      document.getElementById('questsDone').textContent = state.questsDone;
+      document.getElementById('missionsDone').textContent = state.missionsDone;
+
+      // Квесты
+      let qHtml = '';
+      state.quests.forEach((q, i) => {
+        qHtml += `<div class="quest${q.done ? ' done' : ''}">
+          <span class="quest-title">${q.text}</span>
+          ${!q.done ? `<button class="complete-btn" onclick="completeQuest(${i})">Выполнено</button>` : ''}
+        </div>`;
+      });
+      document.getElementById('quests').innerHTML = qHtml;
+
+      // Прокачка аккаунта
+      let pHtml = '';
+      state.progress.forEach((p, i) => {
+        pHtml += `<div class="quest${p.done ? ' done' : ''}">
+          <span class="quest-title">${p.text}</span>
+          ${!p.done ? `<button class="complete-btn" onclick="completeProgress(${i})">Выполнено</button>` : ''}
+        </div>`;
+      });
+      document.getElementById('progress').innerHTML = pHtml;
+
+      // Миссии
+      let mHtml = '';
+      state.missions.forEach((m, i) => {
+        mHtml += `<div class="mission${m.done ? ' done' : ''}">
+          <span class="mission-title">${m.text}</span>
+          ${!m.done ? `<button class="complete-btn" onclick="completeMission(${i})">Выполнено</button>` : ''}
+        </div>`;
+      });
+      document.getElementById('missions').innerHTML = mHtml;
     }
 
-    function renderGenderSelect() {
-      clearPayTimer();
-      screenshotDataUrl = null;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">${langData[lang].buyQr}</div>
-        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectGender}</div>
-        <div class="gender-select fadein">
-          <button class="gender-btn male${gender==='male'?' selected':''}" onclick="selectGender('male')">
-            <span class="gender-icon">👨</span>${langData[lang].male}
-          </button>
-          <button class="gender-btn female${gender==='female'?' selected':''}" onclick="selectGender('female')">
-            <span class="gender-icon">👩</span>${langData[lang].female}
-          </button>
-        </div>
-        <div class="gender-hint fadein">${langData[lang].stepGenderHint}</div>
-      `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-    }
-    function selectGender(g) {
-      gender = g;
-      tickets = { fun: 0, vip: 0 };
-      renderTicketSelection();
-    }
-    function renderTicketSelection() {
-      let priceFun = prices[gender].fun;
-      let priceVip = prices[gender].vip;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein">${langData[lang].buyQr}</div>
-        <div class="step-title fadein" style="margin-bottom:1.3em;">${langData[lang].selectTicket}</div>
-        <div class="ticket-selection fadein">
-          <div class="ticket-row">
-            <div class="ticket-type">QR FUN</div>
-            <div class="ticket-desc">${langData[lang].funDesc}</div>
-            <div class="ticket-btns">
-              <button class="ticket-btn" onclick="changeTicket('fun', -1)">-</button>
-              <span class="ticket-count" id="fun-count">${tickets.fun}</span>
-              <button class="ticket-btn" onclick="changeTicket('fun', 1)">+</button>
-            </div>
-            <div style="color:var(--main-accent);margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceFun}$</div>
-          </div>
-          <div class="ticket-row">
-            <div class="ticket-type">QR VIP</div>
-            <div class="ticket-desc">${langData[lang].vipDesc}</div>
-            <div class="ticket-btns">
-              <button class="ticket-btn" onclick="changeTicket('vip', -1)">-</button>
-              <span class="ticket-count" id="vip-count">${tickets.vip}</span>
-              <button class="ticket-btn" onclick="changeTicket('vip', 1)">+</button>
-            </div>
-            <div style="color:var(--main-accent);margin-top:0.3em;font-family:'Montserrat',sans-serif;">${priceVip}$</div>
-          </div>
-        </div>
-        <div class="total-price-row fadein">
-          ${langData[lang].total}: <span id="total-price">${getTotalPrice()}$</span>
-        </div>
-        <button class="buy-btn fadein" onclick="showPayment()" id="to-pay-btn"
-            ${getTotalPrice()===0?'disabled style="opacity:0.55;filter:grayscale(1);cursor:not-allowed;"':''}>
-          ${langData[lang].buyBtn}
-        </button>
-        <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
-          ${langData[lang].backBtn}
-        </button>
-      `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-    }
-    function changeTicket(type, delta) {
-      tickets[type] += delta;
-      if(tickets[type]<0) tickets[type]=0;
-      document.getElementById(type+'-count').textContent = tickets[type];
-      document.getElementById('total-price').textContent = getTotalPrice()+'$';
-      let btn = document.getElementById('to-pay-btn');
-      if (getTotalPrice()===0) {
-        btn.disabled = true;
-        btn.style.opacity = 0.55;
-        btn.style.filter = "grayscale(1)";
-        btn.style.cursor = "not-allowed";
-      } else {
-        btn.disabled = false;
-        btn.style.opacity = 1;
-        btn.style.filter = "none";
-        btn.style.cursor = "pointer";
+    // Квест выполнен
+    window.completeQuest = function(i) {
+      if (state.quests[i].done) return;
+      state.quests[i].done = true;
+      state.questsDone++;
+      addExp(state.quests[i].exp);
+      // Проверка на миссию "3 начальных квеста"
+      if (!state.missions[0].done && state.questsDone >= state.missions[0].needQuests) {
+        addRep(state.missions[0].rep);
+        state.missions[0].done = true;
+        state.missionsDone++;
       }
-    }
-    function getTotalPrice() {
-      if (!gender) return 0;
-      return tickets.fun * prices[gender].fun + tickets.vip * prices[gender].vip;
-    }
-    function getTotalTickets() {
-      return tickets.fun + tickets.vip;
-    }
-    function showPayment() {
-      let sum = getTotalPrice();
-      let count = getTotalTickets();
-      screenshotDataUrl = null;
-      clearPayTimer();
-      canClickPay = false;
-      payTimerSeconds = confirmSeconds;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].payTitle}</div>
-        <div class="zelle-row fadein" style="justify-content:left;">
-          <span style="font-size:1em;">${langData[lang].zelle}</span> 
-          <span class="zelle-addr" id="zelle-copy">klubnika@mail.ru</span>
-          <button class="copy-btn" onclick="copyZelle()">${langData[lang].copy}</button>
-          <label class="upload-btn" style="margin-left:0.2em;">
-            ${langData[lang].uploadScreenshot}
-            <input type="file" accept="image/*" id="screenshot-upload" onchange="handleScreenshot(event)">
-          </label>
-        </div>
-        <div id="screenshot-preview-wrap"></div>
-        <div class="pay-msg fadein" style="margin-top:0.8em;">
-          ${langData[lang].payMsg(count)}
-        </div>
-        <div class="pay-amount fadein">${langData[lang].payAmount(sum)}</div>
-        <div class="gender-hint fadein" style="margin-top:1.15em;">
-          ${langData[lang].afterPay}
-        </div>
-        <div id="pay-timer-wrap" style="text-align:center;margin-top:0.8em;"></div>
-        <button class="buy-btn fadein" id="pay-finish-btn" style="margin-top:1.1em;" disabled>
-          ${langData[lang].payDone}
-        </button>
-        <button class="buy-btn fadein" style="margin-top:0.7em;background:#2e0d16;color:var(--main-accent);border:2px solid var(--main-accent);" onclick="renderGenderSelect()">
-          ${langData[lang].backBtn}
-        </button>
-      `;
-      setTimeout(()=>{window.scrollTo({top:0,behavior:'smooth'});}, 10);
-      startPayTimer();
-      document.getElementById('pay-finish-btn').onclick = function() {
-        if (canClickPay) showTicketResult();
-      };
-    }
-    function copyZelle() {
-      const mail = "klubnika@mail.ru";
-      if (navigator?.clipboard) {
-        navigator.clipboard.writeText(mail);
-      }
-      const btn = event.target;
-      btn.textContent = langData[lang].copy === 'Copy' ? "Copied!" : "Скопировано!";
-      btn.style.background = "#fff";
-      btn.style.color = "var(--main-accent)";
-      setTimeout(() => {
-        btn.textContent = langData[lang].copy;
-        btn.style.background = "var(--main-accent)";
-        btn.style.color = "#fff";
-      }, 1200);
-    }
-    function handleScreenshot(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        screenshotDataUrl = e.target.result;
-        document.getElementById('screenshot-preview-wrap').innerHTML = `
-          <img src="${screenshotDataUrl}" class="screenshot-preview" alt="Скриншот оплаты">
-        `;
-        if (!canClickPay) {
-          enablePayButton();
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-    function enablePayButton() {
-      if (payTimerSeconds > 0) return;
-      canClickPay = true;
-      let btn = document.getElementById('pay-finish-btn');
-      btn.disabled = false;
-      btn.style.opacity = 1;
-      btn.style.filter = "none";
-      btn.style.cursor = "pointer";
-    }
-    function startPayTimer() {
-      payTimerSeconds = confirmSeconds;
-      updatePayTimer();
-      payTimerInterval = setInterval(function() {
-        payTimerSeconds--;
-        updatePayTimer();
-        if (payTimerSeconds <= 0) {
-          clearPayTimer();
-          if (screenshotDataUrl) enablePayButton();
-          else {
-            let btn = document.getElementById('pay-finish-btn');
-            btn.disabled = true;
-            btn.style.opacity = 0.55;
-            btn.style.filter = "grayscale(1)";
-            btn.style.cursor = "not-allowed";
-          }
-        }
-      }, 1000);
-    }
-    function updatePayTimer() {
-      let timerWrap = document.getElementById('pay-timer-wrap');
-      if (!timerWrap) return;
-      if (payTimerSeconds > 0) {
-        let min = Math.floor(payTimerSeconds/60).toString().padStart(2,'0');
-        let sec = (payTimerSeconds%60).toString().padStart(2,'0');
-        timerWrap.innerHTML = `<div class="timer">${langData[lang].wait}: ${min}:${sec}</div>`;
-        let btn = document.getElementById('pay-finish-btn');
-        btn.disabled = true;
-        btn.style.opacity = 0.55;
-        btn.style.filter = "grayscale(1)";
-        btn.style.cursor = "not-allowed";
-      } else {
-        timerWrap.innerHTML = "";
-        if (screenshotDataUrl) enablePayButton();
-      }
-    }
-    function clearPayTimer() {
-      if (payTimerInterval) clearInterval(payTimerInterval);
-      payTimerInterval = null;
-      payTimerSeconds = 0;
-      let timerWrap = document.getElementById('pay-timer-wrap');
-      if (timerWrap) timerWrap.innerHTML = '';
-    }
-    function showTicketResult() {
-      let count = getTotalTickets();
-      let funCount = tickets.fun, vipCount = tickets.vip;
-      let blocks = '';
-      if (funCount > 0) {
-        blocks += ticketBlock('FUN', funCount);
-      }
-      if (vipCount > 0) {
-        blocks += ticketBlock('VIP', vipCount);
-      }
-      let typeText = '';
-      if (funCount && !vipCount) {
-        typeText = lang === 'ru' ? 'FUN' : 'FUN';
-      } else if (!funCount && vipCount) {
-        typeText = lang === 'ru' ? 'VIP' : 'VIP';
-      } else if (funCount && vipCount) {
-        typeText = lang === 'ru' ? 'FUN, VIP' : 'FUN, VIP';
-      }
-      let total = funCount + vipCount;
-      document.getElementById('main-step').innerHTML = `
-        <div class="big-title fadein" style="margin-bottom:0.8em;">${langData[lang].ticketsTitle}</div>
-        <div class="success-msg fadein" style="color:#fff;margin-bottom:1.2em;">
-          ${langData[lang].congrats(typeText, total)}
-          <br>
-          <span style="font-size:1.3em;color:var(--main-accent);font-family:var(--main-title-font);">
-            ${funCount > 0 ? 'FUN x'+funCount : ''} ${vipCount > 0 ? 'VIP x'+vipCount : ''}
-          </span>
-        </div>
-        ${blocks}
-        <button class="buy-btn fadein" style="margin-top:2.2em;" onclick="renderGenderSelect()">
-          ${langData[lang].buyMore}
-        </button>
-      `;
-    }
-    function ticketBlock(ticketType, count) {
-      return `<div class="ticket-row" style="margin-top:1.3em;">
-        <div class="ticket-type">QR ${ticketType}</div>
-        <div class="ticket-desc">x${count}</div>
-        <div class="promo-block">
-          <div class="promo-title">${langData[lang].saveQr}</div>
-          <img src="${KINKY_QR_PNG}" class="promo-qr" alt="QR PROMO" id="promo-qr-${ticketType}">
-          <button class="save-qr-btn" onclick="saveQr('${ticketType}')">${lang === 'ru' ? 'Скачать' : 'Download'}</button>
-        </div>
-      </div>`;
-    }
-    // Скачать QR-код
-    function saveQr(type) {
-      const img = document.getElementById('promo-qr-' + type);
-      const link = document.createElement('a');
-      link.href = img.src;
-      link.download = type + '_QR_KINKY.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    // Initial render and lang
-    setLang(lang);
-    window.onload = () => {
-      setTimeout(()=>{ window.scrollTo({top:0,behavior:"smooth"}); }, 80);
+      render();
     };
-    document.addEventListener('submit', e=>e.preventDefault());
+
+    // Прогресс выполнен
+    window.completeProgress = function(i) {
+      if (state.progress[i].done) return;
+      state.progress[i].done = true;
+      addExp(state.progress[i].exp);
+      render();
+    };
+
+    // Миссия выполнена
+    window.completeMission = function(i) {
+      if (state.missions[i].done) return;
+      state.missions[i].done = true;
+      if (state.missions[i].rep) addRep(state.missions[i].rep);
+      state.missionsDone++;
+      render();
+    };
+
+    // Добавить EXP и апнуть уровень при необходимости
+    function addExp(amount) {
+      state.exp += amount;
+      while (state.exp >= state.expMax) {
+        state.exp -= state.expMax;
+        state.level++;
+        state.expMax = Math.floor(state.expMax * 1.4 + 2);
+      }
+      render();
+    }
+
+    // Добавить репутацию
+    window.addRep = function(amount) {
+      state.rep += amount;
+      if (state.rep < 0) state.rep = 0;
+      render();
+    };
+
+    // Сохранение и восстановление pushups/abs
+    document.getElementById('pushups').addEventListener('change', function() {
+      localStorage.setItem('pushups', this.value);
+    });
+    document.getElementById('abs').addEventListener('change', function() {
+      localStorage.setItem('abs', this.value);
+    });
+    document.getElementById('pushups').value = localStorage.getItem('pushups') || 0;
+    document.getElementById('abs').value = localStorage.getItem('abs') || 0;
+
+    // Сохранение кастомных значений (деньги, крипто, локация и т.п.)
+    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
+      el.addEventListener('input', () => {
+        localStorage.setItem(el.id, el.textContent);
+      });
+      let saved = localStorage.getItem(el.id);
+      if (saved !== null) el.textContent = saved;
+    });
+
+    // Рендер на старте
+    render();
   </script>
 </body>
 </html>

@@ -16,6 +16,7 @@
       --fields-bg: #23232a;
       --fields-border: 1.8px solid #23232a;
       --fields-shadow: 0 1px 14px #18182440;
+      --indicator-bg: rgba(255,255,255,0.07);
     }
     body {
       background: var(--main-bg);
@@ -180,36 +181,33 @@
       text-transform: uppercase;
       min-width: 140px;
     }
-    .field-val,
-    .completed-number {
-      background: none;
-      color: var(--main-yellow);
-      border: none;
-      border-radius: 0;
-      padding: 0;
-      min-width: 0;
+    .field-indicator-block {
+      background: var(--indicator-bg);
+      border-radius: 8px;
+      padding: 5px 13px;
+      min-width: 80px;
       max-width: 170px;
       text-align: right;
       font-size: 1.09em;
       font-family: var(--font-title);
       font-weight: 700;
-      outline: none;
-      box-sizing: border-box;
-      flex: 1 1 auto;
+      color: var(--main-yellow);
       letter-spacing: 1.2px;
       display: inline-block;
       vertical-align: middle;
-      transition: color .14s;
+      box-sizing: border-box;
+      border: 1.4px solid rgba(255,230,109,0.13);
+      transition: color .14s, background .17s;
       cursor: pointer;
     }
-    .field-val[contenteditable="true"]:focus {
+    .field-indicator-block[contenteditable="true"]:focus {
       color: #ffd800;
-      background: none;
-      box-shadow: none;
+      background: rgba(255,255,255,0.13);
+      outline: 2px solid #ffd800;
     }
-    .field-val.static {
+    .field-indicator-block.static {
       cursor: default;
-      background: none;
+      background: var(--indicator-bg);
     }
     .fields-completed {
       margin-top: 1.1em;
@@ -238,11 +236,20 @@
       letter-spacing: 1.2px;
     }
     .completed-number {
+      background: var(--indicator-bg);
       color: var(--main-yellow);
       font-family: var(--font-title);
       font-size: 1.09em;
       margin-left: 7px;
       letter-spacing: 1px;
+      border-radius: 8px;
+      padding: 5px 13px;
+      border: 1.4px solid rgba(255,230,109,0.13);
+      min-width: 55px;
+      text-align: right;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 700;
     }
     .main-btns {
       width: 100%;
@@ -426,31 +433,31 @@
     <div class="fields-block">
       <div class="field-row">
         <span class="field-label">ЛОКАЦИЯ</span>
-        <span class="field-val static" id="location">USA, LA</span>
+        <span class="field-indicator-block static" id="location">USA, LA</span>
       </div>
       <div class="field-row">
         <span class="field-label">СТАТУС</span>
-        <span class="field-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
+        <span class="field-indicator-block" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
       </div>
       <div class="field-row">
         <span class="field-label">РАБОТА</span>
-        <span class="field-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
+        <span class="field-indicator-block" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
       </div>
       <div class="field-row">
         <span class="field-label">МАШИНА</span>
-        <span class="field-val" id="car" contenteditable="true" spellcheck="false">НЕТУ</span>
+        <span class="field-indicator-block" id="car" contenteditable="true" spellcheck="false">НЕТУ</span>
       </div>
       <div class="field-row">
         <span class="field-label">РЕПУТАЦИЯ</span>
-        <span class="field-val" id="rep" contenteditable="true">2</span>
+        <span class="field-indicator-block" id="rep" contenteditable="true">2</span>
       </div>
       <div class="field-row">
         <span class="field-label">ДЕНЬГИ</span>
-        <span class="field-val" id="money" contenteditable="true">0</span>
+        <span class="field-indicator-block" id="money" contenteditable="true">0</span>
       </div>
       <div class="field-row">
         <span class="field-label">CRYPTO</span>
-        <span class="field-val" id="crypto" contenteditable="true"></span>
+        <span class="field-indicator-block" id="crypto" contenteditable="true"></span>
       </div>
       <div class="fields-completed">
         <div class="fields-completed-row">

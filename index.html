@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>ПРОФИЛЬ: DIOR</title>
+  <title>STATS: DIOR (YEHOR)</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <!-- Use more visible bold font for title (Bebas Neue) -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -66,29 +65,9 @@
       transition: box-shadow .19s, border .19s;
       display: block;
     }
-    /* Title moved above EXP bar, right aligned */
-    .profile-title {
-      font-family: var(--title-font);
-      font-size: 2.05em;
-      color: #fff;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin: 0;
-      text-align: right;
-      text-transform: uppercase;
-      user-select: none;
-      background: none;
-      position: absolute;
-      right: 12px;
-      top: 68px;
-      z-index: 4;
-      text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
-      padding: 0;
-      line-height: 1.03em;
-    }
     .exp-bar-wrap {
       width: 92%;
-      margin: 2.7em auto 0.65em auto;
+      margin: 1.3em auto 0.65em auto;
       display: flex;
       align-items: center;
       position: relative;
@@ -152,6 +131,26 @@
       justify-content: flex-end;
       white-space: nowrap;
       text-shadow: none;
+    }
+    /* Title: now inside exp-bar-wrap, left side, just above the exp-bar */
+    .stats-title {
+      position: absolute;
+      left: 0;
+      bottom: 100%;
+      margin-bottom: 2px;
+      font-family: var(--title-font);
+      font-size: 1.25em;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-align: left;
+      text-transform: uppercase;
+      user-select: none;
+      background: none;
+      z-index: 5;
+      padding-left: 2px;
+      text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
+      line-height: 1.1em;
     }
     .fields-block {
       width: 93%;
@@ -436,7 +435,7 @@
       .main-container { max-width: 100vw; }
       .fields-block { max-width: 98vw; }
       .header-block { border-radius: 0 0 16px 16px; }
-      .profile-title { font-size: 1.17em; right: 7px; top: 55px;}
+      .stats-title { font-size: 0.99em; }
       .main-btns { min-height: 0; }
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
       .field-label { min-width: 40px; font-size: 0.94em;}
@@ -462,8 +461,8 @@
         <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
         <input type="file" id="photo-upload" accept="image/*" style="display:none;">
       </div>
-      <div class="profile-title">ПРОФИЛЬ: DIOR</div>
       <div class="exp-bar-wrap">
+        <span class="stats-title">STATS: DIOR (YEHOR)</span>
         <div class="exp-lvl-badge" id="level-ind">1</div>
         <div class="exp-bar">
           <div class="exp-bar-inner" id="progress-inner"></div>

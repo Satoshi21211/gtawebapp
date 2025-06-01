@@ -13,7 +13,7 @@
       --panel-dark: #23233A;
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
-      /* !!! Заменить ссылку ниже на свой фон !!! */
+      /* Заменить ссылку ниже на свой фон, если надо */
       --profile-bg: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80');
       --fields-bg: rgba(32,32,36,0.85);
       --fields-border: 1.8px solid #23232a;
@@ -45,7 +45,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: var(--main-yellow);
+      background: rgba(255, 230, 109, 0.5); /* желтая прозрачность 50% */
       border-radius: 0 0 28px 28px;
     }
     .profile-photo-wrap {
@@ -152,9 +152,9 @@
 
     .fields-block {
       width: 92%;
-      background: var(--fields-bg);
+      background: rgba(30, 30, 34, 0.85);
       border-radius: 18px;
-      margin: 1.1em auto 0.5em 1.1em;
+      margin: 1.1em 0 0.5em 1.9em;
       padding: 1.1em 1.25em 1.1em 1.25em;
       box-shadow: var(--fields-shadow);
       border: var(--fields-border);
@@ -164,7 +164,7 @@
       color: #fff;
       font-size: 1.03em;
       position: relative;
-      left: -8px;
+      left: 18px;
       max-width: 350px;
     }
     .field-row {
@@ -186,7 +186,7 @@
       text-align: left;
     }
     .field-val {
-      background: rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.07);
       color: #fff;
       border: 1.6px solid #29282d;
       border-radius: 7px;
@@ -233,6 +233,13 @@
       font-weight: 900;
       font-size: 1.04em;
       letter-spacing: 1.2px;
+    }
+    .fields-completed .completed-number {
+      color: #fff;
+      font-family: var(--font-title);
+      font-size: 1.06em;
+      margin-left: 7px;
+      letter-spacing: 1px;
     }
     .main-btns {
       width: 100%;
@@ -439,8 +446,8 @@
         <span class="field-val" id="crypto" contenteditable="true"></span>
       </div>
       <div class="fields-completed">
-        <span>ВЫПОЛНЕНО КВЕСТОВ: <span id="quests-completed">0</span></span>
-        <span>ВЫПОЛНЕНО МИСИЙ: <span id="missions-completed">0</span></span>
+        <span>ВЫПОЛНЕНО КВЕСТОВ:<span class="completed-number" id="quests-completed">13</span></span>
+        <span>ВЫПОЛНЕНО МИСИЙ:<span class="completed-number" id="missions-completed">4</span></span>
       </div>
     </div>
     <div class="main-btns">
@@ -475,8 +482,8 @@
       crypto: "",
       location: "USA, LA",
       photo: "",
-      questsCompleted: 0,
-      missionsCompleted: 0,
+      questsCompleted: 13,
+      missionsCompleted: 4,
       quests: [
         { text: "Заработать 200$ [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
         { text: "Гигиена 30 дней [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },

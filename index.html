@@ -18,6 +18,16 @@
       --indicator-bg: rgba(255,255,255,0.08);
       --title-font: 'Bebas Neue', Arial, Impact, sans-serif;
       --main-font: 'Montserrat', Arial, sans-serif;
+      --indicator-radius: 12px;
+      --indicator-height: 38px;
+      --indicator-width: 155px;
+      --indicator-bg-white: rgba(255,255,255,0.13);
+      --indicator-border-default: 1.6px solid #edededcc;
+      --indicator-border-yellow: 1.6px solid var(--main-yellow-dark);
+      --indicator-border-green: 1.6px solid var(--main-green);
+      --indicator-border-red: 1.6px solid var(--main-red);
+      --indicator-label-yellow: var(--main-yellow-dark);
+      --indicator-label-default: #fff;
     }
     body {
       background: var(--main-bg);
@@ -40,27 +50,24 @@
       background: var(--fields-bg);
       border-radius: 0 0 20px 20px;
       box-shadow: 0 4px 28px #000c;
-      padding: 22px 0 0 0;
-      position: relative;
+      padding: 30px 30px 16px 30px;
       display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: flex-start;
-      gap: 18px;
-      min-height: 100px;
+      align-items: center;
+      gap: 22px;
     }
     .profile-photo-wrap {
-      width: 78px; height: 78px;
-      margin-left: 22px;
+      width: 88px; height: 88px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
       box-shadow: 0 2px 18px #ffe66d44;
+      background: var(--fields-bg);
+      border-radius: 18px;
     }
     .profile-photo {
-      width: 76px;
-      height: 76px;
+      width: 84px;
+      height: 84px;
       border-radius: 16px;
       object-fit: cover;
       background: #fff;
@@ -71,14 +78,13 @@
       display: block;
     }
     .main-info-header {
+      flex: 1 1 auto;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      flex: 1 1 auto;
       min-width: 0;
-      padding-right: 20px;
-      padding-left: 0;
+      gap: 8px;
     }
     .stats-title {
       font-family: var(--title-font);
@@ -89,19 +95,18 @@
       text-transform: uppercase;
       user-select: none;
       text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
-      line-height: 1.2em;
-      margin-bottom: 7px;
+      margin-bottom: 2px;
       margin-top: 0;
       text-align: left;
+      padding-left: 2px;
     }
     .exp-bar-wrap {
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       width: 100%;
       min-width: 0;
-      margin-bottom: 2px;
     }
     .exp-lvl-badge {
       min-width: 36px;
@@ -142,7 +147,7 @@
       display: flex;
       align-items: center;
       min-width: 70px;
-      margin-bottom: 1px;
+      margin-bottom: 2px;
     }
     .exp-bar-inner {
       height: 100%;
@@ -168,7 +173,6 @@
       text-shadow: 0 0 6px #ffe66d99;
       margin-top: 2px;
       padding-left: 4px;
-      padding-top: 1px;
       min-height: 18px;
       background: none;
       border-radius: 6px;
@@ -199,7 +203,6 @@
     .indicator-label {
       font-family: var(--title-font);
       font-weight: 700;
-      color: #fff;
       letter-spacing: 0.9px;
       font-size: 1.01em;
       text-align: left;
@@ -209,6 +212,10 @@
       padding: 1px 0 1px 0;
       line-height: 1.12em;
       flex: 1 1 45%;
+      color: var(--main-yellow-dark);
+      text-shadow:
+        0 1px 4px #ffe66d55,
+        0 0.5px 0.5px #23232a;
     }
     .indicator-box {
       display: flex;
@@ -216,9 +223,9 @@
       height: 38px;
       min-width: 155px;
       max-width: 155px;
-      border-radius: 10px;
-      background: var(--indicator-bg);
-      border: 1.5px solid var(--main-yellow-dark);
+      border-radius: var(--indicator-radius);
+      background: var(--indicator-bg-white);
+      border: var(--indicator-border-default);
       box-sizing: border-box;
       padding: 0 14px;
       font-family: var(--title-font);
@@ -233,13 +240,19 @@
     }
     .indicator-box.green {
       color: var(--main-green);
-      border: 1.5px solid rgba(33,232,123,0.16);
+      border: var(--indicator-border-green);
       background: var(--indicator-bg);
     }
     .indicator-box.red {
       color: var(--main-red);
-      border: 1.5px solid rgba(255,70,90,0.19);
+      border: var(--indicator-border-red);
       background: var(--indicator-bg);
+    }
+    /* Серая обводка для обычных индикаторов */
+    .indicator-box.gray {
+      color: var(--main-yellow-dark);
+      border: 1.6px solid #d2d2d2;
+      background: var(--indicator-bg-white);
     }
     .indicator-value {
       flex: 1 1 auto;
@@ -296,11 +309,11 @@
       html, body { width: 100vw; min-width: 100vw; }
       .main-container { max-width: 100vw; border-radius: 0; }
       .fields-block { max-width: 98vw; }
-      .header-block { border-radius: 0 0 16px 16px; padding-top: 13px;}
-      .stats-title { font-size: 0.93em; margin-bottom: 6px; margin-left: 0;}
-      .header-block { gap: 10px; }
-      .profile-photo-wrap { width: 54px; height: 54px; margin-left: 7px;}
+      .header-block { border-radius: 0 0 16px 16px; padding: 22px 8px 12px 8px; gap: 10px;}
+      .profile-photo-wrap { width: 54px; height: 54px; }
       .profile-photo { width: 52px; height: 52px;}
+      .main-info-header { gap:6px; }
+      .stats-title { font-size: 0.93em; margin-bottom: 4px;}
       .exp-lvl-badge { min-width: 22px; height: 22px; font-size: 0.85em;}
       .exp-bar-area { min-width: 0; max-width: 90px;}
       .exp-bar { min-width: 0; max-width: 90px;}
@@ -308,7 +321,6 @@
       .indicator-label { min-width: 57px; font-size: 0.95em;}
       .indicator-box { min-width: 80px; max-width: 80px; font-size: 0.91em; height: 28px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
-      .main-info-header {padding-right: 4px;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -351,31 +363,31 @@
       </div>
       <div class="indicator-row">
         <span class="indicator-label">ЛОКАЦИЯ</span>
-        <span class="indicator-box" id="location-box">
+        <span class="indicator-box gray" id="location-box">
           <span class="indicator-value" id="location">USA, LA</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">СТАТУС</span>
-        <span class="indicator-box" id="status-box">
+        <span class="indicator-box gray" id="status-box">
           <span class="indicator-value" id="status">NO LEGAL</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">РАБОТА</span>
-        <span class="indicator-box" id="job-box">
+        <span class="indicator-box gray" id="job-box">
           <span class="indicator-value" id="job">McDonald</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">МАШИНА</span>
-        <span class="indicator-box" id="car-box">
+        <span class="indicator-box gray" id="car-box">
           <span class="indicator-value" id="car">НЕТУ</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">РЕПУТАЦИЯ</span>
-        <span class="indicator-box" id="rep-box">
+        <span class="indicator-box gray" id="rep-box">
           <span class="indicator-value" id="rep">2</span>
         </span>
       </div>

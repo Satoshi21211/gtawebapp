@@ -2,26 +2,24 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>DIOR: GTA LIFE MOTIVATOR</title>
+  <title>МОЙ ПРОКАЧАННЫЙ ПУТЬ</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --main-yellow: #ffe66d;
+      --main-neon: #fffbe0;
       --main-dark: #181824;
-      --main-accent: #ffe66d;
-      --main-secondary: #ffce1a;
-      --main-bg: linear-gradient(135deg, #181824 70%, #22213a 100%);
-      --main-panel: #26262e;
-      --border-yellow: 3px solid #ffe66d;
-      --border-ach: 2px solid #ffce1a;
+      --panel-dark: #23233A;
+      --panel-light: #23232a;
+      --neon-glow: 0 0 16px #ffe66d99, 0 0 8px #ffe66d88;
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
     }
     body {
       margin: 0;
       padding: 0;
-      background: var(--main-bg);
+      background: linear-gradient(135deg, #19182b 70%, #23233a 100%);
       color: #fff;
       font-family: var(--font-main);
       min-height: 100vh;
@@ -29,315 +27,325 @@
       box-sizing: border-box;
       overflow-x: hidden;
     }
-    .motivator {
-      max-width: 410px;
-      margin: 36px auto 0 auto;
-      background: var(--main-panel);
-      border-radius: 24px;
-      box-shadow: 0 8px 36px #000a, 0 3px 12px #ffe66d28;
-      padding: 0 0 22px 0;
+    .main-container {
+      max-width: 425px;
+      margin: 38px auto 0 auto;
+      background: var(--panel-dark);
+      border-radius: 30px;
+      box-shadow: 0 8px 44px #000b, 0 2px 12px #ffe66d33;
+      padding: 0 0 18px 0;
       position: relative;
       overflow: hidden;
     }
-    .motivator-header {
+    .header-block {
       background: linear-gradient(90deg, #ffe66d 60%, #fffbe0 100%);
-      padding: 23px 24px 18px 24px;
-      border-radius: 0 0 30px 30px;
-      box-shadow: 0 2px 20px #ffe66d44;
+      padding: 30px 0 20px 0;
+      border-radius: 0 0 36px 36px;
+      box-shadow: 0 2px 22px #ffe66d44;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 1.1em;
+      margin-bottom: 0.7em;
       position: relative;
     }
-    .motivator-avatar-wrap {
-      margin-bottom: 0.5em;
+    .profile-photo-wrap {
+      width: 110px; height: 110px;
+      margin-bottom: 0.7em;
       position: relative;
-      width: 92px; height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .motivator-avatar {
-      width: 92px; height: 92px;
-      border-radius: 22px;
-      border: 4px solid #ffe66d;
+    .profile-photo {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 5px solid #ffe66d;
       object-fit: cover;
       background: #181824;
-      box-shadow: 0 0 0 4px #ffce1a, 0 3px 16px #ffe66d77;
+      box-shadow: var(--neon-glow);
       cursor: pointer;
-      transition: box-shadow .18s;
+      transition: box-shadow .19s;
       display: block;
+      z-index: 2;
     }
-    .motivator-avatar:hover {
-      box-shadow: 0 0 0 6px #fff076, 0 3px 18px #ffe66dbb;
+    .profile-photo:hover {
+      box-shadow: 0 0 0 7px #fffbe0, 0 4px 28px #ffe66da7;
     }
-    .motivator-avatar-edit {
+    .photo-edit-btn {
       position: absolute;
-      right: 5px; bottom: 5px;
+      right: 7px; bottom: 10px;
       background: #ffe66d;
       color: #181824;
-      font-size: 0.92em;
+      font-size: 1.04em;
       font-weight: bold;
-      border-radius: 8px;
-      padding: 2px 10px;
-      opacity: 0.93;
-      cursor: pointer;
+      border-radius: 50%;
+      width: 34px; height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 3px 7px #ffe66d44;
-      z-index: 2;
-      border: 1.5px solid #ffce1a;
+      border: 2px solid #ffce1a;
+      cursor: pointer;
+      z-index: 3;
       transition: background .16s;
     }
-    .motivator-avatar-edit:hover { background: #ffce1a; }
-    .motivator-header-title {
+    .photo-edit-btn:hover { background: #fffbe0; }
+    .profile-title {
       font-family: var(--font-title);
-      font-size: 1.24em;
+      font-size: 1.4em;
       color: #181824;
       font-weight: 900;
-      letter-spacing: 1.5px;
-      text-shadow: 0 3px 14px #ffe66d66;
-      margin-bottom: 0.2em;
+      letter-spacing: 2.3px;
+      text-shadow: 0 4px 22px #ffe66d66;
+      margin-bottom: 0.09em;
       text-transform: uppercase;
+      text-align: center;
+      user-select: none;
     }
-    .motivator-progress-bar {
-      width: 96%;
-      height: 18px;
-      margin: 0.45em 0 0.86em 0;
+    .big-progress-bar {
+      width: 93%;
+      height: 23px;
+      margin: 0.33em 0 1.1em 0;
       background: #fffbe5;
-      border-radius: 9px;
+      border-radius: 14px;
       box-shadow: 0 2px 8px #ffe66d44;
       position: relative;
       overflow: hidden;
-      border: 2px solid #ffe66d;
+      border: 2.7px solid #ffe66d;
       display: flex;
       align-items: center;
     }
-    .motivator-progress-inner {
+    .big-progress-inner {
       height: 100%;
       background: linear-gradient(90deg, #ffe66d 45%, #ffce1a 100%);
-      border-radius: 9px 0 0 9px;
-      transition: width 0.38s cubic-bezier(0.6,0.2,0.2,1);
-      min-width: 8px;
-      box-shadow: 0 2px 12px #ffce1a77;
+      border-radius: 14px 0 0 14px;
+      transition: width 0.39s cubic-bezier(0.6,0.2,0.2,1);
+      min-width: 10px;
+      box-shadow: var(--neon-glow);
     }
-    .motivator-progress-text {
+    .big-progress-text {
       position: absolute;
-      right: 12px; top: 1.5px;
+      right: 17px; top: 2.5px;
       color: #181824;
-      font-size: 1em;
+      font-size: 1.04em;
       font-family: var(--font-main);
       font-weight: 700;
       text-shadow: none;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
     }
-    .motivator-level {
-      background: var(--main-accent);
+    .level-ind {
+      background: var(--main-yellow);
       color: #181824;
-      border-radius: 10px;
-      padding: 2px 16px;
-      font-size: 1.11em;
-      margin: 0 0 0.11em 0.4em;
+      border-radius: 12px;
+      padding: 4px 20px;
+      font-size: 1.19em;
+      margin: 0 0 0.13em 0.6em;
       font-family: var(--font-title);
       font-weight: 900;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.6px;
       box-shadow: 0 2px 10px #ffe66d33;
       display: inline-block;
       vertical-align: middle;
+      margin-bottom: 0.13em;
     }
-    .motivator-fields {
-      width: 95%;
+    .fields-block {
+      width: 93%;
       background: #222;
-      border-radius: 15px;
-      margin: 0 auto 0.7em auto;
-      padding: 1.1em 1.4em 0.6em 1.4em;
+      border-radius: 19px;
+      margin: 0 auto 0.8em auto;
+      padding: 1.25em 1.5em 0.7em 1.5em;
       box-shadow: 0 1px 7px #ffe66d22;
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
+      gap: 0.7em;
       color: #ffe66d;
-      font-size: 1.05em;
+      font-size: 1.08em;
     }
-    .motivator-field-row {
+    .field-row {
       display: flex;
       align-items: center;
-      margin-bottom: 0.33em;
-      gap: 0.5em;
+      margin-bottom: 0.21em;
+      gap: 0.6em;
       flex-wrap: wrap;
     }
-    .motivator-field-label {
-      min-width: 82px;
+    .field-label {
+      min-width: 90px;
       font-family: var(--font-title);
       font-weight: 700;
       color: #ffe66d;
-      letter-spacing: 0.7px;
-      font-size: 1em;
+      letter-spacing: 1.1px;
+      font-size: 1.08em;
       margin-right: 0.7em;
     }
-    .motivator-field-val {
+    .field-val {
       background: #292a2d;
       color: #fff;
-      border: 1.5px solid #ffe66d;
-      border-radius: 7px;
-      padding: 4px 14px;
-      min-width: 63px;
+      border: 1.7px solid #ffe66d;
+      border-radius: 9px;
+      padding: 5px 17px;
+      min-width: 65px;
       text-align: left;
-      font-size: 1em;
+      font-size: 1.07em;
       font-family: var(--font-main);
       font-weight: 700;
       outline: none;
-      transition: box-shadow .15s;
+      transition: box-shadow .14s;
       cursor: pointer;
     }
-    .motivator-field-val.static {
+    .field-val.static {
       cursor: default;
       background: #23232a;
-      opacity: 0.86;
+      opacity: 0.89;
     }
-    .motivator-field-val[contenteditable="true"]:focus {
+    .field-val[contenteditable="true"]:focus {
       box-shadow: 0 0 0 2px #ffe66d;
     }
-    .motivator-achievements {
-      margin: 0.65em auto 0.18em auto;
-      width: 95%;
-    }
-    .motivator-ach-title {
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-size: 1.12em;
-      font-weight: 700;
-      margin-bottom: 0.4em;
-      letter-spacing: 1.1px;
-      text-shadow: 0 1px 8px #ffe66d33;
-    }
-    .motivator-ach-list {
+    .progress-indicators {
+      margin: 1.3em auto 0.7em auto;
+      width: 93%;
       display: flex;
-      gap: 0.45em;
-      flex-wrap: wrap;
-    }
-    .motivator-ach {
-      background: #222;
-      border: var(--border-ach);
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-size: 0.9em;
-      border-radius: 9px;
-      padding: 5px 12px;
-      margin-bottom: 4px;
-      box-shadow: 0 1px 4px #ffe66d33;
-      font-weight: 700;
-      letter-spacing: 1.1px;
-      display: flex;
-      align-items: center;
-      gap: 0.4em;
-      min-width: 60px;
-      text-align: center;
-      animation: fadein .7s;
-    }
-    @keyframes fadein {
-      0%{opacity:0;transform:translateY(26px);}
-      100%{opacity:1;transform:translateY(0);}
-    }
-    .motivator-progress-indicators {
-      margin: 1.2em auto 0.4em auto;
-      width: 95%;
-      display: flex;
-      gap: 1.2em;
+      gap: 1.3em;
       justify-content: space-between;
     }
-    .motivator-indicator-block {
+    .indicator-block {
       background: #23232a;
-      border-radius: 10px;
-      padding: 0.9em 1.1em;
+      border-radius: 11px;
+      padding: 1em 1.3em;
       box-shadow: 0 1px 7px #ffe66d22;
       color: #ffe66d;
       font-family: var(--font-title);
-      font-size: 1.01em;
+      font-size: 1.06em;
       font-weight: 700;
       min-width: 90px;
       text-align: center;
-      letter-spacing: 0.9px;
+      letter-spacing: 1.1px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .motivator-indicator-block span {
+    .indicator-block span {
       color: #fff;
-      font-size: 1.19em;
+      font-size: 1.21em;
       margin-top: 0.15em;
       font-family: var(--font-main);
+      font-weight: 900;
     }
-    .motivator-main-btns {
-      position: sticky;
-      bottom: 0;
-      left: 0;
+    .main-btns {
       width: 100%;
-      background: #181824cc;
-      border-radius: 0 0 24px 24px;
-      box-shadow: 0 -3px 20px #ffe66d22;
       display: flex;
       gap: 1.2em;
       justify-content: center;
-      padding: 1.08em 0 1.08em 0;
-      z-index: 10;
+      margin: 2.2em 0 0.7em 0;
     }
-    .motivator-main-btn {
+    .main-btn {
       font-family: var(--font-title);
-      font-size: 1.12em;
-      background: var(--main-accent);
+      font-size: 1.17em;
+      background: var(--main-yellow);
       color: #181824;
-      border-radius: 11px;
+      border-radius: 14px;
       border: none;
-      padding: 0.8em 2.1em;
+      padding: 0.94em 2.7em;
       font-weight: 900;
-      box-shadow: 0 2px 14px #ffe66d44, 0 2px 9px #0006;
+      box-shadow: 0 2px 18px #ffe66d33, 0 2px 9px #0006;
       cursor: pointer;
-      transition: filter .13s, background .18s, color .13s;
-      letter-spacing: 1.3px;
+      transition: background .16s, color .13s, box-shadow .14s;
+      letter-spacing: 1.5px;
+      outline: none;
     }
-    .motivator-main-btn.selected,
-    .motivator-main-btn:active {
+    .main-btn:active, .main-btn.selected {
       background: #fffbe0;
-      color: var(--main-secondary);
-      filter: brightness(1.07) drop-shadow(0 2px 10px #ffe66d55);
+      color: #ffce1a;
+      filter: brightness(1.04) drop-shadow(0 2px 10px #ffe66d77);
     }
-    .motivator-section {
-      margin: 1.45em 0 0 0;
+    /* MODAL */
+    .modal {
       display: none;
-      animation: fadein .6s;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(24, 24, 36, 0.90);
+      animation: fadein .5s;
     }
-    .motivator-section.active { display: block; }
-    .motivator-list { margin: 0.7em 0 0 0; }
-    .motivator-quest, .motivator-mission {
+    .modal-content {
+      background: var(--panel-light);
+      margin: 7vh auto 0 auto;
+      border-radius: 18px;
+      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #0008;
+      padding: 2.1em 1.5em 1.8em 1.5em;
+      max-width: 390px;
+      min-width: 260px;
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.09em;
+      animation: fadein .55s;
+      position: relative;
+    }
+    .close-modal {
+      position: absolute;
+      right: 15px; top: 10px;
+      color: #ffe66d;
+      font-size: 1.8em;
+      font-weight: 900;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 3;
+      outline: none;
+      padding: 2px 7px;
+    }
+    .modal-title {
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.19em;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.2em;
+      text-align: center;
+      text-shadow: 0 1px 7px #ffe66d44;
+    }
+    .list {
+      margin: 0.3em 0 0 0;
+    }
+    .list-item {
       background: #23232a;
       border-radius: 11px;
-      padding: 13px 12px 13px 15px;
+      padding: 11px 10px 13px 14px;
       margin-bottom: 1em;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 1px 8px #ffe66d20, 0 1px 4px #ffe66d11;
+      box-shadow: 0 1px 8px #ffe66d20;
       font-size: 1.04em;
       border: 2px solid #ffe66d;
       transition: box-shadow .12s, border .17s;
       position: relative;
+      color: #ffe66d;
+      font-family: var(--font-main);
     }
-    .motivator-quest.active, .motivator-mission.active {
-      border: 2.5px solid var(--main-secondary);
+    .list-item.active {
+      border: 2.5px solid #ffce1a;
       box-shadow: 0 2px 12px #ffe66d55;
     }
-    .motivator-quest.done, .motivator-mission.done {
-      border: 2.5px solid var(--gta-green,#19db60);
+    .list-item.done {
+      border: 2.5px solid #19db60;
       opacity: 0.62;
       text-decoration: line-through;
       color: #b8b8b8;
       background: #212118;
     }
-    .motivator-quest-controls {
+    .item-controls {
       display: flex;
       gap: 0.7em;
       align-items: center;
     }
-    .motivator-quest-btn, .motivator-mission-btn {
+    .item-btn {
       font-family: var(--font-title);
       font-size: 0.99em;
-      padding: 0.30em 1.1em;
+      padding: 0.27em 1.1em;
       border-radius: 8px;
       border: none;
       font-weight: 800;
@@ -347,14 +355,14 @@
       box-shadow: 0 2px 7px #ffe66d44;
       transition: background .15s, color .12s;
       outline: none;
-      margin-left: 0.1em;
+      margin-left: 0.08em;
       letter-spacing: 1.1px;
     }
-    .motivator-quest-btn:active, .motivator-mission-btn:active {
-      background: var(--main-secondary);
+    .item-btn:active {
+      background: #ffce1a;
       color: #fff;
     }
-    .motivator-timer {
+    .timer {
       background: #181824;
       color: #ffe66d;
       border-radius: 7px;
@@ -369,153 +377,92 @@
       text-align: center;
       font-weight: 700;
     }
-    .motivator-quote-popup {
-      position: fixed;
-      left: 50%;
-      top: 10%;
-      transform: translate(-50%, 0);
-      background: #181824ee;
-      color: #ffe66d;
-      border: 3px solid #ffe66d;
-      border-radius: 16px;
-      padding: 1.4em 1.8em;
-      font-size: 1.09em;
-      font-family: var(--font-title);
-      font-weight: 800;
-      letter-spacing: 1.1px;
-      z-index: 9999;
-      box-shadow: 0 4px 36px #ffe66d99;
-      animation: fadein .7s;
-      display: none;
-      text-align: center;
-      max-width: 85vw;
-    }
     @media (max-width: 500px) {
-      .motivator { max-width: 99vw; padding: 0 0 14vw 0;}
-      .motivator-header { padding: 14px 6vw 13px 6vw; }
-      .motivator-fields { padding: 0.7em 1.4em 0.3em 1.4em; }
-      .motivator-achievements { width: 99%; }
-      .motivator-progress-indicators { width: 99%; gap: 0.7em;}
-      .motivator-indicator-block { padding: 0.7em 0.6em;}
-      .motivator-main-btns { padding: 0.7em 0 0.7em 0;}
+      .main-container { max-width: 99vw; padding: 0 0 10vw 0;}
+      .header-block { padding: 13px 0 12px 0;}
+      .fields-block { padding: 0.9em 1.1em 0.3em 1.1em; }
+      .progress-indicators { width: 99%; gap: 0.7em;}
+      .indicator-block { padding: 0.7em 0.6em;}
+      .main-btns { padding: 0.7em 0 0.7em 0;}
+      .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}
     }
   </style>
 </head>
 <body>
-  <div class="motivator">
-    <div class="motivator-header">
-      <div class="motivator-avatar-wrap">
-        <img id="avatar-img" class="motivator-avatar" src="https://i.imgur.com/8ZbGyoP.png" alt="Фото профиля">
-        <label class="motivator-avatar-edit" for="avatar-upload" title="Загрузить фото">📷</label>
-        <input type="file" id="avatar-upload" accept="image/*" style="display:none;">
+  <div class="main-container">
+    <div class="header-block">
+      <div class="profile-photo-wrap">
+        <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
+        <label class="photo-edit-btn" for="photo-upload" title="Загрузить фото">📷</label>
+        <input type="file" id="photo-upload" accept="image/*" style="display:none;">
       </div>
-      <div class="motivator-header-title">DIOR: GTA LIFE</div>
-      <div class="motivator-progress-bar">
-        <div class="motivator-progress-inner" id="progress-inner"></div>
-        <span class="motivator-progress-text" id="progress-text">0/8 EXP</span>
+      <div class="profile-title">МОЙ ПРОКАЧАННЫЙ ПУТЬ</div>
+      <div class="big-progress-bar">
+        <div class="big-progress-inner" id="progress-inner"></div>
+        <span class="big-progress-text" id="progress-text">0/8 EXP</span>
       </div>
-      <span class="motivator-level" id="level-ind">1 LVL</span>
+      <span class="level-ind" id="level-ind">1 LVL</span>
     </div>
-    <div class="motivator-fields">
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">ЛОКАЦИЯ:</span>
-        <span class="motivator-field-val static" id="location">USA, LA</span>
+    <div class="fields-block">
+      <div class="field-row">
+        <span class="field-label">ЛОКАЦИЯ:</span>
+        <span class="field-val static" id="location">USA, LA</span>
       </div>
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">СТАТУС:</span>
-        <span class="motivator-field-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
+      <div class="field-row">
+        <span class="field-label">СТАТУС:</span>
+        <span class="field-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
       </div>
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">РАБОТА:</span>
-        <span class="motivator-field-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
+      <div class="field-row">
+        <span class="field-label">РАБОТА:</span>
+        <span class="field-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
       </div>
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">РЕПУТАЦИЯ:</span>
-        <span class="motivator-field-val" id="rep" contenteditable="true">0</span>
+      <div class="field-row">
+        <span class="field-label">РЕПУТАЦИЯ:</span>
+        <span class="field-val" id="rep" contenteditable="true">0</span>
       </div>
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">ДЕНЬГИ:</span>
-        <span class="motivator-field-val" id="money" contenteditable="true">0$</span>
+      <div class="field-row">
+        <span class="field-label">ДЕНЬГИ:</span>
+        <span class="field-val" id="money" contenteditable="true">0$</span>
       </div>
-      <div class="motivator-field-row">
-        <span class="motivator-field-label">CRYPTO:</span>
-        <span class="motivator-field-val" id="crypto" contenteditable="true">0$</span>
+      <div class="field-row">
+        <span class="field-label">CRYPTO:</span>
+        <span class="field-val" id="crypto" contenteditable="true">0$</span>
       </div>
     </div>
-    <div class="motivator-achievements">
-      <div class="motivator-ach-title">ДОСТИЖЕНИЯ</div>
-      <div class="motivator-ach-list" id="ach-list"></div>
-    </div>
-    <div class="motivator-progress-indicators">
-      <div class="motivator-indicator-block">
+    <div class="progress-indicators">
+      <div class="indicator-block">
         КВЕСТОВ
         <span id="quests-completed">0</span>
       </div>
-      <div class="motivator-indicator-block">
+      <div class="indicator-block">
         МИСИЙ
         <span id="missions-completed">0</span>
       </div>
     </div>
-    <div class="motivator-section active" id="section-quests">
-      <div class="motivator-list" id="quests-list"></div>
-    </div>
-    <div class="motivator-section" id="section-missions">
-      <div class="motivator-list" id="missions-list"></div>
-    </div>
-    <div class="motivator-main-btns">
-      <button class="motivator-main-btn selected" id="btn-quests" onclick="toggleSection('quests')">КВЕСТЫ</button>
-      <button class="motivator-main-btn" id="btn-missions" onclick="toggleSection('missions')">МИСИИ</button>
+    <div class="main-btns">
+      <button class="main-btn" id="open-quests">КВЕСТЫ</button>
+      <button class="main-btn" id="open-missions">МИСИИ</button>
     </div>
   </div>
-  <div class="motivator-quote-popup" id="motivator-quote"></div>
+
+  <!-- MODALS -->
+  <div class="modal" id="modal-quests">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('modal-quests')">&times;</button>
+      <div class="modal-title">КВЕСТЫ</div>
+      <div class="list" id="quests-list"></div>
+    </div>
+  </div>
+  <div class="modal" id="modal-missions">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal('modal-missions')">&times;</button>
+      <div class="modal-title">МИСИИ</div>
+      <div class="list" id="missions-list"></div>
+    </div>
+  </div>
+
   <script>
-    // --- MOTIVATION QUOTES ---
-    const motivatorQuotes = [
-      "Действие — единственный путь к успеху.",
-      "Не жалей себя — жалей свои упущенные возможности.",
-      "Каждый уровень — твоя реальная победа!",
-      "GTA: Твоя жизнь — твой главный квест.",
-      "Сделал шаг — ты уже впереди большинства.",
-      "Пока другие ждут, ты делаешь результат.",
-      "Вчерашний ты уже слабее, чем сегодняшний.",
-      "Время — твой самый ценный ресурс. Не трать зря.",
-      "Ты — свой главный герой. Не сливай сюжет!",
-      "Каждый раз, когда сдаёшься — кто-то становится сильнее тебя.",
-      "Жизнь — это твой открытый мир. Не оставайся на месте!",
-      "Дорога к успеху всегда строится шаг за шагом.",
-      "Падаешь? Вставай! Иди дальше!",
-      "Стань тем, кем сам бы восхищался.",
-      "Твоя реальность — в твоих руках."
-    ];
-    function popupMotivatorQuote() {
-      const el = document.getElementById('motivator-quote');
-      el.textContent = motivatorQuotes[Math.floor(Math.random() * motivatorQuotes.length)];
-      el.style.display = "block";
-      setTimeout(()=>{ el.style.display = "none"; }, 3800);
-    }
-
-    // --- ACHIEVEMENTS ---
-    let achievements = [
-      {id: "lvl5", title: "LVL 5", desc:"Достиг 5 уровня", show: s=>s.level>=5},
-      {id: "lvl10", title: "LVL 10", desc:"Достиг 10 уровня", show: s=>s.level>=10},
-      {id: "firstMoney", title: "Первые 100$", desc:"Заработал первые 100$", show: s=>parseInt(s.money)||0 >=100},
-      {id: "crypto500", title: "CRYPTO 500$", desc:"Накопил 500$ в крипте", show: s=>parseInt(s.crypto)||0 >=500},
-      {id: "rep5", title: "Репутация: 5", desc:"Достиг репутации 5", show: s=>parseInt(s.rep)||0 >=5},
-      {id: "quests3", title: "3 Квеста", desc:"Выполнено 3 квеста", show: s=>s.questsCompleted>=3},
-      {id: "missions1", title: "1 Миссия", desc:"Выполнена 1 миссия", show: s=>s.missionsCompleted>=1},
-      {id: "fullSet", title: "Новый я", desc:"Изменил все индикаторы!", show: s=>s.status!=="NO LEGAL"&&s.job!=="НЕТУ"&&(parseInt(s.money)||0)>0&&(parseInt(s.crypto)||0)>0}
-    ];
-    function renderAchievements() {
-      let html = "";
-      achievements.forEach(ach=>{
-        if(ach.show(state)){
-          html += `<div class="motivator-ach" title="${ach.desc}">${ach.title}</div>`;
-        }
-      });
-      document.getElementById('ach-list').innerHTML = html || '<span style="opacity:0.5">Нет достижений</span>';
-    }
-
-    // --- GAME STATE ---
+    // GAME STATE
     let state = {
       level: 1,
       exp: 0,
@@ -549,13 +496,13 @@
       ]
     };
 
-    // --- SAVE/LOAD ---
+    // SAVE/LOAD
     function saveState() {
-      localStorage.setItem("dior_motivator_state", JSON.stringify(state));
+      localStorage.setItem("my_life_game_state", JSON.stringify(state));
     }
     function loadState() {
       try {
-        let loaded = JSON.parse(localStorage.getItem("dior_motivator_state"));
+        let loaded = JSON.parse(localStorage.getItem("my_life_game_state"));
         if (loaded) {
           for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
           for (let k in loaded) state[k] = loaded[k];
@@ -563,40 +510,33 @@
       } catch {}
     }
 
-    // --- PROFILE RENDER ---
+    // PROFILE RENDER
     function renderProfile() {
-      // Level, exp
       document.getElementById('level-ind').textContent = state.level + " LVL";
       let percent = Math.round(state.exp / state.expMax * 100);
       if (percent > 100) percent = 100;
       document.getElementById('progress-inner').style.width = percent + "%";
       document.getElementById('progress-text').textContent = `${state.exp}/${state.expMax} EXP`;
-      // fields
       document.getElementById('location').textContent = state.location;
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
       document.getElementById('rep').textContent = state.rep;
       document.getElementById('money').textContent = state.money;
       document.getElementById('crypto').textContent = state.crypto;
-      // progress
       document.getElementById('quests-completed').textContent = state.questsCompleted;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
-      // avatar
-      let img = document.getElementById('avatar-img');
+      let img = document.getElementById('profile-img');
       if(state.photo) img.src = state.photo;
-      else img.src = "https://i.imgur.com/8ZbGyoP.png";
-      // achievements
-      renderAchievements();
+      else img.src = "https://i.imgur.com/1vA0Q2z.png";
     }
 
-    // --- EDITABLE FIELDS ---
+    // EDITABLE FIELDS
     function setupEditable() {
       ["status", "job", "rep", "money", "crypto"].forEach(id => {
         let el = document.getElementById(id);
         el.addEventListener("input", function () {
           state[id] = el.textContent.trim();
           saveState();
-          renderAchievements();
         });
         el.addEventListener("blur", function () {
           el.textContent = state[id];
@@ -604,41 +544,54 @@
       });
     }
 
-    // --- AVATAR UPLOAD ---
-    document.getElementById('avatar-upload').addEventListener('change', function(e){
+    // PHOTO UPLOAD
+    document.getElementById('photo-upload').addEventListener('change', function(e){
       let file = e.target.files[0];
       if (!file) return;
       let reader = new FileReader();
       reader.onload = function(ev){
         state.photo = ev.target.result;
-        document.getElementById('avatar-img').src = state.photo;
+        document.getElementById('profile-img').src = state.photo;
         saveState();
       };
       reader.readAsDataURL(file);
     });
-    document.querySelector('.motivator-avatar-edit').onclick = function() {
-      document.getElementById('avatar-upload').click();
+    document.querySelector('.photo-edit-btn').onclick = function() {
+      document.getElementById('photo-upload').click();
     };
 
-    // --- QUESTS ---
+    // QUESTS/MISSIONS MODAL
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+    document.getElementById('open-quests').onclick = function() {
+      renderQuests();
+      document.getElementById('modal-quests').style.display = "block";
+    };
+    document.getElementById('open-missions').onclick = function() {
+      renderMissions();
+      document.getElementById('modal-missions').style.display = "block";
+    };
+
+    // QUESTS RENDER & LOGIC
     function renderQuests() {
       let activeCount = state.quests.filter(q => q.active && !q.done).length;
       let html = "";
       state.quests.forEach((q, i) => {
-        let questClass = "motivator-quest";
+        let questClass = "list-item";
         if (q.done) questClass += " done";
         else if (q.active) questClass += " active";
         html += `<div class="${questClass}">
           <span>${q.text}</span>
-          <div class="motivator-quest-controls">`;
+          <div class="item-controls">`;
         if (!q.done && !q.active && activeCount < 3) {
-          html += `<button class="motivator-quest-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
+          html += `<button class="item-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
         }
         if (q.active && !q.done) {
-          html += `<span class="motivator-timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
+          html += `<span class="timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
           if (q.timer <= 0) {
-            html += `<button class="motivator-quest-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
-            <button class="motivator-quest-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
+            html += `<button class="item-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
+            <button class="item-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
           }
         }
         html += `</div></div>`;
@@ -679,12 +632,11 @@
       q.started = null;
       if (q.timerID) clearInterval(q.timerID);
       state.questsCompleted++;
-      addExp(q.exp, true);
+      addExp(q.exp);
       checkMissions();
       renderQuests();
       renderProfile();
       saveState();
-      popupMotivatorQuote();
     }
     function cancelQuest(i) {
       let q = state.quests[i];
@@ -716,17 +668,17 @@
       });
     }
 
-    // --- MISSIONS ---
+    // MISSIONS RENDER & LOGIC
     function renderMissions() {
       let html = "";
       state.missions.forEach((m, i) => {
-        let mClass = "motivator-mission";
+        let mClass = "list-item";
         if (m.done) mClass += " done";
         html += `<div class="${mClass}">
           <span>${m.text}</span>
-          <div class="motivator-quest-controls">`;
+          <div class="item-controls">`;
         if (!m.done && canCompleteMission(i)) {
-          html += `<button class="motivator-mission-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
+          html += `<button class="item-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
         }
         html += `</div></div>`;
       });
@@ -748,11 +700,10 @@
       renderMissions();
       renderProfile();
       saveState();
-      popupMotivatorQuote();
     }
 
-    // --- LEVELING ---
-    function addExp(amount, fromQuest) {
+    // LEVELING
+    function addExp(amount) {
       let prevLevel = state.level;
       state.exp += amount;
       while (state.level < 100 && state.exp >= state.expMax) {
@@ -762,35 +713,17 @@
       }
       renderProfile();
       saveState();
-      if (state.level !== prevLevel) popupMotivatorQuote();
     }
 
-    // --- SECTION TOGGLING ---
-    function toggleSection(sec) {
-      document.getElementById('btn-quests').classList.remove('selected');
-      document.getElementById('btn-missions').classList.remove('selected');
-      document.getElementById('section-quests').classList.remove('active');
-      document.getElementById('section-missions').classList.remove('active');
-      if (sec === 'quests') {
-        document.getElementById('btn-quests').classList.add('selected');
-        document.getElementById('section-quests').classList.add('active');
-      } else {
-        document.getElementById('btn-missions').classList.add('selected');
-        document.getElementById('section-missions').classList.add('active');
-      }
-    }
-
-    // --- MISSIONS CHECK ---
+    // MISSIONS CHECK
     function checkMissions() {
       renderMissions();
     }
 
-    // --- INIT ---
+    // INIT
     loadState();
     renderProfile();
     setupEditable();
-    renderQuests();
-    renderMissions();
     tickQuests();
     setInterval(renderProfile, 2000);
   </script>

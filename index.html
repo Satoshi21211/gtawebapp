@@ -14,11 +14,15 @@
       --main-bg: #181824;
       --panel-dark: #19191e;
       --fields-bg: rgba(32,32,36,0.95);
-      --fields-border: 1.8px solid #23232a;
       --fields-shadow: 0 1px 14px #18182440;
       --indicator-bg: rgba(255,255,255,0.08);
       --title-font: 'Bebas Neue', Arial, Impact, sans-serif;
       --main-font: 'Montserrat', Arial, sans-serif;
+      --indicator-border: 1.5px solid rgba(255,255,255,0.13);
+      --indicator-radius: 10px;
+      --indicator-height: 38px;
+      --indicator-width: 155px;
+      --indicator-bg-white: rgba(255,255,255,0.12);
     }
     body {
       background: var(--main-bg);
@@ -30,11 +34,10 @@
     }
     .main-container {
       max-width: 410px;
-      margin: 30px auto 0 auto;
+      margin: 32px auto 0 auto;
       border-radius: 20px;
       background: var(--panel-dark);
       box-shadow: 0 8px 44px #000b, 0 2px 12px #ffe66d33;
-      position: relative;
       overflow: hidden;
       padding-bottom: 24px;
     }
@@ -42,34 +45,50 @@
       background: var(--fields-bg);
       border-radius: 0 0 20px 20px;
       box-shadow: 0 4px 28px #000c;
-      padding: 18px 0 0 0;
+      padding: 20px 0 0 0;
       position: relative;
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      min-height: 136px;
+      align-items: flex-start;
+    }
+    .stats-title {
+      font-family: var(--title-font);
+      font-size: 1.01em;
+      color: #fff;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      user-select: none;
+      background: none;
+      z-index: 5;
+      text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
+      line-height: 1.2em;
+      margin: 0 0 7px 25px;
+      padding: 0;
+      text-align: left;
+      min-width: 0;
     }
     .header-flex {
       display: flex;
       flex-direction: row;
       align-items: flex-end;
       width: 100%;
-      justify-content: flex-end;
-      gap: 0;
-      position: relative;
+      justify-content: flex-start;
+      gap: 20px;
+      margin-left: 13px;
+      margin-bottom: 5px;
     }
     .profile-photo-wrap {
-      width: 110px; height: 110px;
-      margin-right: 18px;
+      width: 100px; height: 100px;
       margin-bottom: 0;
       margin-top: 0;
       display: flex;
       align-items: flex-end;
-      justify-content: flex-end;
+      justify-content: flex-start;
       z-index: 2;
     }
     .profile-photo {
-      width: 110px; height: 110px;
+      width: 100px; height: 100px;
       border-radius: 18px;
       object-fit: cover;
       background: #fff;
@@ -79,45 +98,19 @@
       outline: none;
       display: block;
     }
-    .profile-titles-block {
-      position: absolute;
-      right: 130px;
-      bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      z-index: 3;
-      min-width: 0;
-    }
-    .stats-title {
-      font-family: var(--title-font);
-      font-size: 1.05em;
-      color: #fff;
-      font-weight: 900;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
-      user-select: none;
-      background: none;
-      z-index: 5;
-      text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d77;
-      line-height: 1.1em;
-      margin: 0;
-      padding: 0 0 6px 0;
-      text-align: right;
-      min-width: 0;
-    }
     .exp-bar-wrap {
-      width: 170px;
+      margin-left: 0;
+      width: 180px;
+      margin-bottom: 0;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      gap: 10px;
       position: relative;
-      height: 18px;
-      gap: 7px;
-      justify-content: flex-end;
+      height: 38px;
     }
     .exp-lvl-badge {
-      min-width: 26px;
-      height: 26px;
+      min-width: 38px;
+      height: 38px;
       border-radius: 50%;
       background: var(--main-yellow-dark);
       color: #181824;
@@ -125,16 +118,17 @@
       align-items: center;
       justify-content: center;
       font-family: var(--title-font);
-      font-size: 0.99em;
-      font-weight: bold;
+      font-size: 1.13em;
+      font-weight: 900;
       box-shadow: 0 2px 8px #ffe66d55;
-      border: 2px solid #fff;
+      border: 2.5px solid #fff;
       z-index: 2;
       letter-spacing: 1px;
+      margin-right: 7px;
     }
     .exp-bar {
       flex: 1 1 auto;
-      height: 10px;
+      height: 15px;
       background: #fff;
       border-radius: 7px;
       box-shadow: 0 2px 8px #ffe66d33;
@@ -143,8 +137,8 @@
       border: 2px solid var(--main-yellow-dark);
       display: flex;
       align-items: center;
-      min-width: 80px;
-      max-width: 140px;
+      min-width: 90px;
+      max-width: 150px;
     }
     .exp-bar-inner {
       height: 100%;
@@ -158,46 +152,44 @@
     }
     .exp-bar-text {
       position: absolute;
-      left: 36px;
-      right: 7px;
-      top: 0;
-      bottom: 0;
-      color: #181824;
-      font-size: 0.92em;
+      right: 10px;
+      top: -21px;
+      color: #fff;
+      font-size: 1.06em;
       font-family: var(--title-font);
       font-weight: 700;
-      letter-spacing: 1.1px;
+      letter-spacing: 1.2px;
       z-index: 3;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: flex-end;
       white-space: nowrap;
-      text-shadow: none;
+      text-shadow: 0 0 5px #000, 0 1px 10px #ffe66d88;
+      pointer-events: none;
     }
     .fields-block {
       width: 93%;
       background: var(--fields-bg);
       border-radius: 14px;
-      margin: 0.7em auto 0.3em auto;
+      margin: 1em auto 0.3em auto;
       padding: 0.3em 0.5em 0.3em 0.5em;
       box-shadow: var(--fields-shadow);
       border: var(--fields-border);
       display: flex;
       flex-direction: column;
-      gap: 0.15em;
+      gap: 0.13em;
       font-size: 1.04em;
       position: relative;
       max-width: 99vw;
     }
-    .field-row, .cash-row, .crypto-row {
+    .indicator-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      min-width: 0;
-      margin-bottom: 0.10em;
-      gap: 0.13em;
+      margin-bottom: 0.12em;
+      gap: 0.15em;
     }
-    .field-label, .cash-label, .crypto-label {
+    .indicator-label {
       font-family: var(--title-font);
       font-weight: 700;
       color: #fff;
@@ -205,105 +197,69 @@
       font-size: 1.01em;
       text-align: left;
       text-transform: uppercase;
-      min-width: 65px;
-      flex: 1 1 47%;
+      min-width: 85px;
       background: none;
       padding: 1px 0 1px 0;
-      line-height: 1.10em;
+      line-height: 1.12em;
+      flex: 1 1 45%;
     }
-    .field-indicator-block, .cash-value, .crypto-value {
-      background: var(--indicator-bg);
-      border-radius: 8px;
-      padding: 5px 14px;
-      min-width: 60px;
-      max-width: 110px;
-      text-align: right;
-      font-size: 1.02em;
-      font-family: var(--title-font);
-      font-weight: 700;
-      letter-spacing: 1.1px;
-      display: inline-block;
-      vertical-align: middle;
-      box-sizing: border-box;
-      border: 1.1px solid rgba(255,230,109,0.13);
-      transition: color .14s, background .17s;
-      outline: none;
-      line-height: 1.10em;
-    }
-    .cash-value {
-      color: var(--main-green);
-      border-color: rgba(33,232,123,0.17);
-      background: var(--indicator-bg);
-    }
-    .crypto-value {
-      color: var(--main-red);
-      border-color: rgba(255,70,90,0.17);
-      background: var(--indicator-bg);
-    }
-    .field-indicator-block.static {
-      cursor: default;
-      color: var(--main-yellow);
-      border-color: rgba(255,230,109,0.13);
-    }
-    .field-indicator-block[contenteditable="true"]:focus,
-    .cash-value[contenteditable="true"]:focus {
-      background: rgba(33,232,123,0.12);
-      border: 2px solid var(--main-green);
-      color: #13c95d;
-    }
-    .crypto-value[contenteditable="true"]:focus {
-      background: rgba(255,70,90,0.11);
-      border: 2px solid var(--main-red);
-      color: #ff465a;
-    }
-    .fields-completed {
-      margin-top: 0.18em;
-      display: flex;
-      flex-direction: column;
-      gap: 0.1em;
-      font-size: 1.04em;
-      font-family: var(--title-font);
-      letter-spacing: 1px;
-      text-align: left;
-      padding-left: 0;
-      padding-bottom: 0.11em;
-    }
-    .fields-completed-row {
+    .indicator-box {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.13em;
-      margin-bottom: 0.04em;
-    }
-    .fields-completed-label {
-      color: #fff;
+      height: var(--indicator-height);
+      min-width: var(--indicator-width);
+      max-width: var(--indicator-width);
+      border-radius: var(--indicator-radius);
+      background: var(--indicator-bg-white);
+      border: var(--indicator-border);
+      box-sizing: border-box;
+      padding: 0 10px;
       font-family: var(--title-font);
-      font-weight: 800;
-      font-size: 1.01em;
-      text-transform: uppercase;
+      font-size: 1.09em;
+      font-weight: 900;
       letter-spacing: 1.1px;
-      background: none;
-      flex: 1 1 47%;
-      padding: 1px 0 1px 0;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
     }
-    .completed-number {
-      background: var(--indicator-bg);
-      color: var(--main-yellow);
-      font-family: var(--title-font);
-      font-size: 1.02em;
-      margin-left: 5px;
-      letter-spacing: 1px;
-      border-radius: 8px;
-      padding: 3px 8px;
-      border: 1.1px solid rgba(255,230,109,0.13);
-      min-width: 38px;
-      text-align: right;
-      display: inline-block;
-      vertical-align: middle;
-      font-weight: 700;
-      flex: 1 1 53%;
-      line-height: 1.10em;
+    .indicator-box.white {
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.13);
+      background: var(--indicator-bg-white);
     }
+    .indicator-box.green {
+      color: var(--main-green);
+      border: 1.5px solid rgba(33,232,123,0.16);
+      background: var(--indicator-bg-white);
+    }
+    .indicator-box.red {
+      color: var(--main-red);
+      border: 1.5px solid rgba(255,70,90,0.19);
+      background: var(--indicator-bg-white);
+    }
+    /* полоска-прогресс для числовых индикаторов */
+    .indicator-progress-bar {
+      background: rgba(255,255,255,0.28);
+      border-radius: 7px;
+      position: absolute;
+      left: 6px;
+      bottom: 6px;
+      height: 7px;
+      width: calc(100% - 12px);
+      overflow: hidden;
+    }
+    .indicator-progress-inner {
+      height: 100%;
+      border-radius: 7px;
+      width: 0;
+      background: var(--main-yellow-dark);
+      transition: width 0.35s cubic-bezier(.6,.2,.2,1);
+      opacity: 0.55;
+    }
+    .indicator-box.green .indicator-progress-inner { background: var(--main-green); }
+    .indicator-box.red .indicator-progress-inner { background: var(--main-red); }
+    .indicator-box.white .indicator-progress-inner { background: #fff; }
     .main-btns {
       width: 97%;
       margin: 1.13em auto 0 auto;
@@ -342,75 +298,20 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
-    /* MODAL */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 50;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      overflow: auto;
-      background: rgba(24, 24, 36, 0.93);
-      animation: fadein .5s;
-    }
-    .modal-content {
-      background: #fffbe0;
-      margin: 7vh auto 0 auto;
-      border-radius: 16px;
-      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 2em 1.2em 1.6em 1.2em;
-      max-width: 390px;
-      min-width: 260px;
-      color: #181824;
-      font-family: var(--main-font);
-      font-size: 1.07em;
-      animation: fadein .55s;
-      position: relative;
-    }
-    .close-modal {
-      position: absolute;
-      right: 15px; top: 10px;
-      color: #181824;
-      font-size: 1.8em;
-      font-weight: 900;
-      cursor: pointer;
-      background: none;
-      border: none;
-      z-index: 3;
-      outline: none;
-      padding: 2px 7px;
-    }
-    .modal-title {
-      color: #181824;
-      font-family: var(--title-font);
-      font-size: 1.15em;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-      margin-bottom: 1em;
-      text-align: center;
-      text-shadow: 0 1px 7px #ffe66d44;
-    }
     @media (max-width: 600px) {
       html, body { width: 100vw; min-width: 100vw; }
       .main-container { max-width: 100vw; border-radius: 0; }
       .fields-block { max-width: 98vw; }
-      .header-block { border-radius: 0 0 16px 16px; }
-      .header-flex { margin-left: 2px; }
-      .main-btns { min-height: 0; }
+      .header-block { border-radius: 0 0 16px 16px; padding-top: 13px;}
+      .header-flex { margin-left: 0; }
+      .profile-photo-wrap { width: 82px; height: 82px; }
+      .profile-photo { width: 80px; height: 80px;}
+      .profile-titles-block { min-width: 0; }
+      .exp-bar-wrap { min-width: 0; width: 140px;}
+      .stats-title { font-size: 0.89em; margin-left: 13px;}
+      .indicator-label { min-width: 62px; font-size: 0.97em;}
+      .indicator-box { min-width: 120px; max-width: 120px; font-size: 0.93em; height: 31px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
-      .field-label, .cash-label, .crypto-label { min-width: 40px; font-size: 0.94em;}
-      .field-indicator-block, .cash-value, .crypto-value { padding: 5px 7px; min-width: 32px;}
-      .fields-completed-label { font-size: 0.93em;}
-      .completed-number { padding: 3px 7px; min-width: 22px;}
-      .profile-photo-wrap { width: 62px; height: 62px;}
-      .profile-photo { width: 60px; height: 60px;}
-      .exp-lvl-badge { min-width: 18px; height: 18px; font-size: 0.83em;}
-      .exp-bar { height: 7px;}
-      .profile-titles-block { right: 75px; }
-      .exp-bar-wrap { width: 120px; }
-      .stats-title { font-size: 0.91em; }
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -421,61 +322,84 @@
   <audio id="click-sound" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa6c2d.mp3" preload="auto"></audio>
   <div class="main-container">
     <div class="header-block">
+      <span class="stats-title">СТАТИСТИКА: ЕГОР</span>
       <div class="header-flex">
-        <div class="profile-titles-block">
-          <span class="stats-title">СТАТИСТИКА: ЕГОР</span>
-          <div class="exp-bar-wrap">
-            <div class="exp-lvl-badge" id="level-ind">1</div>
-            <div class="exp-bar">
-              <div class="exp-bar-inner" id="progress-inner"></div>
-              <span class="exp-bar-text" id="progress-text">0/8 EXP</span>
-            </div>
-          </div>
-        </div>
         <div class="profile-photo-wrap">
           <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
           <input type="file" id="photo-upload" accept="image/*" style="display:none;">
         </div>
+        <div class="exp-bar-wrap">
+          <div class="exp-lvl-badge" id="level-ind">1</div>
+          <div class="exp-bar">
+            <div class="exp-bar-inner" id="progress-inner"></div>
+          </div>
+          <span class="exp-bar-text" id="progress-text">0/8 EXP</span>
+        </div>
       </div>
     </div>
     <div class="fields-block">
-      <div class="cash-row">
-        <span class="cash-label">Деньги</span>
-        <span class="cash-value" id="cash" contenteditable="true">0</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Деньги</span>
+        <span class="indicator-box green" id="cash-box">
+          <span class="indicator-value" id="cash">0</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="cash-progress"></span></span>
+        </span>
       </div>
-      <div class="crypto-row">
-        <span class="crypto-label">Крипта</span>
-        <span class="crypto-value" id="crypto" contenteditable="true">0</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Крипта</span>
+        <span class="indicator-box red" id="crypto-box">
+          <span class="indicator-value" id="crypto">0</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="crypto-progress"></span></span>
+        </span>
       </div>
-      <div class="field-row">
-        <span class="field-label">Локация</span>
-        <span class="field-indicator-block static" id="location">USA, LA</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Локация</span>
+        <span class="indicator-box white" id="location-box">
+          <span class="indicator-value" id="location">USA, LA</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="location-progress"></span></span>
+        </span>
       </div>
-      <div class="field-row">
-        <span class="field-label">Статус</span>
-        <span class="field-indicator-block" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Статус</span>
+        <span class="indicator-box white" id="status-box">
+          <span class="indicator-value" id="status">NO LEGAL</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="status-progress"></span></span>
+        </span>
       </div>
-      <div class="field-row">
-        <span class="field-label">Работа</span>
-        <span class="field-indicator-block" id="job" contenteditable="true" spellcheck="false">McDonald</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Работа</span>
+        <span class="indicator-box white" id="job-box">
+          <span class="indicator-value" id="job">McDonald</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="job-progress"></span></span>
+        </span>
       </div>
-      <div class="field-row">
-        <span class="field-label">Машина</span>
-        <span class="field-indicator-block" id="car" contenteditable="true" spellcheck="false">НЕТУ</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Машина</span>
+        <span class="indicator-box white" id="car-box">
+          <span class="indicator-value" id="car">НЕТУ</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="car-progress"></span></span>
+        </span>
       </div>
-      <div class="field-row">
-        <span class="field-label">Репутация</span>
-        <span class="field-indicator-block" id="rep" contenteditable="true">2</span>
+      <div class="indicator-row">
+        <span class="indicator-label">Репутация</span>
+        <span class="indicator-box white" id="rep-box">
+          <span class="indicator-value" id="rep">2</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="rep-progress"></span></span>
+        </span>
       </div>
-      <div class="fields-completed">
-        <div class="fields-completed-row">
-          <span class="fields-completed-label">Выполнено квестов</span>
-          <span class="completed-number" id="quests-completed">13</span>
-        </div>
-        <div class="fields-completed-row">
-          <span class="fields-completed-label">Выполнено мисий</span>
-          <span class="completed-number" id="missions-completed">4</span>
-        </div>
+      <div class="indicator-row">
+        <span class="indicator-label">Выполнено квестов</span>
+        <span class="indicator-box white" id="quests-box">
+          <span class="indicator-value" id="quests-completed">13</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="quests-progress"></span></span>
+        </span>
+      </div>
+      <div class="indicator-row">
+        <span class="indicator-label">Выполнено мисий</span>
+        <span class="indicator-box white" id="missions-box">
+          <span class="indicator-value" id="missions-completed">4</span>
+          <span class="indicator-progress-bar"><span class="indicator-progress-inner" id="missions-progress"></span></span>
+        </span>
       </div>
     </div>
     <div class="main-btns">
@@ -526,11 +450,9 @@
       cash: "0",
       crypto: "0",
       location: "USA, LA",
-      photo: "",
       questsCompleted: 13,
       missionsCompleted: 4,
-      quests: [],
-      missions: []
+      photo: "",
     };
     function saveState() {
       localStorage.setItem("profile_dior_state", JSON.stringify(state));
@@ -550,30 +472,36 @@
       if (percent > 100) percent = 100;
       document.getElementById('progress-inner').style.width = percent + "%";
       document.getElementById('progress-text').textContent = `${state.exp}/${state.expMax} EXP`;
+
+      document.getElementById('cash').textContent = state.cash;
+      document.getElementById('crypto').textContent = state.crypto;
       document.getElementById('location').textContent = state.location;
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
       document.getElementById('car').textContent = state.car;
       document.getElementById('rep').textContent = state.rep;
-      document.getElementById('cash').textContent = state.cash;
-      document.getElementById('crypto').textContent = state.crypto;
       document.getElementById('quests-completed').textContent = state.questsCompleted;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
+
+      // Индикаторы прогресса (пример: 0-100%)
+      setBar('cash-progress', state.cash, 10000); // лимит 10k
+      setBar('crypto-progress', state.crypto, 10000);
+      setBar('rep-progress', state.rep, 50);
+      setBar('quests-progress', state.questsCompleted, 100);
+      setBar('missions-progress', state.missionsCompleted, 100);
+      setBar('location-progress', 1, 1);
+      setBar('status-progress', 1, 1);
+      setBar('job-progress', 1, 1);
+      setBar('car-progress', 1, 1);
+
       let img = document.getElementById('profile-img');
       if(state.photo) img.src = state.photo;
       else img.src = "https://i.imgur.com/1vA0Q2z.png";
     }
-    function setupEditable() {
-      ["status", "job", "car", "rep", "cash", "crypto"].forEach(id => {
-        let el = document.getElementById(id);
-        el.addEventListener("input", function () {
-          state[id] = el.textContent.trim();
-          saveState();
-        });
-        el.addEventListener("blur", function () {
-          el.textContent = state[id];
-        });
-      });
+    function setBar(id, val, max) {
+      let el = document.getElementById(id);
+      let percent = Math.max(0, Math.min(100, Math.round((parseFloat(val) || 0) / max * 100)));
+      el.style.width = percent + "%";
     }
     document.getElementById('profile-img').onclick = function() {
       document.getElementById('photo-upload').click();
@@ -601,15 +529,12 @@
         btn.addEventListener('click', playClick);
       });
     });
-
     document.getElementById('open-quests').onclick = function() {
       playClick();
-      renderQuests();
       document.getElementById('modal-quests').style.display = "block";
     };
     document.getElementById('open-missions').onclick = function() {
       playClick();
-      renderMissions();
       document.getElementById('modal-missions').style.display = "block";
     };
     document.getElementById('open-stats').onclick = function() {
@@ -621,16 +546,15 @@
       document.getElementById('modal-shop').style.display = "block";
     };
 
-    function renderQuests() {
-      document.getElementById('quests-list').innerHTML = '<div style="color:#181824;text-align:center;">Квесты скоро будут!</div>';
-    }
     function renderMissions() {
       document.getElementById('missions-list').innerHTML = '<div style="color:#181824;text-align:center;">Миссии скоро будут!</div>';
+    }
+    function renderQuests() {
+      document.getElementById('quests-list').innerHTML = '<div style="color:#181824;text-align:center;">Квесты скоро будут!</div>';
     }
 
     loadState();
     renderProfile();
-    setupEditable();
     setInterval(renderProfile, 2000);
   </script>
 </body>

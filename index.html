@@ -2,207 +2,663 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>DIOR RPG</title>
+  <title>DIOR GTA Life Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts GTA-like -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@600;900&display=swap" rel="stylesheet">
   <style>
-    body { background: #181824; color: #fff; font-family: 'Montserrat', Arial, sans-serif; margin: 0; padding: 0; }
-    .game-box { max-width: 400px; margin: 40px auto; background: #23233a; border-radius: 16px; box-shadow: 0 4px 20px #0008; padding: 24px 18px 28px 18px; }
-    .title { font-size: 1.44em; font-weight: bold; letter-spacing: 2px; margin-bottom: 1em; text-align: center; }
-    .row { margin-bottom: 0.7em; display: flex; justify-content: space-between; align-items: center; }
-    .label { color: #b7b8e7; font-weight: 500; }
-    .val, .edit-input { background: #2d2d45; color: #fff; border: 1px solid #393963; border-radius: 8px; padding: 4px 9px; min-width: 60px; text-align: right; font-size: 1.08em;}
-    .val[contenteditable="true"] { outline: 2px solid #e9457a; }
-    .stat-btn { margin-left: 7px; padding: 2px 9px; font-size: 1.05em; background: #e9457a; color: #fff; border: none; border-radius: 7px; cursor: pointer; }
-    .stat-btn:active { background: #af2654; }
-    .section-title { color: #e9457a; font-size: 1.16em; font-weight: 700; margin: 1em 0 0.4em 0; }
-    .quests, .missions, .progress { margin: 1em 0 1em 0; }
-    .quest, .mission { margin-bottom: 0.67em; background: #1c1c32; border-radius: 8px; padding: 7px 10px 7px 10px; display: flex; align-items: center; justify-content: space-between;}
-    .quest.done, .mission.done { opacity: 0.5; text-decoration: line-through; }
-    .quest-title, .mission-title { flex: 1 1 auto; }
-    .complete-btn { margin-left: 10px; padding: 2px 8px; font-size: 0.94em; background: #b7b8e7; color: #23233a; border: none; border-radius: 6px; cursor: pointer; }
-    .complete-btn:active { background: #e9457a; color: #fff; }
-    .stat-row { display: flex; align-items: center; margin-bottom: 0.5em;}
-    .stat-row label { flex: 1; }
-    .stat-num { width: 50px; margin-left: 7px; }
-    .divider { border-bottom: 1px solid #2c2c44; margin: 1.2em 0; }
+    :root {
+      --accent: #e9457a;
+      --dark: #181824;
+      --panel: #23233a;
+      --border: #3c3c5f;
+      --gta-green: #19db60;
+      --gta-yellow: #ffe66d;
+      --gta-red: #e9457a;
+      --main-font: 'Montserrat', Arial, sans-serif;
+      --title-font: 'Russo One', Arial, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #181824 60%, #2e396a 100%);
+      color: #fff;
+      font-family: var(--main-font);
+      margin: 0;
+      min-height: 100vh;
+      letter-spacing: 0.03em;
+    }
+    .gta-game {
+      max-width: 380px;
+      margin: 34px auto 0 auto;
+      background: rgba(35,35,58,0.99);
+      border-radius: 20px;
+      box-shadow: 0 10px 36px #000b, 0 1.5px 8px #e9457a44;
+      padding: 24px 20px 32px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .gta-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 1.5em;
+    }
+    .gta-photo {
+      width: 78px; height: 78px;
+      border-radius: 14px;
+      border: 3px solid var(--accent);
+      background: #111 url('https://i.imgur.com/8ZbGyoP.png') center/cover no-repeat;
+      object-fit: cover;
+      box-shadow: 0 2px 12px #e9457a44, 0 2px 10px #fff2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .18s;
+    }
+    .gta-photo:hover {
+      box-shadow: 0 0 0 3px #ffe66d, 0 2px 12px #e9457a44;
+    }
+    .gta-photo input[type="file"]{
+      display: none;
+    }
+    .gta-photo-edit {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(25,25,35,0.85);
+      color: #ffe66d;
+      font-size: 0.91em;
+      text-align: center;
+      padding: 2px 0 2px 0;
+      font-family: var(--main-font);
+      cursor: pointer;
+    }
+    .gta-indicators {
+      flex: 1;
+    }
+    .gta-title {
+      font-family: var(--title-font);
+      font-size: 1.18em;
+      color: #fff;
+      font-weight: 900;
+      text-shadow: 0 1px 12px #e9457a99, 0 2px 6px #000c;
+      letter-spacing: 2px;
+      margin-bottom: 0.18em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .gta-level {
+      background: var(--gta-green);
+      color: #181824;
+      border-radius: 7px;
+      padding: 2px 9px 2px 8px;
+      font-size: 0.96em;
+      margin-left: 0.6em;
+      font-family: var(--title-font);
+      font-weight: 900;
+      letter-spacing: 1.1px;
+      box-shadow: 0 2px 10px #19db6040;
+    }
+    .gta-expbar-wrap {
+      margin: 0.31em 0 0.5em 0;
+      width: 92%;
+      background: #23233a;
+      border-radius: 12px;
+      height: 12px;
+      box-shadow: 0 1px 8px #e9457a22;
+      border: 1px solid #33334c;
+      position: relative;
+    }
+    .gta-expbar-bar {
+      background: linear-gradient(90deg, #ffe66d 60%, #e9457a 100%);
+      border-radius: 11px 0 0 11px;
+      height: 100%;
+      transition: width 0.3s;
+    }
+    .gta-expbar-text {
+      position: absolute;
+      right: 11px; top: 0; font-size: 0.95em; color: #fff;
+      text-shadow: 0 1px 2px #0007;
+      font-weight: bold;
+      line-height: 12px;
+      font-family: var(--main-font);
+    }
+    .gta-indicator-row {
+      display: flex;
+      align-items: center;
+      font-size: 0.98em;
+      margin-bottom: 0.48em;
+      gap: 0.8em;
+      flex-wrap: wrap;
+    }
+    .gta-ind-label {
+      color: #ffe66d;
+      font-family: var(--title-font);
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      min-width: 77px;
+      font-size: 1em;
+    }
+    .gta-indicator-val {
+      background: #2d2d45;
+      color: #fff;
+      border: 1.5px solid #393963;
+      border-radius: 8px;
+      padding: 3px 10px;
+      min-width: 60px;
+      text-align: left;
+      font-size: 1.08em;
+      font-family: var(--main-font);
+      font-weight: 700;
+      outline: none;
+      transition: box-shadow .16s;
+      cursor: pointer;
+    }
+    .gta-indicator-val[contenteditable="true"]:focus {
+      box-shadow: 0 0 0 2px #ffe66d;
+    }
+    .gta-indicator-val.static {
+      cursor: default;
+      background: #26263a;
+      opacity: 0.85;
+    }
+    .gta-indicator-val.rep {
+      border: 2px solid var(--gta-yellow);
+      color: var(--gta-yellow);
+      background: #222230;
+    }
+    .gta-indicator-val.money {
+      border: 2px solid var(--gta-green);
+      color: var(--gta-green);
+    }
+    .gta-indicator-val.crypto {
+      border: 2px solid var(--gta-red);
+      color: var(--gta-red);
+    }
+    .gta-indicator-val.levelup {
+      animation: levelup 0.6s;
+    }
+    @keyframes levelup {
+      0% { box-shadow: 0 0 0 8px #ffe66d88; }
+      100% { box-shadow: none; }
+    }
+
+    .gta-progress-box {
+      background: #19192c;
+      border-radius: 13px;
+      padding: 11px 15px 11px 15px;
+      margin: 0.6em 0 1.2em 0;
+      box-shadow: 0 1px 6px #ffe66d22;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.1em;
+      font-family: var(--title-font);
+      color: #ffe66d;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-shadow: 0 2px 7px #e9457a33;
+    }
+    .gta-progress-box span {
+      color: #fff;
+      margin-left: 0.7em;
+      letter-spacing: 1.1px;
+      font-family: var(--main-font);
+    }
+    .gta-main-btns {
+      margin-top: 1.5em;
+      display: flex;
+      gap: 1.5em;
+      justify-content: center;
+    }
+    .gta-main-btn {
+      font-family: var(--title-font);
+      font-size: 1.11em;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 13px;
+      border: none;
+      padding: 0.8em 2.2em;
+      font-weight: 900;
+      box-shadow: 0 2px 14px #e9457a44, 0 2px 9px #0006;
+      cursor: pointer;
+      transition: filter .13s, background .18s, color .13s;
+      letter-spacing: 1.4px;
+    }
+    .gta-main-btn.selected,
+    .gta-main-btn:active {
+      background: #ffe66d;
+      color: var(--accent);
+      filter: brightness(1.07) drop-shadow(0 2px 10px #ffe66d55);
+    }
+
+    .gta-section {
+      margin-top: 1.1em;
+      display: none;
+      animation: fadein .5s;
+    }
+    .gta-section.active {
+      display: block;
+    }
+    .gta-quests-list, .gta-missions-list {
+      margin: 0.7em 0 0 0;
+    }
+    .gta-quest, .gta-mission {
+      background: #23233a;
+      border-radius: 10px;
+      padding: 12px 10px 12px 12px;
+      margin-bottom: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 7px #0002, 0 1px 3px #ffe66d22;
+      font-size: 1.01em;
+      border: 2px solid #393963;
+      transition: box-shadow .15s, border .15s;
+      position: relative;
+    }
+    .gta-quest.active, .gta-mission.active {
+      border: 2px solid var(--gta-yellow);
+      box-shadow: 0 2px 12px #ffe66d55;
+    }
+    .gta-quest.done, .gta-mission.done {
+      border: 2px solid var(--gta-green);
+      opacity: 0.58;
+      text-decoration: line-through;
+      color: #b8b8b8;
+    }
+    .gta-quest-controls {
+      display: flex;
+      gap: 0.6em;
+      align-items: center;
+    }
+    .gta-quest-btn, .gta-mission-btn {
+      font-family: var(--title-font);
+      font-size: 0.98em;
+      padding: 0.25em 1em;
+      border-radius: 8px;
+      border: none;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--gta-yellow);
+      color: var(--accent);
+      box-shadow: 0 2px 7px #ffe66d33;
+      transition: background .15s, color .12s;
+      outline: none;
+      margin-left: 0.1em;
+    }
+    .gta-quest-btn:active, .gta-mission-btn:active {
+      background: var(--gta-green);
+      color: #fff;
+    }
+    .gta-timer {
+      background: #23233a;
+      color: var(--gta-yellow);
+      border-radius: 7px;
+      font-family: var(--main-font);
+      font-size: 0.93em;
+      padding: 0.13em 0.8em;
+      margin-left: 0.9em;
+      border: 1.5px solid var(--gta-yellow);
+      box-shadow: 0 1px 4px #ffe66d33;
+      display: inline-block;
+      min-width: 53px;
+      text-align: center;
+    }
+    @keyframes fadein {
+      0%{opacity:0;transform:translateY(30px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+    @media (max-width: 500px) {
+      .gta-game { max-width: 98vw; padding: 10px 2vw 22vw 2vw; }
+      .gta-header { gap: 7px; }
+      .gta-photo { width: 62px; height: 62px; }
+      .gta-ind-label { min-width: 65px; font-size: 0.98em;}
+      .gta-progress-box { font-size: 1em; }
+      .gta-section { margin-top: 0.55em; }
+    }
   </style>
 </head>
 <body>
-  <div class="game-box">
-    <div class="title">DIOR || УРОВЕНЬ: <span id="level">1</span> || EXP: <span id="exp">0</span>/<span id="expMax">8</span></div>
-    <div class="row"><span class="label">ЛОКАЦИЯ:</span><span class="val" contenteditable="true" id="location">USA, LA</span></div>
-    <div class="row"><span class="label">PASS:</span><span class="val" contenteditable="true" id="pass">NO LEGAL</span></div>
-    <div class="row"><span class="label">РАБОТА:</span><span class="val" contenteditable="true" id="job">НЕТУ</span></div>
-    <div class="row"><span class="label">РЕПУТАЦИЯ:</span>
-      <span class="val" id="rep">0</span>
-      <button class="stat-btn" onclick="addRep(1)">+1</button>
-      <button class="stat-btn" onclick="addRep(-1)">-1</button>
+  <div class="gta-game">
+    <div class="gta-header">
+      <label class="gta-photo" title="Загрузить/сменить фото">
+        <input type="file" id="photo-upload" accept="image/*">
+        <img id="photo-img" src="https://i.imgur.com/8ZbGyoP.png" alt="Фото профиля" style="width:100%;height:100%;object-fit:cover;">
+        <div class="gta-photo-edit">📷 Загрузить</div>
+      </label>
+      <div class="gta-indicators">
+        <div class="gta-title">
+          ИМЯ: <span id="player-name">DIOR</span>
+          <span class="gta-level" id="level">1</span>
+        </div>
+        <div class="gta-expbar-wrap">
+          <div class="gta-expbar-bar" id="expbar"></div>
+          <span class="gta-expbar-text" id="expbar-text">0/8 EXP</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">ЛОКАЦИЯ:</span>
+          <span class="gta-indicator-val static" id="location">USA, LA</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">СТАТУС:</span>
+          <span class="gta-indicator-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">РАБОТА:</span>
+          <span class="gta-indicator-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">РЕПУТАЦИЯ:</span>
+          <span class="gta-indicator-val rep" id="rep" contenteditable="true">0</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">ДЕНЬГИ:</span>
+          <span class="gta-indicator-val money" id="money" contenteditable="true">0$</span>
+        </div>
+        <div class="gta-indicator-row">
+          <span class="gta-ind-label">CRYPTO:</span>
+          <span class="gta-indicator-val crypto" id="crypto" contenteditable="true">0$</span>
+        </div>
+      </div>
     </div>
-    <div class="row"><span class="label">ДЕНЬГИ:</span><span class="val" contenteditable="true" id="money">0$</span></div>
-    <div class="row"><span class="label">CRYPTO:</span><span class="val" contenteditable="true" id="crypto">0$</span></div>
-
-    <div class="divider"></div>
-    <div class="row"><span class="label">ПРОЙДЕНО КВЕСТОВ:</span><span class="val" id="questsDone">0</span></div>
-    <div class="row"><span class="label">ПРОЙДЕНО МИСИЙ:</span><span class="val" id="missionsDone">0</span></div>
-    <div class="divider"></div>
-
-    <div class="section-title">СДЕЛАНО ОТЖИМАНИЯ:</div>
-    <div class="stat-row"><label>Отжимания</label><input class="stat-num" type="number" id="pushups" min="0" value="0"></div>
-    <div class="section-title">СДЕЛАНО ПРЕССА:</div>
-    <div class="stat-row"><label>Пресс</label><input class="stat-num" type="number" id="abs" min="0" value="0"></div>
-
-    <div class="section-title">КВЕСТЫ</div>
-    <div class="quests" id="quests"></div>
-    <div class="section-title">🧠 ПРОКАЧАТЬ АККАУНТ</div>
-    <div class="progress" id="progress"></div>
-    <div class="section-title">🪫🔋 МИСИИ</div>
-    <div class="missions" id="missions"></div>
+    <div class="gta-progress-box">
+      ПРОЙДЕНО КВЕСТОВ: <span id="quests-completed">0</span>
+      &nbsp;|&nbsp;
+      ПРОЙДЕНО МИСИЙ: <span id="missions-completed">0</span>
+    </div>
+    <div class="gta-main-btns">
+      <button class="gta-main-btn selected" id="btn-quests" onclick="toggleSection('quests')">КВЕСТЫ</button>
+      <button class="gta-main-btn" id="btn-missions" onclick="toggleSection('missions')">МИСИИ</button>
+    </div>
+    <!-- КВЕСТЫ -->
+    <div class="gta-section active" id="section-quests">
+      <div class="gta-quests-list" id="quests-list"></div>
+    </div>
+    <!-- МИСИИ -->
+    <div class="gta-section" id="section-missions">
+      <div class="gta-missions-list" id="missions-list"></div>
+    </div>
   </div>
-
   <script>
-    // Данные игрока
+    // --- Game Data ---
     let state = {
+      name: "DIOR",
       level: 1,
       exp: 0,
-      expMax: 8,
       rep: 0,
-      questsDone: 0,
-      missionsDone: 0,
+      expMax: 8,
+      photo: "",
+      location: "USA, LA",
+      status: "NO LEGAL",
+      job: "НЕТУ",
+      money: "0$",
+      crypto: "0$",
+      questsCompleted: 0,
+      missionsCompleted: 0,
       quests: [
-        { text: "Заработать 200$ [+1 EXP]", exp: 1, done: false },
-        { text: "Гигиена 30 дней [+1 EXP]", exp: 1, done: false },
-        { text: "Не курить 7 дней [+2 EXP]", exp: 2, done: false },
-        { text: "Сдать на права [+3 EXP]", exp: 3, done: false },
-        { text: "Отложить 1000$ [+3 EXP]", exp: 3, done: false },
-        { text: "Заняться зубами [+5 EXP]", exp: 5, done: false },
-        { text: "Получить машину [+5 EXP]", exp: 5, done: false },
-        { text: "Настроить работу [+5 EXP]", exp: 5, done: false },
-        { text: "Выплатить кредит [+5 EXP]", exp: 5, done: false },
-        { text: "Набрать слегка вес [+5 EXP]", exp: 5, done: false },
-      ],
-      progress: [
-        { text: "Прогулка далеко от дома [+2 EXP]", exp: 2, done: false },
-        { text: "Каждая прочитанная книга [+3 EXP]", exp: 3, done: false },
-        { text: "Каждый спортивный день [+2 EXP]", exp: 2, done: false },
+        { text: "Заработать 200$ [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Гигиена 30 дней [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Не курить 7 дней [+2 EXP]", exp: 2, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Сдать на права [+3 EXP]", exp: 3, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Отложить 1000$ [+3 EXP]", exp: 3, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Заняться зубами [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Получить машину [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Настроить работу [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Выплатить кредит [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Набрать слегка вес [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
       ],
       missions: [
-        { text: "Начнем знакомство, Mr.DIOR<br><small>Выполни: 3 начальных квеста [+1 REP]</small>", rep: 1, needQuests: 3, done: false, type: "quests" },
-        { text: "Не пора бы поработать?<br><small>Запустить свой проект в работу, и по мимо заработай первые 200$ [+1 REP]</small>", rep: 1, done: false, type: "custom" },
-        { text: "Ты в деле! Поехали уже…<br><small>Полностью сдать на вод. права [+🔑]</small>", rep: 0, done: false, type: "custom" },
+        { text: "Начнем знакомство, Mr.DIOR<br><small>Выполни: 3 начальных квеста [+1 REP]</small>", rep: 1, done: false, type: "quests", needQuests: 3 },
+        { text: "Не пора бы поработать?<br><small>Запусти свой проект и заработай первые 200$ [+1 REP]</small>", rep: 1, done: false, type: "custom" },
+        { text: "Ты в деле! Поехали уже…<br><small>Полностью сдать на вод. права [+ 🔑]</small>", rep: 0, done: false, type: "custom" },
         { text: "Легальность мое второе имя.<br><small>Найти легальную работу за кэш</small>", rep: 0, done: false, type: "custom" },
       ]
     };
 
-    function render() {
-      document.getElementById('level').textContent = state.level;
-      document.getElementById('exp').textContent = state.exp;
-      document.getElementById('expMax').textContent = state.expMax;
-      document.getElementById('rep').textContent = state.rep;
-      document.getElementById('questsDone').textContent = state.questsDone;
-      document.getElementById('missionsDone').textContent = state.missionsDone;
-
-      // Квесты
-      let qHtml = '';
-      state.quests.forEach((q, i) => {
-        qHtml += `<div class="quest${q.done ? ' done' : ''}">
-          <span class="quest-title">${q.text}</span>
-          ${!q.done ? `<button class="complete-btn" onclick="completeQuest(${i})">Выполнено</button>` : ''}
-        </div>`;
-      });
-      document.getElementById('quests').innerHTML = qHtml;
-
-      // Прокачка аккаунта
-      let pHtml = '';
-      state.progress.forEach((p, i) => {
-        pHtml += `<div class="quest${p.done ? ' done' : ''}">
-          <span class="quest-title">${p.text}</span>
-          ${!p.done ? `<button class="complete-btn" onclick="completeProgress(${i})">Выполнено</button>` : ''}
-        </div>`;
-      });
-      document.getElementById('progress').innerHTML = pHtml;
-
-      // Миссии
-      let mHtml = '';
-      state.missions.forEach((m, i) => {
-        mHtml += `<div class="mission${m.done ? ' done' : ''}">
-          <span class="mission-title">${m.text}</span>
-          ${!m.done ? `<button class="complete-btn" onclick="completeMission(${i})">Выполнено</button>` : ''}
-        </div>`;
-      });
-      document.getElementById('missions').innerHTML = mHtml;
+    // --- Helpers ---
+    function saveState() {
+      localStorage.setItem("dior_gta_state", JSON.stringify(state));
     }
-
-    // Квест выполнен
-    window.completeQuest = function(i) {
-      if (state.quests[i].done) return;
-      state.quests[i].done = true;
-      state.questsDone++;
-      addExp(state.quests[i].exp);
-      // Проверка на миссию "3 начальных квеста"
-      if (!state.missions[0].done && state.questsDone >= state.missions[0].needQuests) {
-        addRep(state.missions[0].rep);
-        state.missions[0].done = true;
-        state.missionsDone++;
+    function loadState() {
+      try {
+        let loaded = JSON.parse(localStorage.getItem("dior_gta_state"));
+        if (loaded) {
+          // Миграция новых полей
+          for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
+          for (let k in loaded) state[k] = loaded[k];
+        }
+      } catch {}
+    }
+    // --- Profile ---
+    function renderProfile() {
+      document.getElementById('player-name').textContent = state.name;
+      document.getElementById('level').textContent = state.level;
+      // EXP BAR
+      let percent = Math.round(state.exp / state.expMax * 100);
+      if (percent > 100) percent = 100;
+      document.getElementById('expbar').style.width = percent + "%";
+      document.getElementById('expbar-text').textContent = `${state.exp}/${state.expMax} EXP`;
+      // Индикаторы
+      document.getElementById('location').textContent = state.location;
+      document.getElementById('status').textContent = state.status;
+      document.getElementById('job').textContent = state.job;
+      document.getElementById('rep').textContent = state.rep;
+      document.getElementById('money').textContent = state.money;
+      document.getElementById('crypto').textContent = state.crypto;
+      // Фото
+      let img = document.getElementById('photo-img');
+      if(state.photo) img.src = state.photo;
+      else img.src = "https://i.imgur.com/8ZbGyoP.png";
+      // Прогресс
+      document.getElementById('quests-completed').textContent = state.questsCompleted;
+      document.getElementById('missions-completed').textContent = state.missionsCompleted;
+    }
+    // --- Editable indicators ---
+    function setupEditable() {
+      ["status", "job", "rep", "money", "crypto"].forEach(id => {
+        let el = document.getElementById(id);
+        el.addEventListener("input", function () {
+          state[id] = el.textContent.trim();
+          saveState();
+        });
+        el.addEventListener("blur", function () {
+          el.textContent = state[id];
+        });
+      });
+    }
+    // --- Photo upload ---
+    document.getElementById('photo-upload').addEventListener('change', function(e){
+      let file = e.target.files[0];
+      if (!file) return;
+      let reader = new FileReader();
+      reader.onload = function(ev){
+        state.photo = ev.target.result;
+        document.getElementById('photo-img').src = state.photo;
+        saveState();
+      };
+      reader.readAsDataURL(file);
+    });
+    // --- Quests ---
+    function renderQuests() {
+      let activeCount = state.quests.filter(q => q.active && !q.done).length;
+      let html = "";
+      state.quests.forEach((q, i) => {
+        let questClass = "gta-quest";
+        if (q.done) questClass += " done";
+        else if (q.active) questClass += " active";
+        html += `<div class="${questClass}">
+          <span>${q.text}</span>
+          <div class="gta-quest-controls">`;
+        if (!q.done && !q.active && activeCount < 3) {
+          html += `<button class="gta-quest-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
+        }
+        if (q.active && !q.done) {
+          html += `<span class="gta-timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
+          if (q.timer <= 0) {
+            html += `<button class="gta-quest-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
+            <button class="gta-quest-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
+          }
+        }
+        html += `</div></div>`;
+      });
+      document.getElementById('quests-list').innerHTML = html;
+    }
+    function formatTimer(q) {
+      if (q.timer <= 0) return "Готово!";
+      let min = Math.floor(q.timer / 60).toString().padStart(2, '0');
+      let sec = (q.timer % 60).toString().padStart(2, '0');
+      return `${min}:${sec}`;
+    }
+    function takeQuest(i) {
+      let q = state.quests[i];
+      if (q.active || q.done) return;
+      let activeCount = state.quests.filter(q => q.active && !q.done).length;
+      if (activeCount >= 3) return;
+      q.active = true;
+      q.timer = 60; // 1 минута для теста
+      q.started = Date.now();
+      q.timerID = setInterval(function(){
+        q.timer--;
+        if (q.timer <= 0) {
+          clearInterval(q.timerID);
+          q.timerID = null;
+        }
+        renderQuests();
+        saveState();
+      }, 1000);
+      renderQuests();
+      saveState();
+    }
+    function completeQuest(i) {
+      let q = state.quests[i];
+      if (q.done || !q.active || q.timer > 0) return;
+      q.done = true;
+      q.active = false;
+      q.started = null;
+      if (q.timerID) clearInterval(q.timerID);
+      state.questsCompleted++;
+      addExp(q.exp);
+      checkMissions();
+      renderQuests();
+      renderProfile();
+      saveState();
+    }
+    function cancelQuest(i) {
+      let q = state.quests[i];
+      if (!q.active || q.done) return;
+      q.active = false;
+      q.timer = 60;
+      q.started = null;
+      if (q.timerID) clearInterval(q.timerID);
+      renderQuests();
+      saveState();
+    }
+    function tickQuests() {
+      // Восстановить таймеры после перезагрузки
+      state.quests.forEach((q, i) => {
+        if (q.active && !q.done && !q.timerID && q.timer>0 && q.started) {
+          let passed = Math.floor((Date.now() - q.started)/1000);
+          q.timer -= passed;
+          if(q.timer < 0) q.timer = 0;
+          q.started = Date.now();
+          q.timerID = setInterval(function(){
+            q.timer--;
+            if (q.timer <= 0) {
+              clearInterval(q.timerID);
+              q.timerID = null;
+            }
+            renderQuests();
+            saveState();
+          }, 1000);
+        }
+      });
+    }
+    // --- Missions ---
+    function renderMissions() {
+      let html = "";
+      state.missions.forEach((m, i) => {
+        let mClass = "gta-mission";
+        if (m.done) mClass += " done";
+        html += `<div class="${mClass}">
+          <span>${m.text}</span>
+          <div class="gta-quest-controls">`;
+        if (!m.done && canCompleteMission(i)) {
+          html += `<button class="gta-mission-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
+        }
+        html += `</div></div>`;
+      });
+      document.getElementById('missions-list').innerHTML = html;
+    }
+    function canCompleteMission(i) {
+      let m = state.missions[i];
+      if (m.type === "quests") {
+        return state.questsCompleted >= m.needQuests && !m.done;
       }
-      render();
-    };
-
-    // Прогресс выполнен
-    window.completeProgress = function(i) {
-      if (state.progress[i].done) return;
-      state.progress[i].done = true;
-      addExp(state.progress[i].exp);
-      render();
-    };
-
-    // Миссия выполнена
-    window.completeMission = function(i) {
-      if (state.missions[i].done) return;
-      state.missions[i].done = true;
-      if (state.missions[i].rep) addRep(state.missions[i].rep);
-      state.missionsDone++;
-      render();
-    };
-
-    // Добавить EXP и апнуть уровень при необходимости
+      return !m.done;
+    }
+    function completeMission(i) {
+      let m = state.missions[i];
+      if (m.done) return;
+      m.done = true;
+      state.missionsCompleted++;
+      state.rep = (parseInt(state.rep) || 0) + (m.rep || 0);
+      renderMissions();
+      renderProfile();
+      saveState();
+    }
+    // --- Leveling ---
     function addExp(amount) {
+      let prevLevel = state.level;
       state.exp += amount;
-      while (state.exp >= state.expMax) {
+      while (state.level < 100 && state.exp >= state.expMax) {
         state.exp -= state.expMax;
         state.level++;
-        state.expMax = Math.floor(state.expMax * 1.4 + 2);
+        state.expMax += 2; // каждый уровень на +2 EXP больше
       }
-      render();
+      if (state.level !== prevLevel) {
+        let levelEl = document.getElementById('level');
+        levelEl.classList.add('levelup');
+        setTimeout(()=>levelEl.classList.remove('levelup'), 1000);
+      }
+      renderProfile();
+      saveState();
     }
-
-    // Добавить репутацию
-    window.addRep = function(amount) {
-      state.rep += amount;
-      if (state.rep < 0) state.rep = 0;
-      render();
-    };
-
-    // Сохранение и восстановление pushups/abs
-    document.getElementById('pushups').addEventListener('change', function() {
-      localStorage.setItem('pushups', this.value);
-    });
-    document.getElementById('abs').addEventListener('change', function() {
-      localStorage.setItem('abs', this.value);
-    });
-    document.getElementById('pushups').value = localStorage.getItem('pushups') || 0;
-    document.getElementById('abs').value = localStorage.getItem('abs') || 0;
-
-    // Сохранение кастомных значений (деньги, крипто, локация и т.п.)
-    document.querySelectorAll('[contenteditable="true"]').forEach(el => {
-      el.addEventListener('input', () => {
-        localStorage.setItem(el.id, el.textContent);
+    // --- Section toggling ---
+    function toggleSection(sec) {
+      document.getElementById('btn-quests').classList.remove('selected');
+      document.getElementById('btn-missions').classList.remove('selected');
+      document.getElementById('section-quests').classList.remove('active');
+      document.getElementById('section-missions').classList.remove('active');
+      if (sec === 'quests') {
+        document.getElementById('btn-quests').classList.add('selected');
+        document.getElementById('section-quests').classList.add('active');
+      } else {
+        document.getElementById('btn-missions').classList.add('selected');
+        document.getElementById('section-missions').classList.add('active');
+      }
+    }
+    // --- Missions status after quest complete ---
+    function checkMissions() {
+      state.missions.forEach((m, i) => {
+        if (!m.done && m.type === "quests" && state.questsCompleted >= m.needQuests) {
+          // Можно завершить миссию!
+        }
       });
-      let saved = localStorage.getItem(el.id);
-      if (saved !== null) el.textContent = saved;
-    });
-
-    // Рендер на старте
-    render();
+      renderMissions();
+    }
+    // --- Init ---
+    loadState();
+    renderProfile();
+    setupEditable();
+    renderQuests();
+    renderMissions();
+    tickQuests();
+    setInterval(renderProfile, 2000); // авто-обновление индикаторов
   </script>
 </body>
 </html>

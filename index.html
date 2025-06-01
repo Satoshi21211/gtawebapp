@@ -10,12 +10,10 @@
       --main-yellow: #ffe66d;
       --main-yellow-dark: #ffd800;
       --main-bg: #181824;
-      --panel-dark: #23233A;
+      --panel-dark: #19191e;
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
-      /* Заменить ссылку ниже на свой фон, если надо */
-      --profile-bg: url('https://i.imgur.com/I9UjScF.jpeg');
-      --fields-bg: rgba(32,32,36,0.85);
+      --fields-bg: #23232a;
       --fields-border: 1.8px solid #23232a;
       --fields-shadow: 0 1px 14px #18182440;
     }
@@ -31,9 +29,7 @@
       max-width: 430px;
       margin: 36px auto 0 auto;
       border-radius: 28px;
-      background: var(--profile-bg), var(--panel-dark);
-      background-size: cover;
-      background-position: center;
+      background: var(--panel-dark);
       box-shadow: 0 8px 44px #000b, 0 2px 12px #ffe66d33;
       position: relative;
       overflow: hidden;
@@ -45,8 +41,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: rgba(255, 230, 109, 0.5); /* желтая прозрачность 50% */
+      background: var(--main-yellow);
       border-radius: 0 0 28px 28px;
+      box-shadow: 0 4px 28px #ffe66d44;
     }
     .profile-photo-wrap {
       width: 108px; height: 108px;
@@ -70,7 +67,7 @@
     }
     .profile-title {
       font-family: var(--font-title);
-      font-size: 1.21em;
+      font-size: 1.23em;
       color: #181824;
       font-weight: 900;
       letter-spacing: 2.2px;
@@ -152,7 +149,7 @@
 
     .fields-block {
       width: 92%;
-      background: rgba(30, 30, 34, 0.85);
+      background: var(--fields-bg);
       border-radius: 18px;
       margin: 1.1em auto 0.5em auto;
       padding: 1.1em 1.25em 1.1em 1.25em;
@@ -186,7 +183,7 @@
       text-align: left;
     }
     .field-val {
-      background: rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.10);
       color: #fff;
       border: 1.6px solid #29282d;
       border-radius: 7px;
@@ -205,12 +202,12 @@
     }
     .field-val.static {
       cursor: default;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.07);
       opacity: 0.93;
     }
     .field-val[contenteditable="true"]:focus {
       box-shadow: 0 0 0 2px var(--main-yellow-dark);
-      background: rgba(255,255,255,0.13);
+      background: rgba(255,255,255,0.15);
       color: #ffe66d;
     }
     .fields-completed {
@@ -396,8 +393,8 @@
       font-weight: 700;
     }
     @media (max-width: 500px) {
-      .main-container { max-width: 99vw; }
-      .fields-block { left: 0; margin-left: auto; margin-right: auto; }
+      .main-container { max-width: 99vw;}
+      .fields-block { left: 0; margin-left: auto; margin-right: auto;}
       .exp-bar-wrap { width: 98%; margin-left: 0.5em;}
       .header-block { padding-bottom: 10px; }
       .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}

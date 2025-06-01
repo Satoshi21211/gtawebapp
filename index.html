@@ -12,7 +12,6 @@
       --main-dark: #181824;
       --panel-dark: #23233A;
       --panel-light: #23232a;
-      --neon-glow: 0 0 16px #ffe66d99, 0 0 8px #ffe66d88;
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
     }
@@ -58,38 +57,16 @@
     }
     .profile-photo {
       width: 110px; height: 110px;
-      border-radius: 50%;
-      border: 5px solid #ffe66d;
+      border-radius: 14px;
       object-fit: cover;
       background: #181824;
-      box-shadow: var(--neon-glow);
+      box-shadow: 0 2px 10px #ffe66d33;
       cursor: pointer;
       transition: box-shadow .19s;
       display: block;
       z-index: 2;
+      border: none;
     }
-    .profile-photo:hover {
-      box-shadow: 0 0 0 7px #fffbe0, 0 4px 28px #ffe66da7;
-    }
-    .photo-edit-btn {
-      position: absolute;
-      right: 7px; bottom: 10px;
-      background: #ffe66d;
-      color: #181824;
-      font-size: 1.04em;
-      font-weight: bold;
-      border-radius: 50%;
-      width: 34px; height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 3px 7px #ffe66d44;
-      border: 2px solid #ffce1a;
-      cursor: pointer;
-      z-index: 3;
-      transition: background .16s;
-    }
-    .photo-edit-btn:hover { background: #fffbe0; }
     .profile-title {
       font-family: var(--font-title);
       font-size: 1.4em;
@@ -121,7 +98,7 @@
       border-radius: 14px 0 0 14px;
       transition: width 0.39s cubic-bezier(0.6,0.2,0.2,1);
       min-width: 10px;
-      box-shadow: var(--neon-glow);
+      box-shadow: 0 2px 12px #ffe66d99;
     }
     .big-progress-text {
       position: absolute;
@@ -148,34 +125,92 @@
       vertical-align: middle;
       margin-bottom: 0.13em;
     }
+
+    /* Progress indicators block - centered and beautiful */
+    .progress-indicators-block {
+      width: 99%;
+      margin: 1.5em 0 1.4em 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.37em;
+    }
+    .progress-indicators-label {
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.15em;
+      font-weight: 900;
+      letter-spacing: 1.7px;
+      text-align: center;
+      margin-bottom: 0.18em;
+      text-shadow: 0 1px 9px #ffe66d22;
+      user-select: none;
+    }
+    .progress-indicators-row {
+      display: flex;
+      gap: 3em;
+      justify-content: center;
+      align-items: flex-end;
+      margin-bottom: 0.2em;
+    }
+    .indicator-block {
+      background: #23232a;
+      border-radius: 12px;
+      padding: 0.7em 1.5em 0.45em 1.5em;
+      box-shadow: 0 1px 7px #ffe66d22;
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.12em;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 1.1px;
+      min-width: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .indicator-block span {
+      color: #fff;
+      font-size: 1.26em;
+      margin-top: 0.12em;
+      font-family: var(--font-main);
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
     .fields-block {
       width: 93%;
       background: #222;
       border-radius: 19px;
       margin: 0 auto 0.8em auto;
-      padding: 1.25em 1.5em 0.7em 1.5em;
+      padding: 1.25em 1.5em 0.9em 1.5em;
       box-shadow: 0 1px 7px #ffe66d22;
       display: flex;
       flex-direction: column;
-      gap: 0.7em;
+      gap: 0.6em;
       color: #ffe66d;
-      font-size: 1.08em;
+      font-size: 1.09em;
     }
     .field-row {
       display: flex;
       align-items: center;
-      margin-bottom: 0.21em;
+      justify-content: space-between;
+      margin-bottom: 0.12em;
       gap: 0.6em;
       flex-wrap: wrap;
+      min-width: 0;
     }
     .field-label {
-      min-width: 90px;
+      min-width: 102px;
       font-family: var(--font-title);
       font-weight: 700;
       color: #ffe66d;
       letter-spacing: 1.1px;
-      font-size: 1.08em;
+      font-size: 1.07em;
       margin-right: 0.7em;
+      text-align: left;
     }
     .field-val {
       background: #292a2d;
@@ -184,6 +219,7 @@
       border-radius: 9px;
       padding: 5px 17px;
       min-width: 65px;
+      max-width: 160px;
       text-align: left;
       font-size: 1.07em;
       font-family: var(--font-main);
@@ -191,6 +227,8 @@
       outline: none;
       transition: box-shadow .14s;
       cursor: pointer;
+      box-sizing: border-box;
+      flex: 1 1 auto;
     }
     .field-val.static {
       cursor: default;
@@ -200,36 +238,7 @@
     .field-val[contenteditable="true"]:focus {
       box-shadow: 0 0 0 2px #ffe66d;
     }
-    .progress-indicators {
-      margin: 1.3em auto 0.7em auto;
-      width: 93%;
-      display: flex;
-      gap: 1.3em;
-      justify-content: space-between;
-    }
-    .indicator-block {
-      background: #23232a;
-      border-radius: 11px;
-      padding: 1em 1.3em;
-      box-shadow: 0 1px 7px #ffe66d22;
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-size: 1.06em;
-      font-weight: 700;
-      min-width: 90px;
-      text-align: center;
-      letter-spacing: 1.1px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .indicator-block span {
-      color: #fff;
-      font-size: 1.21em;
-      margin-top: 0.15em;
-      font-family: var(--font-main);
-      font-weight: 900;
-    }
+
     .main-btns {
       width: 100%;
       display: flex;
@@ -257,6 +266,7 @@
       color: #ffce1a;
       filter: brightness(1.04) drop-shadow(0 2px 10px #ffe66d77);
     }
+
     /* MODAL */
     .modal {
       display: none;
@@ -313,11 +323,11 @@
     .list-item {
       background: #23232a;
       border-radius: 11px;
-      padding: 11px 10px 13px 14px;
+      padding: 13px 12px 15px 14px;
       margin-bottom: 1em;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: stretch;
       box-shadow: 0 1px 8px #ffe66d20;
       font-size: 1.04em;
       border: 2px solid #ffe66d;
@@ -326,10 +336,6 @@
       color: #ffe66d;
       font-family: var(--font-main);
     }
-    .list-item.active {
-      border: 2.5px solid #ffce1a;
-      box-shadow: 0 2px 12px #ffe66d55;
-    }
     .list-item.done {
       border: 2.5px solid #19db60;
       opacity: 0.62;
@@ -337,10 +343,19 @@
       color: #b8b8b8;
       background: #212118;
     }
+    .list-item .item-text {
+      text-align: left;
+      margin-bottom: 0.7em;
+      font-size: 1.05em;
+      font-family: var(--font-main);
+      color: inherit;
+    }
     .item-controls {
       display: flex;
       gap: 0.7em;
       align-items: center;
+      justify-content: flex-end;
+      margin-top: 0.1em;
     }
     .item-btn {
       font-family: var(--font-title);
@@ -355,8 +370,8 @@
       box-shadow: 0 2px 7px #ffe66d44;
       transition: background .15s, color .12s;
       outline: none;
-      margin-left: 0.08em;
-      letter-spacing: 1.1px;
+      min-width: 105px;
+      text-align: center;
     }
     .item-btn:active {
       background: #ffce1a;
@@ -381,10 +396,9 @@
       .main-container { max-width: 99vw; padding: 0 0 10vw 0;}
       .header-block { padding: 13px 0 12px 0;}
       .fields-block { padding: 0.9em 1.1em 0.3em 1.1em; }
-      .progress-indicators { width: 99%; gap: 0.7em;}
-      .indicator-block { padding: 0.7em 0.6em;}
-      .main-btns { padding: 0.7em 0 0.7em 0;}
       .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}
+      .progress-indicators-block { gap: 0.2em;}
+      .progress-indicators-row { gap: 1.1em;}
     }
   </style>
 </head>
@@ -393,7 +407,6 @@
     <div class="header-block">
       <div class="profile-photo-wrap">
         <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
-        <label class="photo-edit-btn" for="photo-upload" title="Загрузить фото">📷</label>
         <input type="file" id="photo-upload" accept="image/*" style="display:none;">
       </div>
       <div class="profile-title">МОЙ ПРОКАЧАННЫЙ ПУТЬ</div>
@@ -402,6 +415,19 @@
         <span class="big-progress-text" id="progress-text">0/8 EXP</span>
       </div>
       <span class="level-ind" id="level-ind">1 LVL</span>
+    </div>
+    <div class="progress-indicators-block">
+      <div class="progress-indicators-label" id="done-label" style="margin-bottom:0.05em;">ВЫПОЛНЕНО</div>
+      <div class="progress-indicators-row">
+        <div class="indicator-block">
+          КВЕСТОВ
+          <span id="quests-completed">0</span>
+        </div>
+        <div class="indicator-block">
+          МИСИЙ
+          <span id="missions-completed">0</span>
+        </div>
+      </div>
     </div>
     <div class="fields-block">
       <div class="field-row">
@@ -427,16 +453,6 @@
       <div class="field-row">
         <span class="field-label">CRYPTO:</span>
         <span class="field-val" id="crypto" contenteditable="true">0$</span>
-      </div>
-    </div>
-    <div class="progress-indicators">
-      <div class="indicator-block">
-        КВЕСТОВ
-        <span id="quests-completed">0</span>
-      </div>
-      <div class="indicator-block">
-        МИСИЙ
-        <span id="missions-completed">0</span>
       </div>
     </div>
     <div class="main-btns">
@@ -545,6 +561,9 @@
     }
 
     // PHOTO UPLOAD
+    document.getElementById('profile-img').onclick = function() {
+      document.getElementById('photo-upload').click();
+    };
     document.getElementById('photo-upload').addEventListener('change', function(e){
       let file = e.target.files[0];
       if (!file) return;
@@ -556,9 +575,6 @@
       };
       reader.readAsDataURL(file);
     });
-    document.querySelector('.photo-edit-btn').onclick = function() {
-      document.getElementById('photo-upload').click();
-    };
 
     // QUESTS/MISSIONS MODAL
     function closeModal(id) {
@@ -582,7 +598,7 @@
         if (q.done) questClass += " done";
         else if (q.active) questClass += " active";
         html += `<div class="${questClass}">
-          <span>${q.text}</span>
+          <div class="item-text">${q.text}</div>
           <div class="item-controls">`;
         if (!q.done && !q.active && activeCount < 3) {
           html += `<button class="item-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
@@ -675,7 +691,7 @@
         let mClass = "list-item";
         if (m.done) mClass += " done";
         html += `<div class="${mClass}">
-          <span>${m.text}</span>
+          <div class="item-text">${m.text}</div>
           <div class="item-controls">`;
         if (!m.done && canCompleteMission(i)) {
           html += `<button class="item-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;

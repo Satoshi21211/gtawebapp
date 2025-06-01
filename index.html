@@ -2,23 +2,24 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>МОЙ ПРОКАЧАННЫЙ ПУТЬ</title>
+  <title>ПРОФИЛЬ: DIOR</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
       --main-yellow: #ffe66d;
-      --main-neon: #fffbe0;
-      --main-dark: #181824;
+      --main-blue: #2ecfff;
+      --main-bg: #19182b;
       --panel-dark: #23233A;
       --panel-light: #23232a;
       --font-title: 'Russo One', Arial, sans-serif;
       --font-main: 'Montserrat', Arial, sans-serif;
+      --profile-bg: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80'); /* ЗАМЕНИ НА СВОЮ КАРТИНКУ */
     }
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #19182b 70%, #23233a 100%);
+      background: var(--main-bg);
       color: #fff;
       font-family: var(--font-main);
       min-height: 100vh;
@@ -27,25 +28,34 @@
       overflow-x: hidden;
     }
     .main-container {
-      max-width: 425px;
+      max-width: 430px;
       margin: 38px auto 0 auto;
-      background: var(--panel-dark);
-      border-radius: 30px;
+      border-radius: 32px;
       box-shadow: 0 8px 44px #000b, 0 2px 12px #ffe66d33;
       padding: 0 0 18px 0;
       position: relative;
       overflow: hidden;
+      background: var(--profile-bg);
+      background-size: cover;
+      background-position: center;
+      min-height: 680px;
+      transition: background-image .3s;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #19182bcc 65%, #23233aee 100%);
+      z-index: 1;
+      pointer-events: none;
     }
     .header-block {
-      background: linear-gradient(90deg, #ffe66d 60%, #fffbe0 100%);
-      padding: 30px 0 20px 0;
-      border-radius: 0 0 36px 36px;
-      box-shadow: 0 2px 22px #ffe66d44;
+      position: relative;
+      z-index: 2;
+      padding: 38px 0 26px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 0.7em;
-      position: relative;
+      margin-bottom: 1.1em;
     }
     .profile-photo-wrap {
       width: 110px; height: 110px;
@@ -54,174 +64,137 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 2;
     }
     .profile-photo {
       width: 110px; height: 110px;
-      border-radius: 14px;
+      border-radius: 16px;
       object-fit: cover;
       background: #181824;
-      box-shadow: 0 2px 10px #ffe66d33;
+      box-shadow: 0 2px 12px #2ecfff55, 0 2px 10px #ffe66d33;
       cursor: pointer;
-      transition: box-shadow .19s;
       display: block;
-      z-index: 2;
-      border: none;
+      border: 2.8px solid var(--main-blue);
+      outline: none;
     }
     .profile-title {
       font-family: var(--font-title);
-      font-size: 1.4em;
-      color: #181824;
+      font-size: 1.33em;
+      color: #fff;
       font-weight: 900;
       letter-spacing: 2.3px;
-      text-shadow: 0 4px 22px #ffe66d66;
-      margin-bottom: 0.09em;
+      margin-bottom: 0.14em;
+      margin-top: 0.2em;
+      text-shadow: 0 3px 22px #2ecfff55, 0 1.5px 8px #ffe66d77;
       text-transform: uppercase;
       text-align: center;
       user-select: none;
     }
-    .big-progress-bar {
-      width: 93%;
-      height: 23px;
-      margin: 0.33em 0 1.1em 0;
-      background: #fffbe5;
-      border-radius: 14px;
+    .exp-bar-wrap {
+      width: 92%;
+      margin: 1.15em auto 0.7em 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 40px;
+      z-index: 2;
+    }
+    .exp-lvl-badge {
+      min-width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--main-blue) 70%, var(--main-yellow) 100%);
+      color: #19182b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-title);
+      font-size: 1.26em;
+      font-weight: bold;
+      box-shadow: 0 2px 12px #2ecfff66, 0 2px 8px #ffe66d55;
+      margin-right: 1.1em;
+      border: 2.5px solid #fffbe0;
+      letter-spacing: 1.1px;
+      z-index: 2;
+      transition: background .2s;
+    }
+    .exp-bar {
+      flex: 1 1 auto;
+      height: 18px;
+      background: #fffbe5cc;
+      border-radius: 13px;
       box-shadow: 0 2px 8px #ffe66d44;
       position: relative;
       overflow: hidden;
-      border: 2.7px solid #ffe66d;
+      border: 2.1px solid var(--main-yellow);
+      margin-left: 0;
+      margin-right: 0.5em;
       display: flex;
       align-items: center;
     }
-    .big-progress-inner {
+    .exp-bar-inner {
       height: 100%;
-      background: linear-gradient(90deg, #ffe66d 45%, #ffce1a 100%);
-      border-radius: 14px 0 0 14px;
-      transition: width 0.39s cubic-bezier(0.6,0.2,0.2,1);
+      background: linear-gradient(90deg, var(--main-blue) 40%, var(--main-yellow) 100%);
+      border-radius: 13px 0 0 13px;
+      transition: width 0.38s cubic-bezier(0.6,0.2,0.2,1);
       min-width: 10px;
-      box-shadow: 0 2px 12px #ffe66d99;
+      box-shadow: 0 2px 12px #2ecfff77;
     }
-    .big-progress-text {
+    .exp-bar-text {
       position: absolute;
-      right: 17px; top: 2.5px;
+      right: 10px; top: 1.7px;
       color: #181824;
-      font-size: 1.04em;
+      font-size: 1.02em;
       font-family: var(--font-main);
       font-weight: 700;
-      text-shadow: none;
       letter-spacing: 1.2px;
-    }
-    .level-ind {
-      background: var(--main-yellow);
-      color: #181824;
-      border-radius: 12px;
-      padding: 4px 20px;
-      font-size: 1.19em;
-      margin: 0 0 0.13em 0.6em;
-      font-family: var(--font-title);
-      font-weight: 900;
-      letter-spacing: 1.6px;
-      box-shadow: 0 2px 10px #ffe66d33;
-      display: inline-block;
-      vertical-align: middle;
-      margin-bottom: 0.13em;
-    }
-
-    /* Progress indicators block - centered and beautiful */
-    .progress-indicators-block {
-      width: 99%;
-      margin: 1.5em 0 1.4em 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.37em;
-    }
-    .progress-indicators-label {
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-size: 1.15em;
-      font-weight: 900;
-      letter-spacing: 1.7px;
-      text-align: center;
-      margin-bottom: 0.18em;
-      text-shadow: 0 1px 9px #ffe66d22;
-      user-select: none;
-    }
-    .progress-indicators-row {
-      display: flex;
-      gap: 3em;
-      justify-content: center;
-      align-items: flex-end;
-      margin-bottom: 0.2em;
-    }
-    .indicator-block {
-      background: #23232a;
-      border-radius: 12px;
-      padding: 0.7em 1.5em 0.45em 1.5em;
-      box-shadow: 0 1px 7px #ffe66d22;
-      color: #ffe66d;
-      font-family: var(--font-title);
-      font-size: 1.12em;
-      font-weight: 700;
-      text-align: center;
-      letter-spacing: 1.1px;
-      min-width: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-    }
-    .indicator-block span {
-      color: #fff;
-      font-size: 1.26em;
-      margin-top: 0.12em;
-      font-family: var(--font-main);
-      font-weight: 900;
-      letter-spacing: 1.5px;
+      z-index: 3;
+      text-shadow: none;
     }
 
     .fields-block {
-      width: 93%;
-      background: #222;
-      border-radius: 19px;
-      margin: 0 auto 0.8em auto;
-      padding: 1.25em 1.5em 0.9em 1.5em;
-      box-shadow: 0 1px 7px #ffe66d22;
+      width: 88%;
+      background: #23232aee;
+      border-radius: 21px;
+      margin: 0.5em 0 0.5em 2.4em;
+      padding: 1.25em 1.3em 1em 1.3em;
+      box-shadow: 0 1px 8px #2ecfff22;
       display: flex;
       flex-direction: column;
-      gap: 0.6em;
+      gap: 0.63em;
       color: #ffe66d;
       font-size: 1.09em;
+      position: relative;
+      left: -10px;
+      max-width: 350px;
     }
     .field-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.12em;
-      gap: 0.6em;
-      flex-wrap: wrap;
+      gap: 0.5em;
       min-width: 0;
     }
     .field-label {
-      min-width: 102px;
+      min-width: 110px;
       font-family: var(--font-title);
       font-weight: 700;
-      color: #ffe66d;
+      color: var(--main-yellow);
       letter-spacing: 1.1px;
-      font-size: 1.07em;
+      font-size: 1.05em;
       margin-right: 0.7em;
       text-align: left;
     }
     .field-val {
       background: #292a2d;
       color: #fff;
-      border: 1.7px solid #ffe66d;
+      border: 1.8px solid var(--main-blue);
       border-radius: 9px;
-      padding: 5px 17px;
+      padding: 5px 16px;
       min-width: 65px;
-      max-width: 160px;
+      max-width: 140px;
       text-align: left;
-      font-size: 1.07em;
+      font-size: 1.05em;
       font-family: var(--font-main);
       font-weight: 700;
       outline: none;
@@ -236,7 +209,7 @@
       opacity: 0.89;
     }
     .field-val[contenteditable="true"]:focus {
-      box-shadow: 0 0 0 2px #ffe66d;
+      box-shadow: 0 0 0 2px var(--main-blue);
     }
 
     .main-btns {
@@ -244,27 +217,85 @@
       display: flex;
       gap: 1.2em;
       justify-content: center;
-      margin: 2.2em 0 0.7em 0;
+      margin: 2em 0 1em 0;
+      z-index: 2;
+      position: relative;
     }
     .main-btn {
       font-family: var(--font-title);
-      font-size: 1.17em;
+      font-size: 1.13em;
       background: var(--main-yellow);
       color: #181824;
       border-radius: 14px;
       border: none;
-      padding: 0.94em 2.7em;
+      padding: 0.88em 2.5em;
       font-weight: 900;
       box-shadow: 0 2px 18px #ffe66d33, 0 2px 9px #0006;
       cursor: pointer;
       transition: background .16s, color .13s, box-shadow .14s;
-      letter-spacing: 1.5px;
+      letter-spacing: 1.3px;
       outline: none;
     }
     .main-btn:active, .main-btn.selected {
-      background: #fffbe0;
-      color: #ffce1a;
-      filter: brightness(1.04) drop-shadow(0 2px 10px #ffe66d77);
+      background: var(--main-blue);
+      color: #fff;
+      filter: brightness(1.06) drop-shadow(0 2px 10px #2ecfff77);
+    }
+
+    /* Progress indicators block - bottom, beautiful */
+    .progress-indicators-block {
+      width: 99%;
+      margin: 2.4em 0 0.5em 0;
+      padding-bottom: 0.7em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.29em;
+    }
+    .progress-indicators-label {
+      color: var(--main-blue);
+      font-family: var(--font-title);
+      font-size: 1.28em;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 0.10em;
+      margin-top: 0.08em;
+      text-shadow: 0 1px 12px #2ecfff55, 0 1px 8px #ffe66d22;
+      user-select: none;
+    }
+    .progress-indicators-row {
+      display: flex;
+      gap: 3em;
+      justify-content: center;
+      align-items: flex-end;
+      margin-bottom: 0.2em;
+    }
+    .indicator-block {
+      background: #23232a;
+      border-radius: 12px;
+      padding: 0.7em 1.5em 0.45em 1.5em;
+      box-shadow: 0 1px 7px #ffe66d22;
+      color: var(--main-yellow);
+      font-family: var(--font-title);
+      font-size: 1.13em;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 1.1px;
+      min-width: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .indicator-block span {
+      color: #2ecfff;
+      font-size: 1.35em;
+      margin-top: 0.10em;
+      font-family: var(--font-main);
+      font-weight: 900;
+      letter-spacing: 1.5px;
     }
 
     /* MODAL */
@@ -277,14 +308,14 @@
       width: 100vw;
       height: 100vh;
       overflow: auto;
-      background: rgba(24, 24, 36, 0.90);
+      background: rgba(24, 24, 36, 0.93);
       animation: fadein .5s;
     }
     .modal-content {
       background: var(--panel-light);
       margin: 7vh auto 0 auto;
       border-radius: 18px;
-      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #0008;
+      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #2ecfff33;
       padding: 2.1em 1.5em 1.8em 1.5em;
       max-width: 390px;
       min-width: 260px;
@@ -297,7 +328,7 @@
     .close-modal {
       position: absolute;
       right: 15px; top: 10px;
-      color: #ffe66d;
+      color: var(--main-blue);
       font-size: 1.8em;
       font-weight: 900;
       cursor: pointer;
@@ -308,14 +339,14 @@
       padding: 2px 7px;
     }
     .modal-title {
-      color: #ffe66d;
+      color: var(--main-blue);
       font-family: var(--font-title);
       font-size: 1.19em;
       font-weight: 900;
       letter-spacing: 1.5px;
       margin-bottom: 1.2em;
       text-align: center;
-      text-shadow: 0 1px 7px #ffe66d44;
+      text-shadow: 0 1px 7px #2ecfff44;
     }
     .list {
       margin: 0.3em 0 0 0;
@@ -330,7 +361,7 @@
       align-items: stretch;
       box-shadow: 0 1px 8px #ffe66d20;
       font-size: 1.04em;
-      border: 2px solid #ffe66d;
+      border: 2px solid var(--main-blue);
       transition: box-shadow .12s, border .17s;
       position: relative;
       color: #ffe66d;
@@ -374,18 +405,18 @@
       text-align: center;
     }
     .item-btn:active {
-      background: #ffce1a;
+      background: var(--main-blue);
       color: #fff;
     }
     .timer {
       background: #181824;
-      color: #ffe66d;
+      color: var(--main-yellow);
       border-radius: 7px;
       font-family: var(--font-main);
       font-size: 0.98em;
       padding: 0.13em 0.8em;
       margin-left: 0.9em;
-      border: 1.5px solid #ffe66d;
+      border: 1.5px solid var(--main-yellow);
       box-shadow: 0 1.5px 5px #ffe66d33;
       display: inline-block;
       min-width: 53px;
@@ -394,38 +425,30 @@
     }
     @media (max-width: 500px) {
       .main-container { max-width: 99vw; padding: 0 0 10vw 0;}
-      .header-block { padding: 13px 0 12px 0;}
-      .fields-block { padding: 0.9em 1.1em 0.3em 1.1em; }
+      .fields-block { left: 0; margin-left: 0.5em; max-width: 99vw; }
+      .exp-bar-wrap { width: 98%; margin-left: 0.5em;}
+      .progress-indicators-block { margin-top: 1.6em;}
+      .indicator-block { padding: 0.7em 0.8em;}
+      .header-block { padding-bottom: 14px; }
       .modal-content { padding: 1.3em 0.7em 1.1em 0.7em;}
-      .progress-indicators-block { gap: 0.2em;}
-      .progress-indicators-row { gap: 1.1em;}
+      .progress-indicators-row { gap: 1.2em;}
     }
   </style>
 </head>
 <body>
   <div class="main-container">
+    <div class="overlay"></div>
     <div class="header-block">
       <div class="profile-photo-wrap">
         <img id="profile-img" class="profile-photo" src="https://i.imgur.com/1vA0Q2z.png" alt="Фото профиля">
         <input type="file" id="photo-upload" accept="image/*" style="display:none;">
       </div>
-      <div class="profile-title">МОЙ ПРОКАЧАННЫЙ ПУТЬ</div>
-      <div class="big-progress-bar">
-        <div class="big-progress-inner" id="progress-inner"></div>
-        <span class="big-progress-text" id="progress-text">0/8 EXP</span>
-      </div>
-      <span class="level-ind" id="level-ind">1 LVL</span>
-    </div>
-    <div class="progress-indicators-block">
-      <div class="progress-indicators-label" id="done-label" style="margin-bottom:0.05em;">ВЫПОЛНЕНО</div>
-      <div class="progress-indicators-row">
-        <div class="indicator-block">
-          КВЕСТОВ
-          <span id="quests-completed">0</span>
-        </div>
-        <div class="indicator-block">
-          МИСИЙ
-          <span id="missions-completed">0</span>
+      <div class="profile-title">ПРОФИЛЬ: DIOR</div>
+      <div class="exp-bar-wrap">
+        <div class="exp-lvl-badge" id="level-ind">1</div>
+        <div class="exp-bar">
+          <div class="exp-bar-inner" id="progress-inner"></div>
+          <span class="exp-bar-text" id="progress-text">0/8 EXP</span>
         </div>
       </div>
     </div>
@@ -444,20 +467,33 @@
       </div>
       <div class="field-row">
         <span class="field-label">РЕПУТАЦИЯ:</span>
-        <span class="field-val" id="rep" contenteditable="true">0</span>
+        <span class="field-val" id="rep" contenteditable="true">2</span>
       </div>
       <div class="field-row">
         <span class="field-label">ДЕНЬГИ:</span>
-        <span class="field-val" id="money" contenteditable="true">0$</span>
+        <span class="field-val" id="money" contenteditable="true">0</span>
       </div>
       <div class="field-row">
         <span class="field-label">CRYPTO:</span>
-        <span class="field-val" id="crypto" contenteditable="true">0$</span>
+        <span class="field-val" id="crypto" contenteditable="true"></span>
       </div>
     </div>
     <div class="main-btns">
       <button class="main-btn" id="open-quests">КВЕСТЫ</button>
       <button class="main-btn" id="open-missions">МИСИИ</button>
+    </div>
+    <div class="progress-indicators-block">
+      <div class="progress-indicators-label" id="done-label">ВЫПОЛНЕНО</div>
+      <div class="progress-indicators-row">
+        <div class="indicator-block">
+          КВЕСТОВ
+          <span id="quests-completed">10</span>
+        </div>
+        <div class="indicator-block">
+          МИСИЙ
+          <span id="missions-completed">4</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -485,13 +521,13 @@
       expMax: 8,
       status: "NO LEGAL",
       job: "НЕТУ",
-      rep: "0",
+      rep: "2",
       money: "0",
-      crypto: "0",
+      crypto: "",
       location: "USA, LA",
       photo: "",
-      questsCompleted: 0,
-      missionsCompleted: 0,
+      questsCompleted: 10,
+      missionsCompleted: 4,
       quests: [
         { text: "Заработать 200$ [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
         { text: "Гигиена 30 дней [+1 EXP]", exp: 1, timer: 60, active: false, done: false, timerID: null, started: null },
@@ -514,11 +550,11 @@
 
     // SAVE/LOAD
     function saveState() {
-      localStorage.setItem("my_life_game_state", JSON.stringify(state));
+      localStorage.setItem("profile_dior_state", JSON.stringify(state));
     }
     function loadState() {
       try {
-        let loaded = JSON.parse(localStorage.getItem("my_life_game_state"));
+        let loaded = JSON.parse(localStorage.getItem("profile_dior_state"));
         if (loaded) {
           for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
           for (let k in loaded) state[k] = loaded[k];
@@ -528,7 +564,7 @@
 
     // PROFILE RENDER
     function renderProfile() {
-      document.getElementById('level-ind').textContent = state.level + " LVL";
+      document.getElementById('level-ind').textContent = state.level;
       let percent = Math.round(state.exp / state.expMax * 100);
       if (percent > 100) percent = 100;
       document.getElementById('progress-inner').style.width = percent + "%";

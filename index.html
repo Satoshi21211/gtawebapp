@@ -2,402 +2,531 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>DIOR GTA Life Game</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts GTA-like -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@600;900&display=swap" rel="stylesheet">
+  <title>DIOR: GTA LIFE MOTIVATOR</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --accent: #e9457a;
-      --dark: #181824;
-      --panel: #23233a;
-      --border: #3c3c5f;
-      --gta-green: #19db60;
-      --gta-yellow: #ffe66d;
-      --gta-red: #e9457a;
-      --main-font: 'Montserrat', Arial, sans-serif;
-      --title-font: 'Russo One', Arial, sans-serif;
+      --main-yellow: #ffe66d;
+      --main-dark: #181824;
+      --main-accent: #ffe66d;
+      --main-secondary: #ffce1a;
+      --main-bg: linear-gradient(135deg, #181824 70%, #22213a 100%);
+      --main-panel: #26262e;
+      --border-yellow: 3px solid #ffe66d;
+      --border-ach: 2px solid #ffce1a;
+      --font-title: 'Russo One', Arial, sans-serif;
+      --font-main: 'Montserrat', Arial, sans-serif;
     }
     body {
-      background: linear-gradient(135deg, #181824 60%, #2e396a 100%);
-      color: #fff;
-      font-family: var(--main-font);
       margin: 0;
+      padding: 0;
+      background: var(--main-bg);
+      color: #fff;
+      font-family: var(--font-main);
       min-height: 100vh;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
-    .gta-game {
-      max-width: 380px;
-      margin: 34px auto 0 auto;
-      background: rgba(35,35,58,0.99);
-      border-radius: 20px;
-      box-shadow: 0 10px 36px #000b, 0 1.5px 8px #e9457a44;
-      padding: 24px 20px 32px 20px;
+    .motivator {
+      max-width: 410px;
+      margin: 36px auto 0 auto;
+      background: var(--main-panel);
+      border-radius: 24px;
+      box-shadow: 0 8px 36px #000a, 0 3px 12px #ffe66d28;
+      padding: 0 0 22px 0;
       position: relative;
       overflow: hidden;
     }
-    .gta-header {
+    .motivator-header {
+      background: linear-gradient(90deg, #ffe66d 60%, #fffbe0 100%);
+      padding: 23px 24px 18px 24px;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 2px 20px #ffe66d44;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 18px;
-      margin-bottom: 1.5em;
+      margin-bottom: 1.1em;
+      position: relative;
     }
-    .gta-photo {
-      width: 78px; height: 78px;
-      border-radius: 14px;
-      border: 3px solid var(--accent);
-      background: #111 url('https://i.imgur.com/8ZbGyoP.png') center/cover no-repeat;
+    .motivator-avatar-wrap {
+      margin-bottom: 0.5em;
+      position: relative;
+      width: 92px; height: 92px;
+    }
+    .motivator-avatar {
+      width: 92px; height: 92px;
+      border-radius: 22px;
+      border: 4px solid #ffe66d;
       object-fit: cover;
-      box-shadow: 0 2px 12px #e9457a44, 0 2px 10px #fff2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+      background: #181824;
+      box-shadow: 0 0 0 4px #ffce1a, 0 3px 16px #ffe66d77;
       cursor: pointer;
       transition: box-shadow .18s;
-    }
-    .gta-photo:hover {
-      box-shadow: 0 0 0 3px #ffe66d, 0 2px 12px #e9457a44;
-    }
-    .gta-photo input[type="file"]{
-      display: none;
-    }
-    .gta-photo-edit {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: rgba(25,25,35,0.85);
-      color: #ffe66d;
-      font-size: 0.91em;
-      text-align: center;
-      padding: 2px 0 2px 0;
-      font-family: var(--main-font);
-      cursor: pointer;
-    }
-    .gta-indicators {
-      flex: 1;
-    }
-    .gta-title {
-      font-family: var(--title-font);
-      font-size: 1.18em;
-      color: #fff;
-      font-weight: 900;
-      text-shadow: 0 1px 12px #e9457a99, 0 2px 6px #000c;
-      letter-spacing: 2px;
-      margin-bottom: 0.18em;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
-    }
-    .gta-level {
-      background: var(--gta-green);
-      color: #181824;
-      border-radius: 7px;
-      padding: 2px 9px 2px 8px;
-      font-size: 0.96em;
-      margin-left: 0.6em;
-      font-family: var(--title-font);
-      font-weight: 900;
-      letter-spacing: 1.1px;
-      box-shadow: 0 2px 10px #19db6040;
-    }
-    .gta-expbar-wrap {
-      margin: 0.31em 0 0.5em 0;
-      width: 92%;
-      background: #23233a;
-      border-radius: 12px;
-      height: 12px;
-      box-shadow: 0 1px 8px #e9457a22;
-      border: 1px solid #33334c;
-      position: relative;
-    }
-    .gta-expbar-bar {
-      background: linear-gradient(90deg, #ffe66d 60%, #e9457a 100%);
-      border-radius: 11px 0 0 11px;
-      height: 100%;
-      transition: width 0.3s;
-    }
-    .gta-expbar-text {
-      position: absolute;
-      right: 11px; top: 0; font-size: 0.95em; color: #fff;
-      text-shadow: 0 1px 2px #0007;
-      font-weight: bold;
-      line-height: 12px;
-      font-family: var(--main-font);
-    }
-    .gta-indicator-row {
-      display: flex;
-      align-items: center;
-      font-size: 0.98em;
-      margin-bottom: 0.48em;
-      gap: 0.8em;
-      flex-wrap: wrap;
-    }
-    .gta-ind-label {
-      color: #ffe66d;
-      font-family: var(--title-font);
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      min-width: 77px;
-      font-size: 1em;
-    }
-    .gta-indicator-val {
-      background: #2d2d45;
-      color: #fff;
-      border: 1.5px solid #393963;
-      border-radius: 8px;
-      padding: 3px 10px;
-      min-width: 60px;
-      text-align: left;
-      font-size: 1.08em;
-      font-family: var(--main-font);
-      font-weight: 700;
-      outline: none;
-      transition: box-shadow .16s;
-      cursor: pointer;
-    }
-    .gta-indicator-val[contenteditable="true"]:focus {
-      box-shadow: 0 0 0 2px #ffe66d;
-    }
-    .gta-indicator-val.static {
-      cursor: default;
-      background: #26263a;
-      opacity: 0.85;
-    }
-    .gta-indicator-val.rep {
-      border: 2px solid var(--gta-yellow);
-      color: var(--gta-yellow);
-      background: #222230;
-    }
-    .gta-indicator-val.money {
-      border: 2px solid var(--gta-green);
-      color: var(--gta-green);
-    }
-    .gta-indicator-val.crypto {
-      border: 2px solid var(--gta-red);
-      color: var(--gta-red);
-    }
-    .gta-indicator-val.levelup {
-      animation: levelup 0.6s;
-    }
-    @keyframes levelup {
-      0% { box-shadow: 0 0 0 8px #ffe66d88; }
-      100% { box-shadow: none; }
-    }
-
-    .gta-progress-box {
-      background: #19192c;
-      border-radius: 13px;
-      padding: 11px 15px 11px 15px;
-      margin: 0.6em 0 1.2em 0;
-      box-shadow: 0 1px 6px #ffe66d22;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 1.1em;
-      font-family: var(--title-font);
-      color: #ffe66d;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-shadow: 0 2px 7px #e9457a33;
-    }
-    .gta-progress-box span {
-      color: #fff;
-      margin-left: 0.7em;
-      letter-spacing: 1.1px;
-      font-family: var(--main-font);
-    }
-    .gta-main-btns {
-      margin-top: 1.5em;
-      display: flex;
-      gap: 1.5em;
-      justify-content: center;
-    }
-    .gta-main-btn {
-      font-family: var(--title-font);
-      font-size: 1.11em;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 13px;
-      border: none;
-      padding: 0.8em 2.2em;
-      font-weight: 900;
-      box-shadow: 0 2px 14px #e9457a44, 0 2px 9px #0006;
-      cursor: pointer;
-      transition: filter .13s, background .18s, color .13s;
-      letter-spacing: 1.4px;
-    }
-    .gta-main-btn.selected,
-    .gta-main-btn:active {
-      background: #ffe66d;
-      color: var(--accent);
-      filter: brightness(1.07) drop-shadow(0 2px 10px #ffe66d55);
-    }
-
-    .gta-section {
-      margin-top: 1.1em;
-      display: none;
-      animation: fadein .5s;
-    }
-    .gta-section.active {
       display: block;
     }
-    .gta-quests-list, .gta-missions-list {
-      margin: 0.7em 0 0 0;
+    .motivator-avatar:hover {
+      box-shadow: 0 0 0 6px #fff076, 0 3px 18px #ffe66dbb;
     }
-    .gta-quest, .gta-mission {
-      background: #23233a;
+    .motivator-avatar-edit {
+      position: absolute;
+      right: 5px; bottom: 5px;
+      background: #ffe66d;
+      color: #181824;
+      font-size: 0.92em;
+      font-weight: bold;
+      border-radius: 8px;
+      padding: 2px 10px;
+      opacity: 0.93;
+      cursor: pointer;
+      box-shadow: 0 3px 7px #ffe66d44;
+      z-index: 2;
+      border: 1.5px solid #ffce1a;
+      transition: background .16s;
+    }
+    .motivator-avatar-edit:hover { background: #ffce1a; }
+    .motivator-header-title {
+      font-family: var(--font-title);
+      font-size: 1.24em;
+      color: #181824;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 0 3px 14px #ffe66d66;
+      margin-bottom: 0.2em;
+      text-transform: uppercase;
+    }
+    .motivator-progress-bar {
+      width: 96%;
+      height: 18px;
+      margin: 0.45em 0 0.86em 0;
+      background: #fffbe5;
+      border-radius: 9px;
+      box-shadow: 0 2px 8px #ffe66d44;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #ffe66d;
+      display: flex;
+      align-items: center;
+    }
+    .motivator-progress-inner {
+      height: 100%;
+      background: linear-gradient(90deg, #ffe66d 45%, #ffce1a 100%);
+      border-radius: 9px 0 0 9px;
+      transition: width 0.38s cubic-bezier(0.6,0.2,0.2,1);
+      min-width: 8px;
+      box-shadow: 0 2px 12px #ffce1a77;
+    }
+    .motivator-progress-text {
+      position: absolute;
+      right: 12px; top: 1.5px;
+      color: #181824;
+      font-size: 1em;
+      font-family: var(--font-main);
+      font-weight: 700;
+      text-shadow: none;
+      letter-spacing: 1px;
+    }
+    .motivator-level {
+      background: var(--main-accent);
+      color: #181824;
       border-radius: 10px;
-      padding: 12px 10px 12px 12px;
+      padding: 2px 16px;
+      font-size: 1.11em;
+      margin: 0 0 0.11em 0.4em;
+      font-family: var(--font-title);
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      box-shadow: 0 2px 10px #ffe66d33;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .motivator-fields {
+      width: 95%;
+      background: #222;
+      border-radius: 15px;
+      margin: 0 auto 0.7em auto;
+      padding: 1.1em 1.4em 0.6em 1.4em;
+      box-shadow: 0 1px 7px #ffe66d22;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      color: #ffe66d;
+      font-size: 1.05em;
+    }
+    .motivator-field-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.33em;
+      gap: 0.5em;
+      flex-wrap: wrap;
+    }
+    .motivator-field-label {
+      min-width: 82px;
+      font-family: var(--font-title);
+      font-weight: 700;
+      color: #ffe66d;
+      letter-spacing: 0.7px;
+      font-size: 1em;
+      margin-right: 0.7em;
+    }
+    .motivator-field-val {
+      background: #292a2d;
+      color: #fff;
+      border: 1.5px solid #ffe66d;
+      border-radius: 7px;
+      padding: 4px 14px;
+      min-width: 63px;
+      text-align: left;
+      font-size: 1em;
+      font-family: var(--font-main);
+      font-weight: 700;
+      outline: none;
+      transition: box-shadow .15s;
+      cursor: pointer;
+    }
+    .motivator-field-val.static {
+      cursor: default;
+      background: #23232a;
+      opacity: 0.86;
+    }
+    .motivator-field-val[contenteditable="true"]:focus {
+      box-shadow: 0 0 0 2px #ffe66d;
+    }
+    .motivator-achievements {
+      margin: 0.65em auto 0.18em auto;
+      width: 95%;
+    }
+    .motivator-ach-title {
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.12em;
+      font-weight: 700;
+      margin-bottom: 0.4em;
+      letter-spacing: 1.1px;
+      text-shadow: 0 1px 8px #ffe66d33;
+    }
+    .motivator-ach-list {
+      display: flex;
+      gap: 0.45em;
+      flex-wrap: wrap;
+    }
+    .motivator-ach {
+      background: #222;
+      border: var(--border-ach);
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 0.9em;
+      border-radius: 9px;
+      padding: 5px 12px;
+      margin-bottom: 4px;
+      box-shadow: 0 1px 4px #ffe66d33;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      min-width: 60px;
+      text-align: center;
+      animation: fadein .7s;
+    }
+    @keyframes fadein {
+      0%{opacity:0;transform:translateY(26px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+    .motivator-progress-indicators {
+      margin: 1.2em auto 0.4em auto;
+      width: 95%;
+      display: flex;
+      gap: 1.2em;
+      justify-content: space-between;
+    }
+    .motivator-indicator-block {
+      background: #23232a;
+      border-radius: 10px;
+      padding: 0.9em 1.1em;
+      box-shadow: 0 1px 7px #ffe66d22;
+      color: #ffe66d;
+      font-family: var(--font-title);
+      font-size: 1.01em;
+      font-weight: 700;
+      min-width: 90px;
+      text-align: center;
+      letter-spacing: 0.9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .motivator-indicator-block span {
+      color: #fff;
+      font-size: 1.19em;
+      margin-top: 0.15em;
+      font-family: var(--font-main);
+    }
+    .motivator-main-btns {
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #181824cc;
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 -3px 20px #ffe66d22;
+      display: flex;
+      gap: 1.2em;
+      justify-content: center;
+      padding: 1.08em 0 1.08em 0;
+      z-index: 10;
+    }
+    .motivator-main-btn {
+      font-family: var(--font-title);
+      font-size: 1.12em;
+      background: var(--main-accent);
+      color: #181824;
+      border-radius: 11px;
+      border: none;
+      padding: 0.8em 2.1em;
+      font-weight: 900;
+      box-shadow: 0 2px 14px #ffe66d44, 0 2px 9px #0006;
+      cursor: pointer;
+      transition: filter .13s, background .18s, color .13s;
+      letter-spacing: 1.3px;
+    }
+    .motivator-main-btn.selected,
+    .motivator-main-btn:active {
+      background: #fffbe0;
+      color: var(--main-secondary);
+      filter: brightness(1.07) drop-shadow(0 2px 10px #ffe66d55);
+    }
+    .motivator-section {
+      margin: 1.45em 0 0 0;
+      display: none;
+      animation: fadein .6s;
+    }
+    .motivator-section.active { display: block; }
+    .motivator-list { margin: 0.7em 0 0 0; }
+    .motivator-quest, .motivator-mission {
+      background: #23232a;
+      border-radius: 11px;
+      padding: 13px 12px 13px 15px;
       margin-bottom: 1em;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 1px 7px #0002, 0 1px 3px #ffe66d22;
-      font-size: 1.01em;
-      border: 2px solid #393963;
-      transition: box-shadow .15s, border .15s;
+      box-shadow: 0 1px 8px #ffe66d20, 0 1px 4px #ffe66d11;
+      font-size: 1.04em;
+      border: 2px solid #ffe66d;
+      transition: box-shadow .12s, border .17s;
       position: relative;
     }
-    .gta-quest.active, .gta-mission.active {
-      border: 2px solid var(--gta-yellow);
+    .motivator-quest.active, .motivator-mission.active {
+      border: 2.5px solid var(--main-secondary);
       box-shadow: 0 2px 12px #ffe66d55;
     }
-    .gta-quest.done, .gta-mission.done {
-      border: 2px solid var(--gta-green);
-      opacity: 0.58;
+    .motivator-quest.done, .motivator-mission.done {
+      border: 2.5px solid var(--gta-green,#19db60);
+      opacity: 0.62;
       text-decoration: line-through;
       color: #b8b8b8;
+      background: #212118;
     }
-    .gta-quest-controls {
+    .motivator-quest-controls {
       display: flex;
-      gap: 0.6em;
+      gap: 0.7em;
       align-items: center;
     }
-    .gta-quest-btn, .gta-mission-btn {
-      font-family: var(--title-font);
-      font-size: 0.98em;
-      padding: 0.25em 1em;
+    .motivator-quest-btn, .motivator-mission-btn {
+      font-family: var(--font-title);
+      font-size: 0.99em;
+      padding: 0.30em 1.1em;
       border-radius: 8px;
       border: none;
       font-weight: 800;
       cursor: pointer;
-      background: var(--gta-yellow);
-      color: var(--accent);
-      box-shadow: 0 2px 7px #ffe66d33;
+      background: var(--main-yellow);
+      color: #181824;
+      box-shadow: 0 2px 7px #ffe66d44;
       transition: background .15s, color .12s;
       outline: none;
       margin-left: 0.1em;
+      letter-spacing: 1.1px;
     }
-    .gta-quest-btn:active, .gta-mission-btn:active {
-      background: var(--gta-green);
+    .motivator-quest-btn:active, .motivator-mission-btn:active {
+      background: var(--main-secondary);
       color: #fff;
     }
-    .gta-timer {
-      background: #23233a;
-      color: var(--gta-yellow);
+    .motivator-timer {
+      background: #181824;
+      color: #ffe66d;
       border-radius: 7px;
-      font-family: var(--main-font);
-      font-size: 0.93em;
+      font-family: var(--font-main);
+      font-size: 0.98em;
       padding: 0.13em 0.8em;
       margin-left: 0.9em;
-      border: 1.5px solid var(--gta-yellow);
-      box-shadow: 0 1px 4px #ffe66d33;
+      border: 1.5px solid #ffe66d;
+      box-shadow: 0 1.5px 5px #ffe66d33;
       display: inline-block;
       min-width: 53px;
       text-align: center;
+      font-weight: 700;
     }
-    @keyframes fadein {
-      0%{opacity:0;transform:translateY(30px);}
-      100%{opacity:1;transform:translateY(0);}
+    .motivator-quote-popup {
+      position: fixed;
+      left: 50%;
+      top: 10%;
+      transform: translate(-50%, 0);
+      background: #181824ee;
+      color: #ffe66d;
+      border: 3px solid #ffe66d;
+      border-radius: 16px;
+      padding: 1.4em 1.8em;
+      font-size: 1.09em;
+      font-family: var(--font-title);
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      z-index: 9999;
+      box-shadow: 0 4px 36px #ffe66d99;
+      animation: fadein .7s;
+      display: none;
+      text-align: center;
+      max-width: 85vw;
     }
     @media (max-width: 500px) {
-      .gta-game { max-width: 98vw; padding: 10px 2vw 22vw 2vw; }
-      .gta-header { gap: 7px; }
-      .gta-photo { width: 62px; height: 62px; }
-      .gta-ind-label { min-width: 65px; font-size: 0.98em;}
-      .gta-progress-box { font-size: 1em; }
-      .gta-section { margin-top: 0.55em; }
+      .motivator { max-width: 99vw; padding: 0 0 14vw 0;}
+      .motivator-header { padding: 14px 6vw 13px 6vw; }
+      .motivator-fields { padding: 0.7em 1.4em 0.3em 1.4em; }
+      .motivator-achievements { width: 99%; }
+      .motivator-progress-indicators { width: 99%; gap: 0.7em;}
+      .motivator-indicator-block { padding: 0.7em 0.6em;}
+      .motivator-main-btns { padding: 0.7em 0 0.7em 0;}
     }
   </style>
 </head>
 <body>
-  <div class="gta-game">
-    <div class="gta-header">
-      <label class="gta-photo" title="Загрузить/сменить фото">
-        <input type="file" id="photo-upload" accept="image/*">
-        <img id="photo-img" src="https://i.imgur.com/8ZbGyoP.png" alt="Фото профиля" style="width:100%;height:100%;object-fit:cover;">
-        <div class="gta-photo-edit">📷 Загрузить</div>
-      </label>
-      <div class="gta-indicators">
-        <div class="gta-title">
-          ИМЯ: <span id="player-name">DIOR</span>
-          <span class="gta-level" id="level">1</span>
-        </div>
-        <div class="gta-expbar-wrap">
-          <div class="gta-expbar-bar" id="expbar"></div>
-          <span class="gta-expbar-text" id="expbar-text">0/8 EXP</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">ЛОКАЦИЯ:</span>
-          <span class="gta-indicator-val static" id="location">USA, LA</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">СТАТУС:</span>
-          <span class="gta-indicator-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">РАБОТА:</span>
-          <span class="gta-indicator-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">РЕПУТАЦИЯ:</span>
-          <span class="gta-indicator-val rep" id="rep" contenteditable="true">0</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">ДЕНЬГИ:</span>
-          <span class="gta-indicator-val money" id="money" contenteditable="true">0$</span>
-        </div>
-        <div class="gta-indicator-row">
-          <span class="gta-ind-label">CRYPTO:</span>
-          <span class="gta-indicator-val crypto" id="crypto" contenteditable="true">0$</span>
-        </div>
+  <div class="motivator">
+    <div class="motivator-header">
+      <div class="motivator-avatar-wrap">
+        <img id="avatar-img" class="motivator-avatar" src="https://i.imgur.com/8ZbGyoP.png" alt="Фото профиля">
+        <label class="motivator-avatar-edit" for="avatar-upload" title="Загрузить фото">📷</label>
+        <input type="file" id="avatar-upload" accept="image/*" style="display:none;">
+      </div>
+      <div class="motivator-header-title">DIOR: GTA LIFE</div>
+      <div class="motivator-progress-bar">
+        <div class="motivator-progress-inner" id="progress-inner"></div>
+        <span class="motivator-progress-text" id="progress-text">0/8 EXP</span>
+      </div>
+      <span class="motivator-level" id="level-ind">1 LVL</span>
+    </div>
+    <div class="motivator-fields">
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">ЛОКАЦИЯ:</span>
+        <span class="motivator-field-val static" id="location">USA, LA</span>
+      </div>
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">СТАТУС:</span>
+        <span class="motivator-field-val" id="status" contenteditable="true" spellcheck="false">NO LEGAL</span>
+      </div>
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">РАБОТА:</span>
+        <span class="motivator-field-val" id="job" contenteditable="true" spellcheck="false">НЕТУ</span>
+      </div>
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">РЕПУТАЦИЯ:</span>
+        <span class="motivator-field-val" id="rep" contenteditable="true">0</span>
+      </div>
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">ДЕНЬГИ:</span>
+        <span class="motivator-field-val" id="money" contenteditable="true">0$</span>
+      </div>
+      <div class="motivator-field-row">
+        <span class="motivator-field-label">CRYPTO:</span>
+        <span class="motivator-field-val" id="crypto" contenteditable="true">0$</span>
       </div>
     </div>
-    <div class="gta-progress-box">
-      ПРОЙДЕНО КВЕСТОВ: <span id="quests-completed">0</span>
-      &nbsp;|&nbsp;
-      ПРОЙДЕНО МИСИЙ: <span id="missions-completed">0</span>
+    <div class="motivator-achievements">
+      <div class="motivator-ach-title">ДОСТИЖЕНИЯ</div>
+      <div class="motivator-ach-list" id="ach-list"></div>
     </div>
-    <div class="gta-main-btns">
-      <button class="gta-main-btn selected" id="btn-quests" onclick="toggleSection('quests')">КВЕСТЫ</button>
-      <button class="gta-main-btn" id="btn-missions" onclick="toggleSection('missions')">МИСИИ</button>
+    <div class="motivator-progress-indicators">
+      <div class="motivator-indicator-block">
+        КВЕСТОВ
+        <span id="quests-completed">0</span>
+      </div>
+      <div class="motivator-indicator-block">
+        МИСИЙ
+        <span id="missions-completed">0</span>
+      </div>
     </div>
-    <!-- КВЕСТЫ -->
-    <div class="gta-section active" id="section-quests">
-      <div class="gta-quests-list" id="quests-list"></div>
+    <div class="motivator-section active" id="section-quests">
+      <div class="motivator-list" id="quests-list"></div>
     </div>
-    <!-- МИСИИ -->
-    <div class="gta-section" id="section-missions">
-      <div class="gta-missions-list" id="missions-list"></div>
+    <div class="motivator-section" id="section-missions">
+      <div class="motivator-list" id="missions-list"></div>
+    </div>
+    <div class="motivator-main-btns">
+      <button class="motivator-main-btn selected" id="btn-quests" onclick="toggleSection('quests')">КВЕСТЫ</button>
+      <button class="motivator-main-btn" id="btn-missions" onclick="toggleSection('missions')">МИСИИ</button>
     </div>
   </div>
+  <div class="motivator-quote-popup" id="motivator-quote"></div>
   <script>
-    // --- Game Data ---
+    // --- MOTIVATION QUOTES ---
+    const motivatorQuotes = [
+      "Действие — единственный путь к успеху.",
+      "Не жалей себя — жалей свои упущенные возможности.",
+      "Каждый уровень — твоя реальная победа!",
+      "GTA: Твоя жизнь — твой главный квест.",
+      "Сделал шаг — ты уже впереди большинства.",
+      "Пока другие ждут, ты делаешь результат.",
+      "Вчерашний ты уже слабее, чем сегодняшний.",
+      "Время — твой самый ценный ресурс. Не трать зря.",
+      "Ты — свой главный герой. Не сливай сюжет!",
+      "Каждый раз, когда сдаёшься — кто-то становится сильнее тебя.",
+      "Жизнь — это твой открытый мир. Не оставайся на месте!",
+      "Дорога к успеху всегда строится шаг за шагом.",
+      "Падаешь? Вставай! Иди дальше!",
+      "Стань тем, кем сам бы восхищался.",
+      "Твоя реальность — в твоих руках."
+    ];
+    function popupMotivatorQuote() {
+      const el = document.getElementById('motivator-quote');
+      el.textContent = motivatorQuotes[Math.floor(Math.random() * motivatorQuotes.length)];
+      el.style.display = "block";
+      setTimeout(()=>{ el.style.display = "none"; }, 3800);
+    }
+
+    // --- ACHIEVEMENTS ---
+    let achievements = [
+      {id: "lvl5", title: "LVL 5", desc:"Достиг 5 уровня", show: s=>s.level>=5},
+      {id: "lvl10", title: "LVL 10", desc:"Достиг 10 уровня", show: s=>s.level>=10},
+      {id: "firstMoney", title: "Первые 100$", desc:"Заработал первые 100$", show: s=>parseInt(s.money)||0 >=100},
+      {id: "crypto500", title: "CRYPTO 500$", desc:"Накопил 500$ в крипте", show: s=>parseInt(s.crypto)||0 >=500},
+      {id: "rep5", title: "Репутация: 5", desc:"Достиг репутации 5", show: s=>parseInt(s.rep)||0 >=5},
+      {id: "quests3", title: "3 Квеста", desc:"Выполнено 3 квеста", show: s=>s.questsCompleted>=3},
+      {id: "missions1", title: "1 Миссия", desc:"Выполнена 1 миссия", show: s=>s.missionsCompleted>=1},
+      {id: "fullSet", title: "Новый я", desc:"Изменил все индикаторы!", show: s=>s.status!=="NO LEGAL"&&s.job!=="НЕТУ"&&(parseInt(s.money)||0)>0&&(parseInt(s.crypto)||0)>0}
+    ];
+    function renderAchievements() {
+      let html = "";
+      achievements.forEach(ach=>{
+        if(ach.show(state)){
+          html += `<div class="motivator-ach" title="${ach.desc}">${ach.title}</div>`;
+        }
+      });
+      document.getElementById('ach-list').innerHTML = html || '<span style="opacity:0.5">Нет достижений</span>';
+    }
+
+    // --- GAME STATE ---
     let state = {
-      name: "DIOR",
       level: 1,
       exp: 0,
-      rep: 0,
       expMax: 8,
-      photo: "",
-      location: "USA, LA",
       status: "NO LEGAL",
       job: "НЕТУ",
-      money: "0$",
-      crypto: "0$",
+      rep: "0",
+      money: "0",
+      crypto: "0",
+      location: "USA, LA",
+      photo: "",
       questsCompleted: 0,
       missionsCompleted: 0,
       quests: [
@@ -410,98 +539,106 @@
         { text: "Получить машину [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
         { text: "Настроить работу [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
         { text: "Выплатить кредит [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
-        { text: "Набрать слегка вес [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null },
+        { text: "Набрать слегка вес [+5 EXP]", exp: 5, timer: 60, active: false, done: false, timerID: null, started: null }
       ],
       missions: [
         { text: "Начнем знакомство, Mr.DIOR<br><small>Выполни: 3 начальных квеста [+1 REP]</small>", rep: 1, done: false, type: "quests", needQuests: 3 },
         { text: "Не пора бы поработать?<br><small>Запусти свой проект и заработай первые 200$ [+1 REP]</small>", rep: 1, done: false, type: "custom" },
         { text: "Ты в деле! Поехали уже…<br><small>Полностью сдать на вод. права [+ 🔑]</small>", rep: 0, done: false, type: "custom" },
-        { text: "Легальность мое второе имя.<br><small>Найти легальную работу за кэш</small>", rep: 0, done: false, type: "custom" },
+        { text: "Легальность мое второе имя.<br><small>Найти легальную работу за кэш</small>", rep: 0, done: false, type: "custom" }
       ]
     };
 
-    // --- Helpers ---
+    // --- SAVE/LOAD ---
     function saveState() {
-      localStorage.setItem("dior_gta_state", JSON.stringify(state));
+      localStorage.setItem("dior_motivator_state", JSON.stringify(state));
     }
     function loadState() {
       try {
-        let loaded = JSON.parse(localStorage.getItem("dior_gta_state"));
+        let loaded = JSON.parse(localStorage.getItem("dior_motivator_state"));
         if (loaded) {
-          // Миграция новых полей
           for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
           for (let k in loaded) state[k] = loaded[k];
         }
       } catch {}
     }
-    // --- Profile ---
+
+    // --- PROFILE RENDER ---
     function renderProfile() {
-      document.getElementById('player-name').textContent = state.name;
-      document.getElementById('level').textContent = state.level;
-      // EXP BAR
+      // Level, exp
+      document.getElementById('level-ind').textContent = state.level + " LVL";
       let percent = Math.round(state.exp / state.expMax * 100);
       if (percent > 100) percent = 100;
-      document.getElementById('expbar').style.width = percent + "%";
-      document.getElementById('expbar-text').textContent = `${state.exp}/${state.expMax} EXP`;
-      // Индикаторы
+      document.getElementById('progress-inner').style.width = percent + "%";
+      document.getElementById('progress-text').textContent = `${state.exp}/${state.expMax} EXP`;
+      // fields
       document.getElementById('location').textContent = state.location;
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
       document.getElementById('rep').textContent = state.rep;
       document.getElementById('money').textContent = state.money;
       document.getElementById('crypto').textContent = state.crypto;
-      // Фото
-      let img = document.getElementById('photo-img');
-      if(state.photo) img.src = state.photo;
-      else img.src = "https://i.imgur.com/8ZbGyoP.png";
-      // Прогресс
+      // progress
       document.getElementById('quests-completed').textContent = state.questsCompleted;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
+      // avatar
+      let img = document.getElementById('avatar-img');
+      if(state.photo) img.src = state.photo;
+      else img.src = "https://i.imgur.com/8ZbGyoP.png";
+      // achievements
+      renderAchievements();
     }
-    // --- Editable indicators ---
+
+    // --- EDITABLE FIELDS ---
     function setupEditable() {
       ["status", "job", "rep", "money", "crypto"].forEach(id => {
         let el = document.getElementById(id);
         el.addEventListener("input", function () {
           state[id] = el.textContent.trim();
           saveState();
+          renderAchievements();
         });
         el.addEventListener("blur", function () {
           el.textContent = state[id];
         });
       });
     }
-    // --- Photo upload ---
-    document.getElementById('photo-upload').addEventListener('change', function(e){
+
+    // --- AVATAR UPLOAD ---
+    document.getElementById('avatar-upload').addEventListener('change', function(e){
       let file = e.target.files[0];
       if (!file) return;
       let reader = new FileReader();
       reader.onload = function(ev){
         state.photo = ev.target.result;
-        document.getElementById('photo-img').src = state.photo;
+        document.getElementById('avatar-img').src = state.photo;
         saveState();
       };
       reader.readAsDataURL(file);
     });
-    // --- Quests ---
+    document.querySelector('.motivator-avatar-edit').onclick = function() {
+      document.getElementById('avatar-upload').click();
+    };
+
+    // --- QUESTS ---
     function renderQuests() {
       let activeCount = state.quests.filter(q => q.active && !q.done).length;
       let html = "";
       state.quests.forEach((q, i) => {
-        let questClass = "gta-quest";
+        let questClass = "motivator-quest";
         if (q.done) questClass += " done";
         else if (q.active) questClass += " active";
         html += `<div class="${questClass}">
           <span>${q.text}</span>
-          <div class="gta-quest-controls">`;
+          <div class="motivator-quest-controls">`;
         if (!q.done && !q.active && activeCount < 3) {
-          html += `<button class="gta-quest-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
+          html += `<button class="motivator-quest-btn" onclick="takeQuest(${i})">ВЗЯТЬ</button>`;
         }
         if (q.active && !q.done) {
-          html += `<span class="gta-timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
+          html += `<span class="motivator-timer" id="quest-timer-${i}">${formatTimer(q)}</span>`;
           if (q.timer <= 0) {
-            html += `<button class="gta-quest-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
-            <button class="gta-quest-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
+            html += `<button class="motivator-quest-btn" onclick="completeQuest(${i})">ВЫПОЛНЕНО</button>
+            <button class="motivator-quest-btn" onclick="cancelQuest(${i})" style="background:#e9457a;color:#fff;">ОТКАЗАТЬСЯ</button>`;
           }
         }
         html += `</div></div>`;
@@ -520,7 +657,7 @@
       let activeCount = state.quests.filter(q => q.active && !q.done).length;
       if (activeCount >= 3) return;
       q.active = true;
-      q.timer = 60; // 1 минута для теста
+      q.timer = 60;
       q.started = Date.now();
       q.timerID = setInterval(function(){
         q.timer--;
@@ -542,11 +679,12 @@
       q.started = null;
       if (q.timerID) clearInterval(q.timerID);
       state.questsCompleted++;
-      addExp(q.exp);
+      addExp(q.exp, true);
       checkMissions();
       renderQuests();
       renderProfile();
       saveState();
+      popupMotivatorQuote();
     }
     function cancelQuest(i) {
       let q = state.quests[i];
@@ -559,7 +697,6 @@
       saveState();
     }
     function tickQuests() {
-      // Восстановить таймеры после перезагрузки
       state.quests.forEach((q, i) => {
         if (q.active && !q.done && !q.timerID && q.timer>0 && q.started) {
           let passed = Math.floor((Date.now() - q.started)/1000);
@@ -578,17 +715,18 @@
         }
       });
     }
-    // --- Missions ---
+
+    // --- MISSIONS ---
     function renderMissions() {
       let html = "";
       state.missions.forEach((m, i) => {
-        let mClass = "gta-mission";
+        let mClass = "motivator-mission";
         if (m.done) mClass += " done";
         html += `<div class="${mClass}">
           <span>${m.text}</span>
-          <div class="gta-quest-controls">`;
+          <div class="motivator-quest-controls">`;
         if (!m.done && canCompleteMission(i)) {
-          html += `<button class="gta-mission-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
+          html += `<button class="motivator-mission-btn" onclick="completeMission(${i})">ВЫПОЛНЕНО</button>`;
         }
         html += `</div></div>`;
       });
@@ -610,25 +748,24 @@
       renderMissions();
       renderProfile();
       saveState();
+      popupMotivatorQuote();
     }
-    // --- Leveling ---
-    function addExp(amount) {
+
+    // --- LEVELING ---
+    function addExp(amount, fromQuest) {
       let prevLevel = state.level;
       state.exp += amount;
       while (state.level < 100 && state.exp >= state.expMax) {
         state.exp -= state.expMax;
         state.level++;
-        state.expMax += 2; // каждый уровень на +2 EXP больше
-      }
-      if (state.level !== prevLevel) {
-        let levelEl = document.getElementById('level');
-        levelEl.classList.add('levelup');
-        setTimeout(()=>levelEl.classList.remove('levelup'), 1000);
+        state.expMax += 2;
       }
       renderProfile();
       saveState();
+      if (state.level !== prevLevel) popupMotivatorQuote();
     }
-    // --- Section toggling ---
+
+    // --- SECTION TOGGLING ---
     function toggleSection(sec) {
       document.getElementById('btn-quests').classList.remove('selected');
       document.getElementById('btn-missions').classList.remove('selected');
@@ -642,23 +779,20 @@
         document.getElementById('section-missions').classList.add('active');
       }
     }
-    // --- Missions status after quest complete ---
+
+    // --- MISSIONS CHECK ---
     function checkMissions() {
-      state.missions.forEach((m, i) => {
-        if (!m.done && m.type === "quests" && state.questsCompleted >= m.needQuests) {
-          // Можно завершить миссию!
-        }
-      });
       renderMissions();
     }
-    // --- Init ---
+
+    // --- INIT ---
     loadState();
     renderProfile();
     setupEditable();
     renderQuests();
     renderMissions();
     tickQuests();
-    setInterval(renderProfile, 2000); // авто-обновление индикаторов
+    setInterval(renderProfile, 2000);
   </script>
 </body>
 </html>

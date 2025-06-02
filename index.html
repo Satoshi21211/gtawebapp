@@ -24,6 +24,11 @@
       --main-font: 'Montserrat', Arial, sans-serif;
       --exp-bar-h: 18px;
       --modal-shadow: 0 8px 44px #000b, 0 2px 12px #ffe66d33;
+      --btn-yellow: linear-gradient(92deg, #ffe66d 0%, #ffd800 100%);
+      --btn-yellow-shadow: 0 2px 7px #ffe66d44;
+      --btn-green: linear-gradient(98deg,#21e87b 0%,#16c97b 100%);
+      --btn-green-shadow: 0 2px 7px #21e87b44;
+      --btn-disabled: #e0e0e0;
     }
     html, body {
       background: var(--main-bg);
@@ -222,6 +227,9 @@
       flex: 1 1 45%;
       color: #fff;
       text-shadow: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
     .indicator-box {
       display: flex;
@@ -273,30 +281,39 @@
       text-shadow: none;
     }
     /* Кнопка "Показать выполненные" */
-    #show-completed-quests {
+    .show-done-btn {
       font-family: var(--title-font);
-      font-size: 0.90em;
-      background: var(--main-yellow-dark);
+      font-size: 0.9em;
+      background: var(--btn-yellow);
       color: #181824;
       border: none;
       border-radius: 7px;
-      padding: 0.35em 1em;
+      padding: 0.19em 0.78em;
       font-weight: 900;
-      box-shadow: 0 2px 7px #ffe66d44;
+      box-shadow: var(--btn-yellow-shadow);
       cursor: pointer;
-      margin-left: 11px;
-      margin-right: -10px;
+      margin-left: 10px;
+      margin-right: -8px;
       transition: background .14s, color .13s;
       outline: none;
       letter-spacing: 1px;
       vertical-align: middle;
+      display: inline-block;
+      position: relative;
+      top: 0;
+      height: 2em;
+      min-width: 2.5em;
     }
-    #show-completed-quests:active, #show-completed-quests.selected {
+    .show-done-btn svg {
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
+    .show-done-btn:active, .show-done-btn.selected {
       background: var(--main-yellow);
       color: #181824;
       filter: brightness(1.08);
     }
-    /* КВЕСТЫ МОДАЛКА - чуть меньше чем .main-container, чуть больше чем редактор */
+    /* КВЕСТЫ МОДАЛКА */
     .quests-modal {
       display: none;
       position: fixed;
@@ -344,6 +361,7 @@
       gap: 0.11em;
       margin-bottom: 0.07em;
       min-width: 100%;
+      min-height: 2em;
     }
     .quest-item {
       border-radius: 8px;
@@ -361,6 +379,7 @@
       margin-bottom: 0.05em;
       justify-content: space-between;
       transition: background 0.18s;
+      opacity: 1;
     }
     .quest-info {
       display: flex;
@@ -394,26 +413,23 @@
       background: #22331b;
       border: 1.5px solid var(--main-green);
       position: relative;
-      justify-content: space-between !important;
-      text-align: left;
-      gap: 0.18em !important;
-      opacity: 0.75;
+      opacity: 0.85;
     }
     .quest-item.completed .quest-title {
       color: var(--main-green);
       text-shadow: 0 0 3px #21e87b88;
     }
     .quest-item.completed button {
-      background: var(--main-green)!important;
+      background: var(--btn-green)!important;
       color: #fff!important;
-      cursor: not-allowed;
       border: 1.3px solid #21e87b99;
+      cursor: not-allowed;
       font-family: var(--main-font);
       font-weight: bold;
       font-size: 0.89em;
       border-radius: 7px;
       padding: 0.22em 0.7em;
-      box-shadow: 0 2px 7px #21e87b33;
+      box-shadow: var(--btn-green-shadow);
       margin-left: 9px;
     }
     .quest-item button {
@@ -425,13 +441,70 @@
       padding: 0.12em 0.4em;
       border: none;
       cursor: pointer;
-      background: #ffe66d;
+      background: var(--btn-yellow);
       color: #181824;
-      box-shadow: 0 2px 7px #ffe66d44;
+      box-shadow: var(--btn-yellow-shadow);
       transition: .2s;
       margin-left: 6px;
       margin-top: 0;
       margin-bottom: 0;
+      outline: none;
+    }
+    .quest-item button:active {
+      filter: brightness(0.95);
+    }
+    .quest-item button:disabled,
+    .quest-item.completed button:disabled {
+      background: var(--btn-disabled) !important;
+      color: #a0a0a0 !important;
+      border: 1.5px solid #ddd !important;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    /* pagination */
+    .pagination {
+      margin: 16px auto 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 7px;
+      user-select: none;
+    }
+    .pagination-btn {
+      background: var(--main-yellow-dark);
+      color: #181824;
+      border: none;
+      border-radius: 7px;
+      font-family: var(--title-font);
+      font-size: 1em;
+      padding: 0.19em 0.9em;
+      min-width: 2.1em;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.13s, color 0.13s;
+      box-shadow: var(--btn-yellow-shadow);
+      outline: none;
+      display: inline-block;
+    }
+    .pagination-btn.selected,
+    .pagination-btn:active {
+      background: var(--main-yellow);
+      color: #181824;
+      filter: brightness(1.08);
+    }
+    .pagination-btn[disabled] {
+      background: #e0e0e0;
+      color: #aaa;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .pagination-page {
+      font-family: var(--main-font);
+      font-weight: bold;
+      font-size: 1.02em;
+      color: #ffd800;
+      padding: 0 .6em;
+      letter-spacing: 0.5px;
     }
     /* Убираем крестик */
     .quests-modal .close-btn { display: none !important; }
@@ -455,143 +528,15 @@
       .quest-item {font-size: 0.78em; border-radius: 5px; padding: 0.18em 0.23em;}
       .quest-title {font-size: 0.78em;}
       .quest-reward {font-size: 0.75em;}
-      .quest-item button {min-width:27px; font-size:0.72em; padding:0.09em 0.22em; border-radius:4px; margin-left:2px;}
+      .quest-item button,
+      .quest-item.completed button {min-width:27px; font-size:0.72em; padding:0.09em 0.22em; border-radius:4px; margin-left:2px;}
+      .show-done-btn {font-size:0.67em; padding:0.09em 0.33em; min-width:1.5em;height:1.3em;}
+      .pagination {gap:4px;}
+      .pagination-btn {font-size:0.73em;min-width:1.3em;padding:0.07em 0.38em;}
+      .pagination-page {font-size:0.81em;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
-    }
-    /* Редактор */
-    .editor-modal {
-      display: none;
-      position: fixed;
-      z-index: 200;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(32,32,36,0.85);
-      align-items: center !important;
-      justify-content: center !important;
-      overscroll-behavior: contain;
-      touch-action: none;
-    }
-    .editor-content {
-      margin: 0 auto !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      position: relative !important;
-      background: #fff;
-      color: #23232a;
-      border-radius: 15px;
-      max-width: 320px;
-      min-width: 180px;
-      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 0.6em 0.5em 0.6em 0.5em;
-      display: flex;
-      flex-direction: column;
-      gap: 0.31em;
-      align-items: stretch;
-      animation: fadein .4s;
-      overscroll-behavior: contain;
-    }
-    .editor-title {
-      font-family: var(--title-font);
-      font-size: 1.04em;
-      color: var(--main-yellow-dark);
-      font-weight: 900;
-      letter-spacing: 1.15px;
-      margin-bottom: 0.2em;
-      text-align: center;
-      text-shadow: none;
-      text-transform: uppercase;
-      padding-bottom: 2px;
-      border-bottom: 2px solid #ffe66d70;
-      letter-spacing: 1.3px;
-    }
-    .editor-form label {
-      font-family: var(--title-font);
-      font-size: 0.93em;
-      color: #23232a;
-      font-weight: 800;
-      letter-spacing: 0.87px;
-      margin-bottom: 0.09em;
-      display: block;
-      text-transform: uppercase;
-    }
-    .editor-form input[type="text"] {
-      width: 100%;
-      font-size: 0.98em;
-      font-family: var(--main-font);
-      color: #23232a;
-      background: #f8f8fa;
-      border: 2px solid #ffe66d80;
-      border-radius: 7px;
-      padding: 0.28em 0.35em;
-      outline: none;
-      font-weight: 700;
-      margin-bottom: 0.09em;
-      transition: border .14s;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    .editor-form input:focus {
-      border: 2px solid var(--main-yellow-dark);
-      background: #fffbe0;
-    }
-    .editor-form .input-group {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .editor-form .input-suffix {
-      font-family: var(--title-font);
-      font-size: 0.97em;
-      font-weight: 900;
-      letter-spacing: 1.0px;
-      margin-left: 1px;
-      margin-bottom: 0.12em;
-      min-width: 17px;
-      user-select: none;
-      pointer-events: none;
-      padding: 0 2px;
-    }
-    .editor-form .input-suffix.suffix-cash {
-      color: var(--main-green);
-      font-weight: 900;
-    }
-    .editor-form .input-suffix.suffix-btc {
-      color: var(--main-red);
-      font-weight: 900;
-    }
-    .editor-form-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.4em;
-      margin-top: 0.01em;
-    }
-    .editor-form-buttons button {
-      font-family: var(--title-font);
-      font-size: 0.93em;
-      border-radius: 7px;
-      border: none;
-      padding: 0.38em 0.7em;
-      font-weight: 800;
-      cursor: pointer;
-      background: var(--main-yellow-dark);
-      color: #181824;
-      box-shadow: 0 2px 7px #ffe66d44;
-      transition: background .15s, color .12s;
-      outline: none;
-    }
-    .editor-form-buttons button.save {
-      background: var(--main-green);
-      color: #fff;
-    }
-    .editor-form-buttons button.cancel {
-      background: #ddd;
-      color: #23232a;
     }
   </style>
 </head>
@@ -666,16 +611,23 @@
         </span>
       </div>
       <div class="indicator-row">
-        <span class="indicator-label" style="display:flex;align-items:center;">
+        <span class="indicator-label">
           ВЫПОЛНЕНО КВЕСТОВ
-          <button id="show-completed-quests" title="Показать выполненные квесты">👁</button>
+          <button id="show-completed-quests" class="show-done-btn" title="Показать выполненные квесты">
+            <svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#ffd800" stroke="#181824" stroke-width="2"/><path d="M6.5 10.2l2.3 2.3 4.7-4.7" stroke="#181824" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </button>
         </span>
         <span class="indicator-box" id="quests-box">
           <span class="indicator-value" id="quests-completed">0</span>
         </span>
       </div>
       <div class="indicator-row">
-        <span class="indicator-label">ВЫПОЛНЕНО МИСИЙ</span>
+        <span class="indicator-label">
+          ВЫПОЛНЕНО МИСИЙ
+          <button id="show-completed-missions" class="show-done-btn" title="Показать выполненные миссии">
+            <svg width="18" height="18" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="#ffd800" stroke="#181824" stroke-width="2"/><path d="M6.5 10.2l2.3 2.3 4.7-4.7" stroke="#181824" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </button>
+        </span>
         <span class="indicator-box" id="missions-box">
           <span class="indicator-value" id="missions-completed">0</span>
         </span>
@@ -696,6 +648,7 @@
         <div class="quests-list" id="quests-list">
           <!-- Квесты будут добавлены JS -->
         </div>
+        <div class="pagination" id="quests-pagination"></div>
       </div>
     </div>
     <!-- РЕДАКТОР -->
@@ -756,6 +709,7 @@
       questsCompleted: 0,
       missionsCompleted: 0,
       photo: "",
+      completedMissions: [] // Для будущих миссий!
     };
 
     // --- КВЕСТЫ ---
@@ -770,24 +724,15 @@
       { title: "Работу настроить", reward: "+5 EXP", effects: {exp:5} },
       { title: "Выплатить кредит", reward: "+5 EXP", effects: {exp:5} },
       { title: "Вес набрать", reward: "+5 EXP", effects: {exp:5} },
+      // Можно добавить больше квестов!
     ];
 
     let completedQuests = JSON.parse(localStorage.getItem("profile_dior_completedQuests") || "[]");
 
-    function saveState() {
-      localStorage.setItem("profile_dior_state", JSON.stringify(state));
-      localStorage.setItem("profile_dior_completedQuests", JSON.stringify(completedQuests));
-    }
-    function loadState() {
-      try {
-        let loaded = JSON.parse(localStorage.getItem("profile_dior_state"));
-        if (loaded) {
-          for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
-          for (let k in loaded) state[k] = loaded[k];
-        }
-        completedQuests = JSON.parse(localStorage.getItem("profile_dior_completedQuests") || "[]");
-      } catch {}
-    }
+    // --- PAGINATION ---
+    const QUESTS_PER_PAGE = 5;
+
+    // --- PROFILE RENDER ---
     function renderProfile() {
       document.getElementById('level-ind').textContent = state.level;
       let percent = Math.round(state.exp / state.expMax * 100);
@@ -804,12 +749,14 @@
       document.getElementById('license').textContent = state.license;
       document.getElementById('girl').textContent = state.girl;
       document.getElementById('quests-completed').textContent = completedQuests.length;
-      document.getElementById('missions-completed').textContent = state.missionsCompleted;
+      document.getElementById('missions-completed').textContent = state.completedMissions.length ? state.completedMissions.length : "0";
 
       let img = document.getElementById('profile-img');
       if(state.photo) img.src = state.photo;
       else img.src = "https://i.imgur.com/1vA0Q2z.png";
     }
+
+    // --- САУНД ---
     document.getElementById('profile-img').onclick = function() {
       document.getElementById('photo-upload').click();
     };
@@ -833,6 +780,8 @@
         btn.addEventListener('click', playClick);
       });
     });
+
+    // --- РЕДАКТОР ---
     document.getElementById('open-editor').onclick = function() {
       openEditor();
     };
@@ -883,15 +832,44 @@
       renderProfile();
       closeEditor();
     }
+
+    // --- LOCAL STORAGE ---
+    function saveState() {
+      localStorage.setItem("profile_dior_state", JSON.stringify(state));
+      localStorage.setItem("profile_dior_completedQuests", JSON.stringify(completedQuests));
+    }
+    function loadState() {
+      try {
+        let loaded = JSON.parse(localStorage.getItem("profile_dior_state"));
+        if (loaded) {
+          for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
+          for (let k in loaded) state[k] = loaded[k];
+        }
+        completedQuests = JSON.parse(localStorage.getItem("profile_dior_completedQuests") || "[]");
+      } catch {}
+    }
+
+    // --- КВЕСТЫ ---
     document.getElementById('open-quests').onclick = function() {
-      openQuests(false);
+      openQuests(false, 1);
     };
     document.getElementById('show-completed-quests').onclick = function(e) {
       e.stopPropagation();
-      openQuests(true);
+      openQuests(true, 1);
     };
-    function openQuests(showCompletedOnly=false) {
-      renderQuests(showCompletedOnly);
+
+    // --- МИССИИ (Демо, можно доработать под свою структуру) ---
+    document.getElementById('show-completed-missions').onclick = function(e) {
+      e.stopPropagation();
+      openMissionsDone();
+    };
+    function openMissionsDone() {
+      // Можно реализовать аналогичное окно для миссий
+      alert("Выполненные миссии: " + (state.completedMissions && state.completedMissions.length ? state.completedMissions.join(", ") : "Нет выполненных миссий"));
+    }
+
+    function openQuests(showCompletedOnly=false, page=1) {
+      renderQuests(showCompletedOnly, page);
       document.getElementById('quests-modal').style.display = "flex";
       document.getElementById('quests-modal-title').textContent = showCompletedOnly ? "ВЫПОЛНЕННЫЕ КВЕСТЫ" : "КВЕСТЫ";
       lockScroll(true);
@@ -904,45 +882,66 @@
       document.getElementById('quests-modal').style.display = "none";
       lockScroll(false);
     }
-    function renderQuests(showCompletedOnly=false) {
+    function renderQuests(showCompletedOnly=false, page=1) {
       let list = document.getElementById('quests-list');
+      let pagination = document.getElementById('quests-pagination');
       list.innerHTML = "";
-      QUESTS.forEach((q, i) => {
-        let completed = completedQuests.includes(i);
-        if (showCompletedOnly && !completed) return;
+      pagination.innerHTML = "";
+
+      let filtered = QUESTS.map((q, i) => ({...q, idx:i, completed: completedQuests.includes(i)}));
+      if (showCompletedOnly) filtered = filtered.filter(q => q.completed);
+
+      let totalPages = Math.max(1, Math.ceil(filtered.length / QUESTS_PER_PAGE));
+      if (page < 1) page = 1;
+      if (page > totalPages) page = totalPages;
+      let from = (page-1)*QUESTS_PER_PAGE;
+      let to = from + QUESTS_PER_PAGE;
+
+      filtered.slice(from, to).forEach(q => {
         let quest = document.createElement('div');
-        quest.className = 'quest-item' + (completed ? ' completed' : '');
-        if(completed){
-          quest.innerHTML = `
-            <div class="quest-info">
-              <div class="quest-title">${q.title}</div>
-              <div class="quest-reward">${q.reward}</div>
-            </div>
-            <button disabled>Выполнено</button>`;
-        } else {
-          if(!showCompletedOnly){
-            quest.innerHTML = `
-              <div class="quest-info">
-                <div class="quest-title">${q.title}</div>
-                <div class="quest-reward">${q.reward}</div>
-              </div>
-              <button onclick="completeQuest(${i})">Выполнить</button>
-            `;
-          }
-        }
+        quest.className = 'quest-item' + (q.completed ? ' completed' : '');
+        quest.innerHTML = `
+          <div class="quest-info">
+            <div class="quest-title">${q.title}</div>
+            <div class="quest-reward">${q.reward}</div>
+          </div>
+          <button ${q.completed ? "disabled" : ""} onclick="completeQuest(${q.idx})">${q.completed ? "Выполнено" : "Выполнить"}</button>
+        `;
         list.appendChild(quest);
       });
-      // Если выполненных нет и выбран только просмотр выполненных
-      if (showCompletedOnly && list.childNodes.length === 0) {
+
+      if (filtered.length === 0) {
         let empty = document.createElement('div');
         empty.style.cssText = "text-align:center;color:#888;padding:1.5em 0 1.2em 0;font-size:1.07em;font-family:var(--main-font);";
-        empty.textContent = "Нет выполненных квестов";
+        empty.textContent = showCompletedOnly ? "Нет выполненных квестов" : "Квестов пока нет";
         list.appendChild(empty);
+      }
+
+      // Pagination nav
+      if (totalPages > 1) {
+        let prev = document.createElement('button');
+        prev.className = 'pagination-btn';
+        prev.textContent = "<";
+        prev.disabled = page <= 1;
+        prev.onclick = () => renderQuests(showCompletedOnly, page-1);
+        pagination.appendChild(prev);
+
+        let pageDisplay = document.createElement('span');
+        pageDisplay.className = "pagination-page";
+        pageDisplay.textContent = `${page} / ${totalPages}`;
+        pagination.appendChild(pageDisplay);
+
+        let next = document.createElement('button');
+        next.className = 'pagination-btn';
+        next.textContent = ">";
+        next.disabled = page >= totalPages;
+        next.onclick = () => renderQuests(showCompletedOnly, page+1);
+        pagination.appendChild(next);
       }
     }
     window.completeQuest = function(i) {
-      const q = QUESTS[i];
       if (completedQuests.includes(i)) return;
+      const q = QUESTS[i];
       completedQuests.push(i);
       let expAdd = q.effects.exp || 0;
       state.exp = Number(state.exp) + expAdd;
@@ -956,7 +955,18 @@
       state.questsCompleted = completedQuests.length;
       saveState();
       renderProfile();
-      renderQuests();
+      // Оставляем на той же странице и в том же режиме
+      let modal = document.getElementById('quests-modal');
+      if (modal.style.display === "flex") {
+        let showCompleted = document.getElementById('quests-modal-title').textContent.includes('ВЫПОЛНЕННЫЕ');
+        let currentPage = 1;
+        let pag = document.querySelector('.pagination-page');
+        if (pag) {
+          let t = pag.textContent.split('/');
+          currentPage = parseInt(t[0].trim(),10) || 1;
+        }
+        renderQuests(showCompleted, currentPage);
+      }
     };
     loadState();
     renderProfile();

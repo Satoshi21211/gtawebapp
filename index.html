@@ -157,7 +157,7 @@
       top: 0; left: 0; bottom: 0;
     }
     .exp-bar-text {
-      color: #fff; /* БЕЛЫЙ ЦВЕТ */
+      color: #fff;
       font-size: 1.06em;
       font-family: var(--title-font);
       font-weight: 700;
@@ -298,7 +298,7 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
-    /* Белый редактор */
+    /* Белый редактор - компактный */
     .editor-modal {
       display: none;
       position: fixed;
@@ -315,32 +315,32 @@
       background: #fff;
       color: #23232a;
       border-radius: 15px;
-      max-width: 340px;
-      min-width: 260px;
+      max-width: 320px;
+      min-width: 210px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 2em 1.2em 1.6em 1.2em;
+      padding: 1.5em 1em 1.1em 1em;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      gap: 0.5em;
       animation: fadein .4s;
     }
     .editor-title {
       font-family: var(--title-font);
-      font-size: 1.13em;
+      font-size: 1.11em;
       color: #181824;
       font-weight: 900;
-      letter-spacing: 1.5px;
-      margin-bottom: 0.8em;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.5em;
       text-align: center;
       text-shadow: none;
     }
     .editor-close {
       position: absolute;
-      right: 15px; top: 12px;
+      right: 13px; top: 8px;
       color: #181824;
-      font-size: 2em;
+      font-size: 1.7em;
       font-weight: 900;
       cursor: pointer;
       background: none;
@@ -348,30 +348,32 @@
       z-index: 3;
       outline: none;
       padding: 2px 7px;
+      line-height: 1;
     }
     .editor-form label {
       font-family: var(--title-font);
-      font-size: 1em;
+      font-size: 0.98em;
       color: #23232a;
       font-weight: 800;
-      letter-spacing: 1.1px;
-      margin-bottom: 0.19em;
+      letter-spacing: 0.9px;
+      margin-bottom: 0.13em;
       display: block;
       text-transform: uppercase;
     }
     .editor-form input {
       width: 100%;
-      font-size: 1.05em;
+      font-size: 1em;
       font-family: var(--main-font);
       color: #23232a;
       background: #f8f8fa;
       border: 2px solid #ffe66d80;
       border-radius: 7px;
-      padding: 0.5em 0.8em;
+      padding: 0.47em 0.7em;
       outline: none;
       font-weight: 700;
-      margin-bottom: 0.7em;
+      margin-bottom: 0.3em;
       transition: border .14s;
+      box-sizing: border-box;
     }
     .editor-form input:focus {
       border: 2px solid var(--main-yellow-dark);
@@ -381,13 +383,14 @@
       display: flex;
       justify-content: space-between;
       gap: 1em;
+      margin-top: 0.3em;
     }
     .editor-form-buttons button {
       font-family: var(--title-font);
       font-size: 1.02em;
       border-radius: 7px;
       border: none;
-      padding: 0.5em 1.2em;
+      padding: 0.5em 1.1em;
       font-weight: 800;
       cursor: pointer;
       background: var(--main-yellow-dark);
@@ -419,7 +422,7 @@
       .indicator-label { min-width: 57px; font-size: 0.95em;}
       .indicator-box { min-width: 78px; max-width: 78px; font-size: 0.91em; height: 28px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
-      .editor-content {max-width: 97vw;}
+      .editor-content {max-width: 96vw;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -515,19 +518,13 @@
     <div class="editor-modal" id="editor-modal">
       <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="saveEditor();return false;">
         <button type="button" class="editor-close" onclick="closeEditor()">&times;</button>
-        <div class="editor-title">Редактор профиля</div>
+        <div class="editor-title">Админ-редактор</div>
         <label>Деньги<input type="number" id="edit-cash" required></label>
         <label>Крипта<input type="number" id="edit-crypto" required></label>
         <label>Локация<input type="text" id="edit-location" required></label>
         <label>Статус<input type="text" id="edit-status" required></label>
         <label>Работа<input type="text" id="edit-job" required></label>
         <label>Машина<input type="text" id="edit-car" required></label>
-        <label>Репутация<input type="number" id="edit-rep" required></label>
-        <label>Выполнено квестов<input type="number" id="edit-quests" required></label>
-        <label>Выполнено мисий<input type="number" id="edit-missions" required></label>
-        <label>Уровень<input type="number" id="edit-level" min="1" required></label>
-        <label>Опыт<input type="number" id="edit-exp" min="0" required></label>
-        <label>Опыт максимум<input type="number" id="edit-expmax" min="1" required></label>
         <div class="editor-form-buttons">
           <button type="submit" class="save">Сохранить</button>
           <button type="button" class="cancel" onclick="closeEditor()">Отмена</button>
@@ -618,12 +615,7 @@
       document.getElementById('edit-status').value = state.status;
       document.getElementById('edit-job').value = state.job;
       document.getElementById('edit-car').value = state.car;
-      document.getElementById('edit-rep').value = state.rep;
-      document.getElementById('edit-quests').value = state.questsCompleted;
-      document.getElementById('edit-missions').value = state.missionsCompleted;
-      document.getElementById('edit-level').value = state.level;
-      document.getElementById('edit-exp').value = state.exp;
-      document.getElementById('edit-expmax').value = state.expMax;
+      document.getElementById('edit-cash').focus();
     }
     function closeEditor() {
       document.getElementById('editor-modal').style.display = "none";
@@ -635,12 +627,6 @@
       state.status = document.getElementById('edit-status').value;
       state.job = document.getElementById('edit-job').value;
       state.car = document.getElementById('edit-car').value;
-      state.rep = document.getElementById('edit-rep').value;
-      state.questsCompleted = document.getElementById('edit-quests').value;
-      state.missionsCompleted = document.getElementById('edit-missions').value;
-      state.level = document.getElementById('edit-level').value;
-      state.exp = document.getElementById('edit-exp').value;
-      state.expMax = document.getElementById('edit-expmax').value;
       saveState();
       renderProfile();
       closeEditor();

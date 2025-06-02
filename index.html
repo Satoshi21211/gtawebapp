@@ -22,6 +22,7 @@
       --indicator-box-width: 170px;
       --title-font: 'Bebas Neue', Arial, Impact, sans-serif;
       --main-font: 'Montserrat', Arial, sans-serif;
+      --exp-bar-h: 18px;
     }
     html, body {
       background: var(--main-bg);
@@ -145,7 +146,7 @@
     }
     .exp-bar {
       width: 100%;
-      height: 19px;
+      height: var(--exp-bar-h);
       background: #36363d;
       border-radius: 10px;
       box-shadow: 0 2px 9px #ffe66d33;
@@ -181,7 +182,7 @@
       position: absolute;
       right: 10px;
       top: 0;
-      height: 19px;
+      height: var(--exp-bar-h);
       user-select: none;
       padding-right: 2px;
     }
@@ -308,132 +309,97 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
-    .editor-modal {
+    /* КВЕСТЫ */
+    .quests-modal {
       display: none;
       position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(32,32,36,0.85);
+      z-index: 120;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(32,32,36,0.97);
       align-items: center;
       justify-content: center;
       overscroll-behavior: contain;
       touch-action: none;
     }
-    .editor-content {
-      background: #fff;
-      color: #23232a;
-      border-radius: 15px;
-      max-width: 320px;
+    .quests-content {
+      background: #23232a;
+      color: #fff;
+      border-radius: 17px;
+      max-width: 370px;
       min-width: 180px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 0.6em 0.5em 0.6em 0.5em;
+      padding: 1.1em 1em 1.1em 1em;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 0.31em;
-      animation: fadein .4s;
+      gap: 0.4em;
       overscroll-behavior: contain;
     }
-    .editor-title {
+    .quests-title {
       font-family: var(--title-font);
-      font-size: 1.04em;
+      font-size: 1.13em;
       color: var(--main-yellow-dark);
       font-weight: 900;
-      letter-spacing: 1.15px;
-      margin-bottom: 0.2em;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.3em;
       text-align: center;
       text-shadow: none;
       text-transform: uppercase;
-      padding-bottom: 2px;
-      border-bottom: 2px solid #ffe66d70;
-      letter-spacing: 1.3px;
+      border-bottom: 2px solid #ffe66d85;
+      padding-bottom: 3px;
     }
-    .editor-form label {
-      font-family: var(--title-font);
-      font-size: 0.93em;
-      color: #23232a;
-      font-weight: 800;
-      letter-spacing: 0.87px;
-      margin-bottom: 0.09em;
-      display: block;
-      text-transform: uppercase;
+    .quests-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      margin-bottom: 0.7em;
     }
-    .editor-form input[type="text"] {
-      width: 100%;
-      font-size: 0.98em;
+    .quest-item {
+      border-radius: 10px;
+      background: #19191e;
+      padding: 0.7em 1em;
+      box-shadow: 0 2px 10px #ffe66d22;
       font-family: var(--main-font);
-      color: #23232a;
-      background: #f8f8fa;
-      border: 2px solid #ffe66d80;
-      border-radius: 7px;
-      padding: 0.28em 0.35em;
-      outline: none;
-      font-weight: 700;
-      margin-bottom: 0.09em;
-      transition: border .14s;
-      box-sizing: border-box;
-      text-align: left;
-    }
-    .editor-form input:focus {
-      border: 2px solid var(--main-yellow-dark);
-      background: #fffbe0;
-    }
-    .editor-form .input-group {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .editor-form .input-suffix {
-      font-family: var(--title-font);
-      font-size: 0.97em;
-      font-weight: 900;
-      letter-spacing: 1.0px;
-      margin-left: 1px;
-      margin-bottom: 0.12em;
-      min-width: 17px;
-      user-select: none;
-      pointer-events: none;
-      padding: 0 2px;
-    }
-    .editor-form .input-suffix.suffix-cash {
-      color: var(--main-green);
-      font-weight: 900;
-    }
-    .editor-form .input-suffix.suffix-btc {
-      color: var(--main-red);
-      font-weight: 900;
-    }
-    .editor-form-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.4em;
-      margin-top: 0.01em;
-    }
-    .editor-form-buttons button {
-      font-family: var(--title-font);
-      font-size: 0.93em;
-      border-radius: 7px;
-      border: none;
-      padding: 0.38em 0.7em;
-      font-weight: 800;
-      cursor: pointer;
-      background: var(--main-yellow-dark);
-      color: #181824;
-      box-shadow: 0 2px 7px #ffe66d44;
-      transition: background .15s, color .12s;
-      outline: none;
-    }
-    .editor-form-buttons button.save {
-      background: var(--main-green);
+      font-size: 1em;
       color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 0.32em;
+      position: relative;
+      margin-bottom: 0.2em;
     }
-    .editor-form-buttons button.cancel {
-      background: #ddd;
-      color: #23232a;
+    .quest-title {
+      font-family: var(--title-font);
+      font-size: 1.09em;
+      font-weight: 900;
+      color: #ffe66d;
+      letter-spacing: 0.7px;
+      margin-bottom: 2px;
+    }
+    .quest-reward {
+      font-family: var(--main-font);
+      font-size: 0.97em;
+      color: #ffd800;
+      margin-top: 2px;
+      letter-spacing: 0.4px;
+      font-weight: bold;
+    }
+    .quests-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 13px;
+      background: none;
+      border: none;
+      color: #ffe66d;
+      font-size: 1.7em;
+      font-weight: 900;
+      cursor: pointer;
+      z-index: 2;
+      outline: none;
+      padding: 2px 7px;
+      line-height: 1;
     }
     @media (max-width: 600px) {
       .main-container { max-width: 100vw; border-radius: 0;}
@@ -450,12 +416,10 @@
       .indicator-label { min-width: 46px; font-size: 0.81em;}
       .indicator-box { min-width: 42px; max-width: 42px; font-size: 0.71em; height: 15px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.82em; padding: 0.43em 0.1em;}
-      .editor-content {max-width: 97vw; min-width: 0; padding: 0.18em 0.05em 0.3em 0.05em; gap:0.18em;}
-      .editor-title {font-size: 0.82em; padding-bottom:1px;}
-      .editor-form label {font-size: 0.77em;}
-      .editor-form input[type="text"] {font-size: 0.8em; padding: 0.18em 0.15em;}
-      .editor-form .input-suffix {font-size: 0.78em;}
-      .editor-form-buttons button {font-size: 0.8em; padding: 0.32em 0.5em;}
+      .quests-content {max-width: 97vw; min-width: 0; padding: 0.32em 0.05em 0.3em 0.05em;}
+      .quests-title {font-size: 0.81em;}
+      .quest-title {font-size: 0.87em;}
+      .quest-reward {font-size: 0.81em;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -527,12 +491,6 @@
         </span>
       </div>
       <div class="indicator-row">
-        <span class="indicator-label">РЕПУТАЦИЯ</span>
-        <span class="indicator-box gray" id="rep-box">
-          <span class="indicator-value" id="rep">2</span>
-        </span>
-      </div>
-      <div class="indicator-row">
         <span class="indicator-label">ДЕВУШКА</span>
         <span class="indicator-box gray" id="girl-box">
           <span class="indicator-value" id="girl">НЕТУ</span>
@@ -541,13 +499,13 @@
       <div class="indicator-row">
         <span class="indicator-label">ВЫПОЛНЕНО КВЕСТОВ</span>
         <span class="indicator-box" id="quests-box">
-          <span class="indicator-value" id="quests-completed">13</span>
+          <span class="indicator-value" id="quests-completed">0</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">ВЫПОЛНЕНО МИСИЙ</span>
         <span class="indicator-box" id="missions-box">
-          <span class="indicator-value" id="missions-completed">4</span>
+          <span class="indicator-value" id="missions-completed">0</span>
         </span>
       </div>
     </div>
@@ -559,7 +517,17 @@
       <button class="main-btn" id="open-editor">РЕДАКТОР</button>
       <button class="main-btn" id="open-panel">ПАНЕЛЬ</button>
     </div>
-    <!-- Редактор индикаторов -->
+    <!-- КВЕСТЫ МОДАЛКА -->
+    <div class="quests-modal" id="quests-modal">
+      <div class="quests-content">
+        <div class="quests-title">КВЕСТЫ</div>
+        <button class="close-btn" onclick="closeQuests()">&times;</button>
+        <div class="quests-list" id="quests-list">
+          <!-- Квесты будут добавлены JS -->
+        </div>
+      </div>
+    </div>
+    <!-- РЕДАКТОР остался прежним -->
     <div class="editor-modal" id="editor-modal">
       <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="saveEditor();return false;">
         <div class="editor-title">Редактор индикаторов</div>
@@ -601,6 +569,7 @@
     </div>
   </div>
   <script>
+    // --- STATE ---
     let state = {
       level: 1,
       exp: 0,
@@ -610,16 +579,74 @@
       car: "НЕТУ",
       license: "НЕТ",
       girl: "НЕТУ",
-      rep: "2",
       cash: "0",
       crypto: "0",
       location: "USA, LA",
-      questsCompleted: 13,
-      missionsCompleted: 4,
+      questsCompleted: 0,
+      missionsCompleted: 0,
       photo: "",
     };
+
+    // --- КВЕСТЫ ---
+    const QUESTS = [
+      {
+        title: "Заработать 200$",
+        reward: "+3 EXP, 200$",
+        effects: {exp:3, cash:200}
+      },
+      {
+        title: "Гигиена 30 дней",
+        reward: "+1 EXP",
+        effects: {exp:1}
+      },
+      {
+        title: "Не курить 7 дней",
+        reward: "+3 EXP",
+        effects: {exp:3}
+      },
+      {
+        title: "Сдать на вод.права",
+        reward: "+5 EXP, права",
+        effects: {exp:5, license:"ДА"}
+      },
+      {
+        title: "Отложить 1000$",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+      {
+        title: "Заняться зубами",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+      {
+        title: "Получить машину",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+      {
+        title: "Настроить работу",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+      {
+        title: "Выплатить кредит",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+      {
+        title: "Набрать слегка вес",
+        reward: "+5 EXP",
+        effects: {exp:5}
+      },
+    ];
+
+    let completedQuests = JSON.parse(localStorage.getItem("profile_dior_completedQuests") || "[]");
+
+    // --- STORAGE ---
     function saveState() {
       localStorage.setItem("profile_dior_state", JSON.stringify(state));
+      localStorage.setItem("profile_dior_completedQuests", JSON.stringify(completedQuests));
     }
     function loadState() {
       try {
@@ -628,8 +655,10 @@
           for (let k in state) if (!(k in loaded)) loaded[k] = state[k];
           for (let k in loaded) state[k] = loaded[k];
         }
+        completedQuests = JSON.parse(localStorage.getItem("profile_dior_completedQuests") || "[]");
       } catch {}
     }
+    // --- PROFILE ---
     function renderProfile() {
       document.getElementById('level-ind').textContent = state.level;
       let percent = Math.round(state.exp / state.expMax * 100);
@@ -645,7 +674,6 @@
       document.getElementById('car').textContent = state.car;
       document.getElementById('license').textContent = state.license;
       document.getElementById('girl').textContent = state.girl;
-      document.getElementById('rep').textContent = state.rep;
       document.getElementById('quests-completed').textContent = state.questsCompleted;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
 
@@ -653,6 +681,7 @@
       if(state.photo) img.src = state.photo;
       else img.src = "https://i.imgur.com/1vA0Q2z.png";
     }
+    // --- РЕДАКТОР ---
     document.getElementById('profile-img').onclick = function() {
       document.getElementById('photo-upload').click();
     };
@@ -667,6 +696,7 @@
       };
       reader.readAsDataURL(file);
     });
+    // --- КНОПКИ ---
     function playClick() {
       const audio = document.getElementById('click-sound');
       audio.currentTime = 0; audio.play();
@@ -676,10 +706,10 @@
         btn.addEventListener('click', playClick);
       });
     });
+    // --- РЕДАКТОР ---
     document.getElementById('open-editor').onclick = function() {
       openEditor();
     };
-
     function lockScroll(lock) {
       if(lock) {
         document.body.classList.add('noscroll');
@@ -727,6 +757,62 @@
       renderProfile();
       closeEditor();
     }
+
+    // ========== КВЕСТЫ ==========
+    document.getElementById('open-quests').onclick = function() {
+      openQuests();
+    };
+    function openQuests() {
+      renderQuests();
+      document.getElementById('quests-modal').style.display = "flex";
+      lockScroll(true);
+    }
+    function closeQuests() {
+      document.getElementById('quests-modal').style.display = "none";
+      lockScroll(false);
+    }
+    function renderQuests() {
+      let list = document.getElementById('quests-list');
+      list.innerHTML = "";
+      QUESTS.forEach((q, i) => {
+        let completed = completedQuests.includes(i);
+        let quest = document.createElement('div');
+        quest.className = 'quest-item' + (completed ? ' completed' : '');
+        quest.innerHTML = `
+          <div class="quest-title">${q.title}</div>
+          <div class="quest-reward">Награда: [${q.reward}]</div>
+          <button style="margin-top:4px;align-self:flex-end;min-width:88px; font-family:var(--main-font);font-weight:bold;font-size:0.93em;border-radius:7px;padding:0.38em 1.1em;border:none;cursor:pointer;background:${completed ? "#23232a" : "#ffe66d"};color:${completed ? "#888" : "#181824"};box-shadow:0 2px 7px #ffe66d44;" ${completed ? "disabled" : ""} onclick="completeQuest(${i})">${completed ? "Выполнено" : "Выполнить"}</button>
+        `;
+        list.appendChild(quest);
+      });
+    }
+    window.completeQuest = function(i) {
+      const q = QUESTS[i];
+      if (completedQuests.includes(i)) return;
+      completedQuests.push(i);
+
+      // EXP
+      let expAdd = q.effects.exp || 0;
+      state.exp = Number(state.exp) + expAdd;
+      // Уровень ап
+      while (Number(state.exp) >= Number(state.expMax)) {
+        state.exp = Number(state.exp) - Number(state.expMax);
+        state.level = Number(state.level) + 1;
+        state.expMax = Math.ceil(Number(state.expMax) * 1.35);
+      }
+
+      // CASH
+      if(q.effects.cash) state.cash = (Number(state.cash) + Number(q.effects.cash)).toString();
+      // LICENSE
+      if(q.effects.license) state.license = q.effects.license;
+      // Квесты +1
+      state.questsCompleted = Number(state.questsCompleted) + 1;
+      saveState();
+      renderProfile();
+      renderQuests();
+    };
+
+    // --- FIRST LOAD ---
     loadState();
     renderProfile();
     setInterval(renderProfile, 2000);

@@ -326,11 +326,11 @@
       background: #fff;
       color: #23232a;
       border-radius: 18px;
-      max-width: 310px;
+      max-width: 312px;
       min-width: 200px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 1.1em 0.7em 1.1em 0.7em;
+      padding: 1em 0.7em 1em 0.7em;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -340,8 +340,8 @@
     }
     .editor-title {
       font-family: var(--title-font);
-      font-size: 1.08em;
-      color: #181824;
+      font-size: 1.11em;
+      color: var(--main-yellow-dark);
       font-weight: 900;
       letter-spacing: 1.2px;
       margin-bottom: 0.2em;
@@ -349,7 +349,8 @@
       text-shadow: none;
       text-transform: uppercase;
       padding-bottom: 2px;
-      border-bottom: 2px solid #ffe66d70;
+      border-bottom: 2px solid #ffe66d85;
+      letter-spacing: 1.3px;
     }
     .editor-close {
       position: absolute;
@@ -403,12 +404,22 @@
     .editor-form .input-suffix {
       font-family: var(--title-font);
       font-size: 1em;
-      color: #c3b900;
       font-weight: 900;
       letter-spacing: 1.0px;
       margin-left: 2px;
       margin-bottom: 0.2em;
       min-width: 20px;
+      user-select: none;
+      pointer-events: none;
+      padding: 0 4px;
+    }
+    .editor-form .input-suffix.suffix-cash {
+      color: var(--main-green);
+      font-weight: 900;
+    }
+    .editor-form .input-suffix.suffix-btc {
+      color: var(--main-red);
+      font-weight: 900;
     }
     .editor-form-buttons {
       display: flex;
@@ -453,8 +464,8 @@
       .indicator-label { min-width: 51px; font-size: 0.91em;}
       .indicator-box { min-width: 65px; max-width: 65px; font-size: 0.87em; height: 23px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.9em; padding: 0.5em 0.2em;}
-      .editor-content {max-width: 99vw; min-width: 0; padding: 0.4em 0.07em 0.6em 0.07em;}
-      .editor-title {font-size: 0.92em;}
+      .editor-content {max-width: 97vw; min-width: 0; padding: 0.4em 0.07em 0.6em 0.07em;}
+      .editor-title {font-size: 0.97em;}
       .editor-form input[type="text"] {font-size: 0.95em;}
     }
     @media (max-width:400px) {
@@ -556,13 +567,13 @@
           <label style="flex:1;">Деньги
             <input type="text" id="edit-cash" maxlength="12" autocomplete="off" pattern="[0-9 ]{0,}">
           </label>
-          <span class="input-suffix">$</span>
+          <span class="input-suffix suffix-cash">$</span>
         </div>
         <div class="input-group">
           <label style="flex:1;">Крипта
             <input type="text" id="edit-crypto" maxlength="8" autocomplete="off" pattern="[0-9., ]{0,}">
           </label>
-          <span class="input-suffix">BTC</span>
+          <span class="input-suffix suffix-btc">BTC</span>
         </div>
         <label>Локация
           <input type="text" id="edit-location" maxlength="32" autocomplete="off">
@@ -680,7 +691,7 @@
       document.getElementById('edit-status').value = state.status;
       document.getElementById('edit-job').value = state.job;
       document.getElementById('edit-car').value = state.car;
-      document.getElementById('edit-cash').focus();
+      // Никакой автофокусировки!
       lockScroll(true);
     }
     function closeEditor() {

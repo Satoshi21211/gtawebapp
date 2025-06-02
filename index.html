@@ -343,28 +343,13 @@
       font-size: 1.11em;
       color: var(--main-yellow-dark);
       font-weight: 900;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.3px;
       margin-bottom: 0.2em;
       text-align: center;
       text-shadow: none;
       text-transform: uppercase;
       padding-bottom: 2px;
       border-bottom: 2px solid #ffe66d85;
-      letter-spacing: 1.3px;
-    }
-    .editor-close {
-      position: absolute;
-      right: 13px; top: 8px;
-      color: #181824;
-      font-size: 1.7em;
-      font-weight: 900;
-      cursor: pointer;
-      background: none;
-      border: none;
-      z-index: 3;
-      outline: none;
-      padding: 2px 7px;
-      line-height: 1;
     }
     .editor-form label {
       font-family: var(--title-font);
@@ -532,9 +517,21 @@
         </span>
       </div>
       <div class="indicator-row">
+        <span class="indicator-label">ВОД.ПРАВА</span>
+        <span class="indicator-box gray" id="license-box">
+          <span class="indicator-value" id="license">НЕТ</span>
+        </span>
+      </div>
+      <div class="indicator-row">
         <span class="indicator-label">РЕПУТАЦИЯ</span>
         <span class="indicator-box gray" id="rep-box">
           <span class="indicator-value" id="rep">2</span>
+        </span>
+      </div>
+      <div class="indicator-row">
+        <span class="indicator-label">ДЕВУШКА</span>
+        <span class="indicator-box gray" id="girl-box">
+          <span class="indicator-value" id="girl">НЕТУ</span>
         </span>
       </div>
       <div class="indicator-row">
@@ -561,7 +558,6 @@
     <!-- Редактор индикаторов -->
     <div class="editor-modal" id="editor-modal">
       <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="saveEditor();return false;">
-        <button type="button" class="editor-close" onclick="closeEditor()">&times;</button>
         <div class="editor-title">Редактор индикаторов</div>
         <div class="input-group">
           <label style="flex:1;">Деньги
@@ -587,6 +583,12 @@
         <label>Машина
           <input type="text" id="edit-car" maxlength="32" autocomplete="off">
         </label>
+        <label>Вод.права
+          <input type="text" id="edit-license" maxlength="32" autocomplete="off">
+        </label>
+        <label>Девушка
+          <input type="text" id="edit-girl" maxlength="32" autocomplete="off">
+        </label>
         <div class="editor-form-buttons">
           <button type="submit" class="save">Сохранить</button>
           <button type="button" class="cancel" onclick="closeEditor()">Отмена</button>
@@ -602,6 +604,8 @@
       status: "NO LEGAL",
       job: "McDonald",
       car: "НЕТУ",
+      license: "НЕТ",
+      girl: "НЕТУ",
       rep: "2",
       cash: "0",
       crypto: "0",
@@ -635,6 +639,8 @@
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
       document.getElementById('car').textContent = state.car;
+      document.getElementById('license').textContent = state.license;
+      document.getElementById('girl').textContent = state.girl;
       document.getElementById('rep').textContent = state.rep;
       document.getElementById('quests-completed').textContent = state.questsCompleted;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
@@ -673,7 +679,6 @@
     function lockScroll(lock) {
       if(lock) {
         document.body.classList.add('noscroll');
-        // iOS Safari fix
         document.body.addEventListener('touchmove', preventDefault, { passive: false });
       } else {
         document.body.classList.remove('noscroll');
@@ -691,7 +696,8 @@
       document.getElementById('edit-status').value = state.status;
       document.getElementById('edit-job').value = state.job;
       document.getElementById('edit-car').value = state.car;
-      // Никакой автофокусировки!
+      document.getElementById('edit-license').value = state.license;
+      document.getElementById('edit-girl').value = state.girl;
       lockScroll(true);
     }
     function closeEditor() {
@@ -699,7 +705,6 @@
       lockScroll(false);
     }
     function saveEditor() {
-      // Обрезаем пробелы, запрещаем буквы для cash/crypto
       let cashVal = document.getElementById('edit-cash').value.replace(/[^0-9]/g, '');
       if (cashVal === "") cashVal = "0";
       state.cash = cashVal;
@@ -712,6 +717,8 @@
       state.status = document.getElementById('edit-status').value;
       state.job = document.getElementById('edit-job').value;
       state.car = document.getElementById('edit-car').value;
+      state.license = document.getElementById('edit-license').value;
+      state.girl = document.getElementById('edit-girl').value;
       saveState();
       renderProfile();
       closeEditor();

@@ -325,54 +325,55 @@
     .editor-content {
       background: #fff;
       color: #23232a;
-      border-radius: 18px;
-      max-width: 312px;
-      min-width: 200px;
+      border-radius: 15px;
+      max-width: 320px;
+      min-width: 180px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 1em 0.7em 1em 0.7em;
+      padding: 0.6em 0.5em 0.6em 0.5em;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 0.38em;
+      gap: 0.31em;
       animation: fadein .4s;
       overscroll-behavior: contain;
     }
     .editor-title {
       font-family: var(--title-font);
-      font-size: 1.11em;
+      font-size: 1.04em;
       color: var(--main-yellow-dark);
       font-weight: 900;
-      letter-spacing: 1.3px;
+      letter-spacing: 1.15px;
       margin-bottom: 0.2em;
       text-align: center;
       text-shadow: none;
       text-transform: uppercase;
       padding-bottom: 2px;
-      border-bottom: 2px solid #ffe66d85;
+      border-bottom: 2px solid #ffe66d70;
+      letter-spacing: 1.3px;
     }
     .editor-form label {
       font-family: var(--title-font);
-      font-size: 0.98em;
+      font-size: 0.93em;
       color: #23232a;
       font-weight: 800;
-      letter-spacing: 0.9px;
-      margin-bottom: 0.13em;
+      letter-spacing: 0.87px;
+      margin-bottom: 0.09em;
       display: block;
       text-transform: uppercase;
     }
     .editor-form input[type="text"] {
       width: 100%;
-      font-size: 1em;
+      font-size: 0.98em;
       font-family: var(--main-font);
       color: #23232a;
       background: #f8f8fa;
       border: 2px solid #ffe66d80;
       border-radius: 7px;
-      padding: 0.38em 0.6em;
+      padding: 0.28em 0.35em;
       outline: none;
       font-weight: 700;
-      margin-bottom: 0.18em;
+      margin-bottom: 0.09em;
       transition: border .14s;
       box-sizing: border-box;
       text-align: left;
@@ -384,19 +385,19 @@
     .editor-form .input-group {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
     }
     .editor-form .input-suffix {
       font-family: var(--title-font);
-      font-size: 1em;
+      font-size: 0.97em;
       font-weight: 900;
       letter-spacing: 1.0px;
-      margin-left: 2px;
-      margin-bottom: 0.2em;
-      min-width: 20px;
+      margin-left: 1px;
+      margin-bottom: 0.12em;
+      min-width: 17px;
       user-select: none;
       pointer-events: none;
-      padding: 0 4px;
+      padding: 0 2px;
     }
     .editor-form .input-suffix.suffix-cash {
       color: var(--main-green);
@@ -409,15 +410,15 @@
     .editor-form-buttons {
       display: flex;
       justify-content: space-between;
-      gap: 1em;
-      margin-top: 0.1em;
+      gap: 0.4em;
+      margin-top: 0.01em;
     }
     .editor-form-buttons button {
       font-family: var(--title-font);
-      font-size: 1.01em;
+      font-size: 0.93em;
       border-radius: 7px;
       border: none;
-      padding: 0.47em 1.1em;
+      padding: 0.38em 0.7em;
       font-weight: 800;
       cursor: pointer;
       background: var(--main-yellow-dark);
@@ -440,18 +441,21 @@
       .header-block { border-radius: 0 0 16px 16px; padding: 10px 2vw 8px 2vw; gap: 7px;}
       .profile-photo-wrap { width: 45px; height: 45px; }
       .profile-photo { width: 42px; height: 42px;}
-      .main-info-header { gap:6px; }
-      .stats-title { font-size: 0.93em; margin-bottom: 4px;}
-      .exp-lvl-badge { min-width: 22px; height: 22px; font-size: 0.85em;}
-      .exp-bar-area { min-width: 0; max-width: 86px;}
-      .exp-bar { min-width: 0; max-width: 86px;}
-      .exp-bar-text { font-size: 0.78em; }
-      .indicator-label { min-width: 51px; font-size: 0.91em;}
-      .indicator-box { min-width: 65px; max-width: 65px; font-size: 0.87em; height: 23px;}
-      .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.9em; padding: 0.5em 0.2em;}
-      .editor-content {max-width: 97vw; min-width: 0; padding: 0.4em 0.07em 0.6em 0.07em;}
-      .editor-title {font-size: 0.97em;}
-      .editor-form input[type="text"] {font-size: 0.95em;}
+      .main-info-header { gap:5px; }
+      .stats-title { font-size: 0.87em; margin-bottom: 3px;}
+      .exp-lvl-badge { min-width: 19px; height: 19px; font-size: 0.79em;}
+      .exp-bar-area { min-width: 0; max-width: 61px;}
+      .exp-bar { min-width: 0; max-width: 61px;}
+      .exp-bar-text { font-size: 0.65em; }
+      .indicator-label { min-width: 46px; font-size: 0.81em;}
+      .indicator-box { min-width: 42px; max-width: 42px; font-size: 0.71em; height: 15px;}
+      .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.82em; padding: 0.43em 0.1em;}
+      .editor-content {max-width: 97vw; min-width: 0; padding: 0.18em 0.05em 0.3em 0.05em; gap:0.18em;}
+      .editor-title {font-size: 0.82em; padding-bottom:1px;}
+      .editor-form label {font-size: 0.77em;}
+      .editor-form input[type="text"] {font-size: 0.8em; padding: 0.18em 0.15em;}
+      .editor-form .input-suffix {font-size: 0.78em;}
+      .editor-form-buttons button {font-size: 0.8em; padding: 0.32em 0.5em;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}

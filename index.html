@@ -92,9 +92,8 @@
       margin-top: 0;
       text-align: left;
       padding-left: 2px;
-      text-shadow: none; /* Без тени */
+      text-shadow: none;
     }
-    /* NEW EXP BAR DESIGN */
     .exp-bar-block {
       width: 100%;
       max-width: 290px;
@@ -158,7 +157,7 @@
       top: 0; left: 0; bottom: 0;
     }
     .exp-bar-text {
-      color: #ffe66d;
+      color: #fff; /* БЕЛЫЙ ЦВЕТ */
       font-size: 1.06em;
       font-family: var(--title-font);
       font-weight: 700;
@@ -176,7 +175,6 @@
       user-select: none;
       padding-right: 2px;
     }
-    /* FIELDS */
     .fields-block {
       width: 93%;
       background: var(--fields-bg);
@@ -211,7 +209,7 @@
       line-height: 1.12em;
       flex: 1 1 45%;
       color: #fff;
-      text-shadow: none; /* Без тени */
+      text-shadow: none;
     }
     .indicator-box {
       display: flex;
@@ -325,7 +323,7 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 1.2em;
+      gap: 1em;
       animation: fadein .4s;
     }
     .editor-title {
@@ -336,7 +334,7 @@
       letter-spacing: 1.5px;
       margin-bottom: 0.8em;
       text-align: center;
-      text-shadow: 0 1px 7px #ffe66d44;
+      text-shadow: none;
     }
     .editor-close {
       position: absolute;
@@ -515,7 +513,7 @@
     </div>
     <!-- Редактор -->
     <div class="editor-modal" id="editor-modal">
-      <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="return false;">
+      <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="saveEditor();return false;">
         <button type="button" class="editor-close" onclick="closeEditor()">&times;</button>
         <div class="editor-title">Редактор профиля</div>
         <label>Деньги<input type="number" id="edit-cash" required></label>
@@ -531,7 +529,7 @@
         <label>Опыт<input type="number" id="edit-exp" min="0" required></label>
         <label>Опыт максимум<input type="number" id="edit-expmax" min="1" required></label>
         <div class="editor-form-buttons">
-          <button type="submit" class="save" onclick="saveEditor()">Сохранить</button>
+          <button type="submit" class="save">Сохранить</button>
           <button type="button" class="cancel" onclick="closeEditor()">Отмена</button>
         </div>
       </form>
@@ -609,13 +607,6 @@
         btn.addEventListener('click', playClick);
       });
     });
-    // --- Кнопки модалок ---
-    document.getElementById('open-quests').onclick = function() { playClick(); };
-    document.getElementById('open-missions').onclick = function() { playClick(); };
-    document.getElementById('open-stats').onclick = function() { playClick(); };
-    document.getElementById('open-shop').onclick = function() { playClick(); };
-    document.getElementById('open-panel').onclick = function() { playClick(); };
-    // --- Редактор ---
     document.getElementById('open-editor').onclick = function() {
       openEditor();
     };

@@ -404,20 +404,30 @@
       font-weight: bold;
       text-shadow: none;
     }
-    .quests-modal .close-btn {
-      position: absolute;
-      top: 8px;
-      right: 13px;
-      background: none;
-      border: none;
-      color: #ffe66d;
-      font-size: 1em;
-      font-weight: 900;
-      cursor: pointer;
-      z-index: 2;
-      outline: none;
-      padding: 2px 7px;
-      line-height: 1;
+    /* Кнопка "Выполнено" - делаем ровно по центру */
+    .quest-item.completed {
+      justify-content: center !important;
+      text-align: center;
+      gap: 0 !important;
+    }
+    .quest-item.completed .quest-info {
+      display: none !important;
+    }
+    .quest-item.completed button {
+      width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 auto !important;
+      display: block !important;
+      background: #23232a!important;
+      color: #888!important;
+      cursor: not-allowed;
+      border: 1.3px solid #ffe66d77;
+      font-family: var(--main-font);
+      font-weight: bold;
+      font-size: 0.89em;
+      border-radius: 7px;
+      padding: 0.22em 0.7em;
+      box-shadow: 0 2px 7px #ffe66d44;
     }
     .quest-item button {
       min-width: 39px;
@@ -436,12 +446,8 @@
       margin-top: 0;
       margin-bottom: 0;
     }
-    .quest-item.completed button {
-      background: #23232a!important;
-      color: #888!important;
-      cursor: not-allowed;
-      border: 1.3px solid #ffe66d77;
-    }
+    /* Убираем крестик */
+    .quests-modal .close-btn { display: none !important; }
     @media (max-width: 600px) {
       .main-container { max-width: 100vw; border-radius: 0;}
       .fields-block { max-width: 98vw; }
@@ -463,7 +469,6 @@
       .quest-title {font-size: 0.78em;}
       .quest-reward {font-size: 0.75em;}
       .quest-item button {min-width:27px; font-size:0.72em; padding:0.09em 0.22em; border-radius:4px; margin-left:2px;}
-      .quests-modal .close-btn {font-size: 0.77em;top:2px;right:4px;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -698,7 +703,7 @@
     <div class="quests-modal" id="quests-modal">
       <div class="quests-content">
         <div class="quests-title">КВЕСТЫ</div>
-        <button class="close-btn" onclick="closeQuests()">&times;</button>
+        <!-- Больше нет крестика и кнопок -->
         <div class="quests-list" id="quests-list">
           <!-- Квесты будут добавлены JS -->
         </div>
@@ -897,6 +902,10 @@
       document.getElementById('quests-modal').style.display = "flex";
       lockScroll(true);
     }
+    // Закрывать квесты по клику вне окна
+    document.querySelector('.quests-modal').addEventListener('click', function(e){
+      if (e.target === this) closeQuests();
+    });
     function closeQuests() {
       document.getElementById('quests-modal').style.display = "none";
       lockScroll(false);
@@ -908,13 +917,17 @@
         let completed = completedQuests.includes(i);
         let quest = document.createElement('div');
         quest.className = 'quest-item' + (completed ? ' completed' : '');
-        quest.innerHTML = `
-          <div class="quest-info">
-            <div class="quest-title">${q.title}</div>
-            <div class="quest-reward">${q.reward}</div>
-          </div>
-          <button ${completed ? "disabled" : ""} onclick="completeQuest(${i})">${completed ? "Выполнено" : "Выполнить"}</button>
-        `;
+        if(completed){
+          quest.innerHTML = `<button disabled>Выполнено</button>`;
+        } else {
+          quest.innerHTML = `
+            <div class="quest-info">
+              <div class="quest-title">${q.title}</div>
+              <div class="quest-reward">${q.reward}</div>
+            </div>
+            <button onclick="completeQuest(${i})">Выполнить</button>
+          `;
+        }
         list.appendChild(quest);
       });
     }

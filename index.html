@@ -272,45 +272,30 @@
       text-overflow: ellipsis;
       text-shadow: none;
     }
-    .main-btns {
-      width: 97%;
-      margin: 1.13em auto 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5em 2%;
-      justify-content: space-between;
-      z-index: 2;
-      position: relative;
-      min-height: 74px;
-    }
-    .main-btn {
+    /* Кнопка "Показать выполненные" */
+    #show-completed-quests {
       font-family: var(--title-font);
-      font-size: 1.11em;
+      font-size: 0.90em;
       background: var(--main-yellow-dark);
       color: #181824;
-      border-radius: 9px;
       border: none;
-      padding: 0.68em 0.2em;
+      border-radius: 7px;
+      padding: 0.35em 1em;
       font-weight: 900;
-      box-shadow: 0 2px 14px #ffe66d44, 0 2px 7px #0003;
+      box-shadow: 0 2px 7px #ffe66d44;
       cursor: pointer;
-      transition: background .16s, color .13s, box-shadow .14s, transform .07s;
-      letter-spacing: 1.1px;
+      margin-left: 11px;
+      margin-right: -10px;
+      transition: background .14s, color .13s;
       outline: none;
-      width: 48%;
-      min-width: 130px;
-      max-width: 49%;
-      margin-bottom: 0.3em;
-      line-height: 1.2em;
-      text-align: center;
+      letter-spacing: 1px;
+      vertical-align: middle;
     }
-    .main-btn:active, .main-btn.selected {
+    #show-completed-quests:active, #show-completed-quests.selected {
       background: var(--main-yellow);
       color: #181824;
-      filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
-      transform: scale(0.97);
+      filter: brightness(1.08);
     }
-
     /* КВЕСТЫ МОДАЛКА - чуть меньше чем .main-container, чуть больше чем редактор */
     .quests-modal {
       display: none;
@@ -375,6 +360,7 @@
       min-width: 100%;
       margin-bottom: 0.05em;
       justify-content: space-between;
+      transition: background 0.18s;
     }
     .quest-info {
       display: flex;
@@ -404,30 +390,31 @@
       font-weight: bold;
       text-shadow: none;
     }
-    /* Кнопка "Выполнено" - делаем ровно по центру */
     .quest-item.completed {
-      justify-content: center !important;
-      text-align: center;
-      gap: 0 !important;
+      background: #22331b;
+      border: 1.5px solid var(--main-green);
+      position: relative;
+      justify-content: space-between !important;
+      text-align: left;
+      gap: 0.18em !important;
+      opacity: 0.75;
     }
-    .quest-item.completed .quest-info {
-      display: none !important;
+    .quest-item.completed .quest-title {
+      color: var(--main-green);
+      text-shadow: 0 0 3px #21e87b88;
     }
     .quest-item.completed button {
-      width: 100% !important;
-      min-width: 0 !important;
-      margin: 0 auto !important;
-      display: block !important;
-      background: #23232a!important;
-      color: #888!important;
+      background: var(--main-green)!important;
+      color: #fff!important;
       cursor: not-allowed;
-      border: 1.3px solid #ffe66d77;
+      border: 1.3px solid #21e87b99;
       font-family: var(--main-font);
       font-weight: bold;
       font-size: 0.89em;
       border-radius: 7px;
       padding: 0.22em 0.7em;
-      box-shadow: 0 2px 7px #ffe66d44;
+      box-shadow: 0 2px 7px #21e87b33;
+      margin-left: 9px;
     }
     .quest-item button {
       min-width: 39px;
@@ -679,7 +666,10 @@
         </span>
       </div>
       <div class="indicator-row">
-        <span class="indicator-label">ВЫПОЛНЕНО КВЕСТОВ</span>
+        <span class="indicator-label" style="display:flex;align-items:center;">
+          ВЫПОЛНЕНО КВЕСТОВ
+          <button id="show-completed-quests" title="Показать выполненные квесты">👁</button>
+        </span>
         <span class="indicator-box" id="quests-box">
           <span class="indicator-value" id="quests-completed">0</span>
         </span>
@@ -702,8 +692,7 @@
     <!-- КВЕСТЫ МОДАЛКА -->
     <div class="quests-modal" id="quests-modal">
       <div class="quests-content">
-        <div class="quests-title">КВЕСТЫ</div>
-        <!-- Больше нет крестика и кнопок -->
+        <div class="quests-title" id="quests-modal-title">КВЕСТЫ</div>
         <div class="quests-list" id="quests-list">
           <!-- Квесты будут добавлены JS -->
         </div>
@@ -814,7 +803,7 @@
       document.getElementById('car').textContent = state.car;
       document.getElementById('license').textContent = state.license;
       document.getElementById('girl').textContent = state.girl;
-      document.getElementById('quests-completed').textContent = state.questsCompleted;
+      document.getElementById('quests-completed').textContent = completedQuests.length;
       document.getElementById('missions-completed').textContent = state.missionsCompleted;
 
       let img = document.getElementById('profile-img');
@@ -895,11 +884,16 @@
       closeEditor();
     }
     document.getElementById('open-quests').onclick = function() {
-      openQuests();
+      openQuests(false);
     };
-    function openQuests() {
-      renderQuests();
+    document.getElementById('show-completed-quests').onclick = function(e) {
+      e.stopPropagation();
+      openQuests(true);
+    };
+    function openQuests(showCompletedOnly=false) {
+      renderQuests(showCompletedOnly);
       document.getElementById('quests-modal').style.display = "flex";
+      document.getElementById('quests-modal-title').textContent = showCompletedOnly ? "ВЫПОЛНЕННЫЕ КВЕСТЫ" : "КВЕСТЫ";
       lockScroll(true);
     }
     // Закрывать квесты по клику вне окна
@@ -910,26 +904,41 @@
       document.getElementById('quests-modal').style.display = "none";
       lockScroll(false);
     }
-    function renderQuests() {
+    function renderQuests(showCompletedOnly=false) {
       let list = document.getElementById('quests-list');
       list.innerHTML = "";
       QUESTS.forEach((q, i) => {
         let completed = completedQuests.includes(i);
+        if (showCompletedOnly && !completed) return;
         let quest = document.createElement('div');
         quest.className = 'quest-item' + (completed ? ' completed' : '');
         if(completed){
-          quest.innerHTML = `<button disabled>Выполнено</button>`;
-        } else {
           quest.innerHTML = `
             <div class="quest-info">
               <div class="quest-title">${q.title}</div>
               <div class="quest-reward">${q.reward}</div>
             </div>
-            <button onclick="completeQuest(${i})">Выполнить</button>
-          `;
+            <button disabled>Выполнено</button>`;
+        } else {
+          if(!showCompletedOnly){
+            quest.innerHTML = `
+              <div class="quest-info">
+                <div class="quest-title">${q.title}</div>
+                <div class="quest-reward">${q.reward}</div>
+              </div>
+              <button onclick="completeQuest(${i})">Выполнить</button>
+            `;
+          }
         }
         list.appendChild(quest);
       });
+      // Если выполненных нет и выбран только просмотр выполненных
+      if (showCompletedOnly && list.childNodes.length === 0) {
+        let empty = document.createElement('div');
+        empty.style.cssText = "text-align:center;color:#888;padding:1.5em 0 1.2em 0;font-size:1.07em;font-family:var(--main-font);";
+        empty.textContent = "Нет выполненных квестов";
+        list.appendChild(empty);
+      }
     }
     window.completeQuest = function(i) {
       const q = QUESTS[i];
@@ -944,7 +953,7 @@
       }
       if(q.effects.cash) state.cash = (Number(state.cash) + Number(q.effects.cash)).toString();
       if(q.effects.license) state.license = q.effects.license;
-      state.questsCompleted = Number(state.questsCompleted) + 1;
+      state.questsCompleted = completedQuests.length;
       saveState();
       renderProfile();
       renderQuests();

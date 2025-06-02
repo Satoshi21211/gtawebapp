@@ -309,7 +309,7 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
-    /* КВЕСТЫ */
+    /* КВЕСТЫ МОДАЛКА МИНИ */
     .quests-modal {
       display: none;
       position: fixed;
@@ -325,81 +325,102 @@
     .quests-content {
       background: #23232a;
       color: #fff;
-      border-radius: 17px;
-      max-width: 370px;
-      min-width: 180px;
+      border-radius: 13px;
+      max-width: 280px;
+      min-width: 140px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 1.1em 1em 1.1em 1em;
+      padding: 0.6em 0.35em 0.6em 0.35em;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 0.4em;
+      gap: 0.28em;
       overscroll-behavior: contain;
     }
     .quests-title {
       font-family: var(--title-font);
-      font-size: 1.13em;
+      font-size: 1.02em;
       color: var(--main-yellow-dark);
       font-weight: 900;
-      letter-spacing: 1.2px;
-      margin-bottom: 0.3em;
+      letter-spacing: 1.05px;
+      margin-bottom: 0.15em;
       text-align: center;
       text-shadow: none;
       text-transform: uppercase;
       border-bottom: 2px solid #ffe66d85;
-      padding-bottom: 3px;
+      padding-bottom: 2px;
     }
     .quests-list {
       display: flex;
       flex-direction: column;
-      gap: 0.5em;
-      margin-bottom: 0.7em;
+      gap: 0.21em;
+      margin-bottom: 0.3em;
     }
     .quest-item {
-      border-radius: 10px;
+      border-radius: 7px;
       background: #19191e;
-      padding: 0.7em 1em;
+      padding: 0.42em 0.6em;
       box-shadow: 0 2px 10px #ffe66d22;
       font-family: var(--main-font);
-      font-size: 1em;
+      font-size: 0.91em;
       color: #fff;
       display: flex;
       flex-direction: column;
-      gap: 0.32em;
+      gap: 0.19em;
       position: relative;
-      margin-bottom: 0.2em;
+      margin-bottom: 0.1em;
     }
     .quest-title {
       font-family: var(--title-font);
-      font-size: 1.09em;
+      font-size: 0.97em;
       font-weight: 900;
       color: #ffe66d;
-      letter-spacing: 0.7px;
-      margin-bottom: 2px;
+      letter-spacing: 0.4px;
+      margin-bottom: 1px;
     }
     .quest-reward {
       font-family: var(--main-font);
-      font-size: 0.97em;
+      font-size: 0.8em;
       color: #ffd800;
-      margin-top: 2px;
-      letter-spacing: 0.4px;
+      margin-top: 1px;
+      letter-spacing: 0.2px;
       font-weight: bold;
     }
     .quests-modal .close-btn {
       position: absolute;
-      top: 10px;
-      right: 13px;
+      top: 8px;
+      right: 8px;
       background: none;
       border: none;
       color: #ffe66d;
-      font-size: 1.7em;
+      font-size: 1.27em;
       font-weight: 900;
       cursor: pointer;
       z-index: 2;
       outline: none;
       padding: 2px 7px;
       line-height: 1;
+    }
+    .quest-item button {
+      margin-top:2px;
+      align-self:flex-end;
+      min-width:68px;
+      font-family:var(--main-font);
+      font-weight:bold;
+      font-size:0.8em;
+      border-radius:7px;
+      padding:0.28em 0.7em;
+      border:none;
+      cursor:pointer;
+      background:#ffe66d;
+      color:#181824;
+      box-shadow:0 2px 7px #ffe66d44;
+      transition:.2s;
+    }
+    .quest-item.completed button {
+      background: #23232a!important;
+      color: #888!important;
+      cursor: not-allowed;
     }
     @media (max-width: 600px) {
       .main-container { max-width: 100vw; border-radius: 0;}
@@ -416,10 +437,14 @@
       .indicator-label { min-width: 46px; font-size: 0.81em;}
       .indicator-box { min-width: 42px; max-width: 42px; font-size: 0.71em; height: 15px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.82em; padding: 0.43em 0.1em;}
-      .quests-content {max-width: 97vw; min-width: 0; padding: 0.32em 0.05em 0.3em 0.05em;}
-      .quests-title {font-size: 0.81em;}
-      .quest-title {font-size: 0.87em;}
-      .quest-reward {font-size: 0.81em;}
+      .quests-content {max-width: 97vw; min-width: 0; padding: 0.13em 0.01em 0.13em 0.01em; gap:0.11em;}
+      .quests-title {font-size: 0.72em;}
+      .quest-title {font-size: 0.67em;}
+      .quest-reward {font-size: 0.63em;}
+      .quest-item button {min-width:44px;font-size:0.63em;padding:0.15em 0.32em;}
+      .quest-item {padding: 0.19em 0.33em;}
+      .quests-list {gap:0.09em;}
+      .quests-modal .close-btn {font-size: 0.87em; top:3px;right:3px;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -781,7 +806,7 @@
         quest.innerHTML = `
           <div class="quest-title">${q.title}</div>
           <div class="quest-reward">Награда: [${q.reward}]</div>
-          <button style="margin-top:4px;align-self:flex-end;min-width:88px; font-family:var(--main-font);font-weight:bold;font-size:0.93em;border-radius:7px;padding:0.38em 1.1em;border:none;cursor:pointer;background:${completed ? "#23232a" : "#ffe66d"};color:${completed ? "#888" : "#181824"};box-shadow:0 2px 7px #ffe66d44;" ${completed ? "disabled" : ""} onclick="completeQuest(${i})">${completed ? "Выполнено" : "Выполнить"}</button>
+          <button ${completed ? "disabled" : ""} onclick="completeQuest(${i})">${completed ? "Выполнено" : "Выполнить"}</button>
         `;
         list.appendChild(quest);
       });

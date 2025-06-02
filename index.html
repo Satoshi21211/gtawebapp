@@ -88,11 +88,11 @@
       letter-spacing: 1.6px;
       text-transform: uppercase;
       user-select: none;
-      text-shadow: 2px 2px 0 #181824, 0 1.5px 8px #ffe66d99;
       margin-bottom: 10px;
       margin-top: 0;
       text-align: left;
       padding-left: 2px;
+      text-shadow: none; /* Без тени */
     }
     /* NEW EXP BAR DESIGN */
     .exp-bar-block {
@@ -108,30 +108,22 @@
       min-width: 49px;
       height: 49px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--main-yellow-dark) 50%, var(--main-yellow) 100%);
-      color: #181824;
+      background: var(--panel-dark);
+      color: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-family: var(--title-font);
-      font-size: 1.21em;
+      font-size: 1.24em;
       font-weight: 900;
-      box-shadow: 0 2px 18px #ffe66d77, 0 1.5px 8px #18182430;
-      border: 3px solid #fff;
+      box-shadow: 0 2px 18px #ff465a66, 0 1.5px 8px #18182430;
+      border: 3.5px solid var(--main-red);
       z-index: 2;
       letter-spacing: 1px;
       text-align: center;
       position: relative;
-    }
-    .exp-lvl-badge span {
-      display: block;
-      font-size: 0.7em;
-      font-family: var(--main-font);
-      color: #181824b0;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-top: 1px;
+      text-shadow: none;
+      margin-right: 2px;
     }
     .exp-bar-area {
       flex: 1 1 auto;
@@ -167,7 +159,7 @@
     }
     .exp-bar-text {
       color: #ffe66d;
-      font-size: 1.05em;
+      font-size: 1.06em;
       font-family: var(--title-font);
       font-weight: 700;
       letter-spacing: 1.2px;
@@ -176,7 +168,7 @@
       align-items: center;
       justify-content: flex-end;
       white-space: nowrap;
-      text-shadow: 0 0 6px #181824, 0 1px 9px #ffe66d99;
+      text-shadow: none;
       position: absolute;
       right: 10px;
       top: 0;
@@ -219,7 +211,7 @@
       line-height: 1.12em;
       flex: 1 1 45%;
       color: #fff;
-      text-shadow: 0 1px 4px #ffe66d33, 0 0.5px 0.5px #23232a;
+      text-shadow: none; /* Без тени */
     }
     .indicator-box {
       display: flex;
@@ -242,6 +234,7 @@
       border: 2px solid var(--main-yellow-dark);
       color: var(--main-yellow-dark);
       transition: border-color .21s, color .21s;
+      text-shadow: none;
     }
     .indicator-box.green {
       color: var(--main-green);
@@ -251,9 +244,8 @@
       color: var(--main-red);
       border: 2px solid var(--main-red);
     }
-    /* Серые индикаторы */
     .indicator-box.gray {
-      border: 2px solid #cacaca;
+      border: 2px solid #fff;
       color: var(--main-yellow-dark);
     }
     .indicator-value {
@@ -268,6 +260,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-shadow: none;
     }
     .main-btns {
       width: 97%;
@@ -307,22 +300,128 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
+    /* Белый редактор */
+    .editor-modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(32,32,36,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .editor-content {
+      background: #fff;
+      color: #23232a;
+      border-radius: 15px;
+      max-width: 340px;
+      min-width: 260px;
+      margin: 0 auto;
+      box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
+      padding: 2em 1.2em 1.6em 1.2em;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2em;
+      animation: fadein .4s;
+    }
+    .editor-title {
+      font-family: var(--title-font);
+      font-size: 1.13em;
+      color: #181824;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      margin-bottom: 0.8em;
+      text-align: center;
+      text-shadow: 0 1px 7px #ffe66d44;
+    }
+    .editor-close {
+      position: absolute;
+      right: 15px; top: 12px;
+      color: #181824;
+      font-size: 2em;
+      font-weight: 900;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 3;
+      outline: none;
+      padding: 2px 7px;
+    }
+    .editor-form label {
+      font-family: var(--title-font);
+      font-size: 1em;
+      color: #23232a;
+      font-weight: 800;
+      letter-spacing: 1.1px;
+      margin-bottom: 0.19em;
+      display: block;
+      text-transform: uppercase;
+    }
+    .editor-form input {
+      width: 100%;
+      font-size: 1.05em;
+      font-family: var(--main-font);
+      color: #23232a;
+      background: #f8f8fa;
+      border: 2px solid #ffe66d80;
+      border-radius: 7px;
+      padding: 0.5em 0.8em;
+      outline: none;
+      font-weight: 700;
+      margin-bottom: 0.7em;
+      transition: border .14s;
+    }
+    .editor-form input:focus {
+      border: 2px solid var(--main-yellow-dark);
+      background: #fffbe0;
+    }
+    .editor-form-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1em;
+    }
+    .editor-form-buttons button {
+      font-family: var(--title-font);
+      font-size: 1.02em;
+      border-radius: 7px;
+      border: none;
+      padding: 0.5em 1.2em;
+      font-weight: 800;
+      cursor: pointer;
+      background: var(--main-yellow-dark);
+      color: #181824;
+      box-shadow: 0 2px 7px #ffe66d44;
+      transition: background .15s, color .12s;
+      outline: none;
+    }
+    .editor-form-buttons button.save {
+      background: var(--main-green);
+      color: #fff;
+    }
+    .editor-form-buttons button.cancel {
+      background: #ddd;
+      color: #23232a;
+    }
     @media (max-width: 600px) {
-      html, body { width: 100vw; min-width: 100vw; }
-      .main-container { max-width: 100vw; border-radius: 0; }
+      .main-container { max-width: 100vw; border-radius: 0;}
       .fields-block { max-width: 98vw; }
       .header-block { border-radius: 0 0 16px 16px; padding: 18px 5px 12px 5px; gap: 8px;}
       .profile-photo-wrap { width: 54px; height: 54px; }
       .profile-photo { width: 50px; height: 50px;}
       .main-info-header { gap:6px; }
       .stats-title { font-size: 0.98em; margin-bottom: 4px;}
-      .exp-lvl-badge { min-width: 26px; height: 26px; font-size: 0.93em;}
+      .exp-lvl-badge { min-width: 29px; height: 29px; font-size: 0.93em;}
       .exp-bar-area { min-width: 0; max-width: 100px;}
       .exp-bar { min-width: 0; max-width: 100px;}
       .exp-bar-text { font-size: 0.85em; }
       .indicator-label { min-width: 57px; font-size: 0.95em;}
       .indicator-box { min-width: 78px; max-width: 78px; font-size: 0.91em; height: 28px;}
       .main-btn { min-width: 44vw; max-width: 48vw; font-size: 0.97em;}
+      .editor-content {max-width: 97vw;}
     }
     @media (max-width:400px) {
       .fields-block {padding-left: 0.07em;padding-right: 0.07em;}
@@ -340,7 +439,7 @@
       <div class="main-info-header">
         <div class="stats-title">СТАТИСТИКА: ЕГОР</div>
         <div class="exp-bar-block">
-          <div class="exp-lvl-badge" id="level-ind">1<span>LVL</span></div>
+          <div class="exp-lvl-badge" id="level-ind">1</div>
           <div class="exp-bar-area">
             <div class="exp-bar">
               <div class="exp-bar-inner" id="progress-inner"></div>
@@ -411,6 +510,31 @@
       <button class="main-btn" id="open-stats">СТАТИСТИКА</button>
       <button class="main-btn" id="open-missions">МИСИИ</button>
       <button class="main-btn" id="open-shop">МАГАЗИН</button>
+      <button class="main-btn" id="open-editor">РЕДАКТОР</button>
+      <button class="main-btn" id="open-panel">ПАНЕЛЬ</button>
+    </div>
+    <!-- Редактор -->
+    <div class="editor-modal" id="editor-modal">
+      <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="return false;">
+        <button type="button" class="editor-close" onclick="closeEditor()">&times;</button>
+        <div class="editor-title">Редактор профиля</div>
+        <label>Деньги<input type="number" id="edit-cash" required></label>
+        <label>Крипта<input type="number" id="edit-crypto" required></label>
+        <label>Локация<input type="text" id="edit-location" required></label>
+        <label>Статус<input type="text" id="edit-status" required></label>
+        <label>Работа<input type="text" id="edit-job" required></label>
+        <label>Машина<input type="text" id="edit-car" required></label>
+        <label>Репутация<input type="number" id="edit-rep" required></label>
+        <label>Выполнено квестов<input type="number" id="edit-quests" required></label>
+        <label>Выполнено мисий<input type="number" id="edit-missions" required></label>
+        <label>Уровень<input type="number" id="edit-level" min="1" required></label>
+        <label>Опыт<input type="number" id="edit-exp" min="0" required></label>
+        <label>Опыт максимум<input type="number" id="edit-expmax" min="1" required></label>
+        <div class="editor-form-buttons">
+          <button type="submit" class="save" onclick="saveEditor()">Сохранить</button>
+          <button type="button" class="cancel" onclick="closeEditor()">Отмена</button>
+        </div>
+      </form>
     </div>
   </div>
   <script>
@@ -442,7 +566,7 @@
       } catch {}
     }
     function renderProfile() {
-      document.getElementById('level-ind').firstChild.textContent = state.level;
+      document.getElementById('level-ind').textContent = state.level;
       let percent = Math.round(state.exp / state.expMax * 100);
       if (percent > 100) percent = 100;
       document.getElementById('progress-inner').style.width = percent + "%";
@@ -485,6 +609,51 @@
         btn.addEventListener('click', playClick);
       });
     });
+    // --- Кнопки модалок ---
+    document.getElementById('open-quests').onclick = function() { playClick(); };
+    document.getElementById('open-missions').onclick = function() { playClick(); };
+    document.getElementById('open-stats').onclick = function() { playClick(); };
+    document.getElementById('open-shop').onclick = function() { playClick(); };
+    document.getElementById('open-panel').onclick = function() { playClick(); };
+    // --- Редактор ---
+    document.getElementById('open-editor').onclick = function() {
+      openEditor();
+    };
+    function openEditor() {
+      document.getElementById('editor-modal').style.display = "flex";
+      document.getElementById('edit-cash').value = state.cash;
+      document.getElementById('edit-crypto').value = state.crypto;
+      document.getElementById('edit-location').value = state.location;
+      document.getElementById('edit-status').value = state.status;
+      document.getElementById('edit-job').value = state.job;
+      document.getElementById('edit-car').value = state.car;
+      document.getElementById('edit-rep').value = state.rep;
+      document.getElementById('edit-quests').value = state.questsCompleted;
+      document.getElementById('edit-missions').value = state.missionsCompleted;
+      document.getElementById('edit-level').value = state.level;
+      document.getElementById('edit-exp').value = state.exp;
+      document.getElementById('edit-expmax').value = state.expMax;
+    }
+    function closeEditor() {
+      document.getElementById('editor-modal').style.display = "none";
+    }
+    function saveEditor() {
+      state.cash = document.getElementById('edit-cash').value;
+      state.crypto = document.getElementById('edit-crypto').value;
+      state.location = document.getElementById('edit-location').value;
+      state.status = document.getElementById('edit-status').value;
+      state.job = document.getElementById('edit-job').value;
+      state.car = document.getElementById('edit-car').value;
+      state.rep = document.getElementById('edit-rep').value;
+      state.questsCompleted = document.getElementById('edit-quests').value;
+      state.missionsCompleted = document.getElementById('edit-missions').value;
+      state.level = document.getElementById('edit-level').value;
+      state.exp = document.getElementById('edit-exp').value;
+      state.expMax = document.getElementById('edit-expmax').value;
+      saveState();
+      renderProfile();
+      closeEditor();
+    }
     loadState();
     renderProfile();
     setInterval(renderProfile, 2000);

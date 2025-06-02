@@ -298,7 +298,7 @@
       filter: brightness(1.08) drop-shadow(0 2px 10px #ffe66d77);
       transform: scale(0.97);
     }
-    /* Белый редактор - компактный */
+    /* Белый редактор - компактный, стильный */
     .editor-modal {
       display: none;
       position: fixed;
@@ -314,12 +314,12 @@
     .editor-content {
       background: #fff;
       color: #23232a;
-      border-radius: 15px;
+      border-radius: 18px;
       max-width: 320px;
       min-width: 210px;
       margin: 0 auto;
       box-shadow: 0 8px 33px #ffe66d44, 0 2px 8px #ffe66d33;
-      padding: 1.5em 1em 1.1em 1em;
+      padding: 1.3em 1.1em 1.1em 1.1em;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -328,13 +328,16 @@
     }
     .editor-title {
       font-family: var(--title-font);
-      font-size: 1.11em;
+      font-size: 1.13em;
       color: #181824;
       font-weight: 900;
       letter-spacing: 1.2px;
       margin-bottom: 0.5em;
       text-align: center;
       text-shadow: none;
+      text-transform: uppercase;
+      padding-bottom: 2px;
+      border-bottom: 2px solid #ffe66d70;
     }
     .editor-close {
       position: absolute;
@@ -360,7 +363,8 @@
       display: block;
       text-transform: uppercase;
     }
-    .editor-form input {
+    .editor-form input[type="text"],
+    .editor-form input[type="number"] {
       width: 100%;
       font-size: 1em;
       font-family: var(--main-font);
@@ -374,10 +378,26 @@
       margin-bottom: 0.3em;
       transition: border .14s;
       box-sizing: border-box;
+      text-align: left;
     }
     .editor-form input:focus {
       border: 2px solid var(--main-yellow-dark);
       background: #fffbe0;
+    }
+    .editor-form .input-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .editor-form .input-suffix {
+      font-family: var(--title-font);
+      font-size: 1em;
+      color: #c3b900;
+      font-weight: 900;
+      letter-spacing: 1.0px;
+      margin-left: 4px;
+      margin-bottom: 0.2em;
+      min-width: 26px;
     }
     .editor-form-buttons {
       display: flex;
@@ -454,13 +474,13 @@
       <div class="indicator-row">
         <span class="indicator-label">ДЕНЬГИ</span>
         <span class="indicator-box green" id="cash-box">
-          <span class="indicator-value" id="cash">0</span>
+          <span class="indicator-value" id="cash">0$</span>
         </span>
       </div>
       <div class="indicator-row">
         <span class="indicator-label">КРИПТА</span>
         <span class="indicator-box red" id="crypto-box">
-          <span class="indicator-value" id="crypto">0</span>
+          <span class="indicator-value" id="crypto">0 BTC</span>
         </span>
       </div>
       <div class="indicator-row">
@@ -511,20 +531,38 @@
       <button class="main-btn" id="open-stats">СТАТИСТИКА</button>
       <button class="main-btn" id="open-missions">МИСИИ</button>
       <button class="main-btn" id="open-shop">МАГАЗИН</button>
-      <button class="main-btn" id="open-editor">РЕДАКТОР</button>
+      <button class="main-btn" id="open-editor">РЕДАКТОР ИНДИКАТОРОВ</button>
       <button class="main-btn" id="open-panel">ПАНЕЛЬ</button>
     </div>
-    <!-- Редактор -->
+    <!-- Редактор индикаторов -->
     <div class="editor-modal" id="editor-modal">
       <form class="editor-content editor-form" id="editor-form" autocomplete="off" onsubmit="saveEditor();return false;">
         <button type="button" class="editor-close" onclick="closeEditor()">&times;</button>
-        <div class="editor-title">Админ-редактор</div>
-        <label>Деньги<input type="number" id="edit-cash" required></label>
-        <label>Крипта<input type="number" id="edit-crypto" required></label>
-        <label>Локация<input type="text" id="edit-location" required></label>
-        <label>Статус<input type="text" id="edit-status" required></label>
-        <label>Работа<input type="text" id="edit-job" required></label>
-        <label>Машина<input type="text" id="edit-car" required></label>
+        <div class="editor-title">Редактор индикаторов</div>
+        <div class="input-group">
+          <label style="flex:1;">Деньги
+            <input type="text" id="edit-cash" maxlength="12" autocomplete="off" inputmode="numeric" pattern="[0-9 ]{0,}">
+          </label>
+          <span class="input-suffix">$</span>
+        </div>
+        <div class="input-group">
+          <label style="flex:1;">Крипта
+            <input type="text" id="edit-crypto" maxlength="8" autocomplete="off">
+          </label>
+          <span class="input-suffix">BTC</span>
+        </div>
+        <label>Локация
+          <input type="text" id="edit-location" maxlength="32" autocomplete="off">
+        </label>
+        <label>Статус
+          <input type="text" id="edit-status" maxlength="32" autocomplete="off">
+        </label>
+        <label>Работа
+          <input type="text" id="edit-job" maxlength="32" autocomplete="off">
+        </label>
+        <label>Машина
+          <input type="text" id="edit-car" maxlength="32" autocomplete="off">
+        </label>
         <div class="editor-form-buttons">
           <button type="submit" class="save">Сохранить</button>
           <button type="button" class="cancel" onclick="closeEditor()">Отмена</button>
@@ -567,8 +605,8 @@
       document.getElementById('progress-inner').style.width = percent + "%";
       document.getElementById('progress-text').textContent = `${state.exp}/${state.expMax} EXP`;
 
-      document.getElementById('cash').textContent = state.cash;
-      document.getElementById('crypto').textContent = state.crypto;
+      document.getElementById('cash').textContent = state.cash + "$";
+      document.getElementById('crypto').textContent = state.crypto + " BTC";
       document.getElementById('location').textContent = state.location;
       document.getElementById('status').textContent = state.status;
       document.getElementById('job').textContent = state.job;
@@ -621,8 +659,15 @@
       document.getElementById('editor-modal').style.display = "none";
     }
     function saveEditor() {
-      state.cash = document.getElementById('edit-cash').value;
-      state.crypto = document.getElementById('edit-crypto').value;
+      // Обрезаем пробелы, запрещаем буквы для cash/crypto
+      let cashVal = document.getElementById('edit-cash').value.replace(/[^0-9]/g, '');
+      if (cashVal === "") cashVal = "0";
+      state.cash = cashVal;
+
+      let cryptoVal = document.getElementById('edit-crypto').value.replace(/[^0-9.,]/g, '').replace(/,/g, '.');
+      if (cryptoVal === "") cryptoVal = "0";
+      state.crypto = cryptoVal;
+
       state.location = document.getElementById('edit-location').value;
       state.status = document.getElementById('edit-status').value;
       state.job = document.getElementById('edit-job').value;

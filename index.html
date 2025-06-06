@@ -1,253 +1,170 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Жук-Бет: Больше-Меньше на $</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini FPS WebGL</title>
   <style>
-    html, body { height:100%; margin:0; padding:0; }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(120deg, #2e4053 0%, #23232a 100%);
-      color: #fff;
-      font-family: 'Montserrat', Arial, sans-serif;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      height: 100%;
+      background: #000;
     }
-    .bet-panel {
-      background: #23232aee;
-      border-radius: 18px;
-      box-shadow: 0 6px 33px #000a, 0 2px 8px #ffe66d33;
-      padding: 32px 18px 22px 18px;
-      max-width: 350px;
-      min-width: 220px;
-      margin: 24px 0;
-      text-align: center;
-      position: relative;
+    canvas {
+      display: block;
     }
-    .bet-title {
-      font-size: 1.4em;
-      letter-spacing: 1.2px;
-      color: #ffd800;
-      font-weight: 900;
-      margin-bottom: 16px;
-      text-shadow: 0 2px 6px #ffe66d44;
-    }
-    .balance {
-      font-size: 1.1em;
-      color: #21e87b;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-    .dollar {
-      font-size: 1.3em;
-      color: #ffd800;
-      font-weight: 900;
-      margin: 0 5px;
-    }
-    .number-box {
-      font-size: 2.5em;
-      font-weight: 900;
-      color: #ffd800;
-      background: #2e2e38;
-      border-radius: 10px;
-      margin: 14px auto 18px auto;
-      width: 120px;
-      padding: 7px 0;
-      box-shadow: 0 2px 12px #ffd80033;
-    }
-    .bet-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
-    .bet-row input[type="number"] {
-      width: 90px;
-      font-size: 1.1em;
-      border-radius: 7px;
-      border: 2px solid #ffd80099;
-      padding: 5px 10px;
-      background: #23232a;
-      color: #fff;
-      font-weight: 700;
-      outline: none;
-      margin-right: 6px;
-      text-align: center;
-    }
-    .bet-row input[type="number"]:focus {
-      border-color: #ffd800;
-      background: #1c1c23;
-    }
-    .bet-row button {
-      background: #ffd800;
-      color: #23232a;
-      font-weight: 900;
-      font-size: 1.1em;
-      border-radius: 7px;
-      border: none;
-      padding: 7px 15px;
-      cursor: pointer;
-      box-shadow: 0 2px 7px #ffe66d44;
-      transition: background .14s, color .12s;
-      outline: none;
-    }
-    .bet-row button:active { background: #ffe66d; }
-    .choice-row {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-    .choice-btn {
-      background: #21e87b;
-      color: #fff;
-      font-weight: 900;
-      font-size: 1.07em;
-      border-radius: 7px;
-      border: none;
-      padding: 7px 22px;
-      cursor: pointer;
-      box-shadow: 0 2px 7px #21e87b55;
-      transition: background .15s, color .12s;
-    }
-    .choice-btn.lower { background: #ff465a; }
-    .choice-btn:active { filter:brightness(0.93);}
-    .history {
-      margin-top: 18px;
-      font-size: 0.98em;
-      color: #fffbe0;
-      background: #2a2e36aa;
-      border-radius: 10px;
-      padding: 13px 5px 5px 5px;
-      min-height: 38px;
-    }
-    .result {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin: 12px 0 0 0;
-      color: #21e87b;
-      min-height: 28px;
-      transition: color .15s;
-    }
-    .result.loss { color: #ff465a; }
-    .result.draw { color: #ffd800; }
-    .bet-panel .bug-img {
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
-      margin-bottom: 8px;
-      filter: drop-shadow(0 4px 20px #ffe66d33);
-      user-select: none;
-      pointer-events: none;
-    }
-    @media (max-width:600px) {
-      .bet-panel {max-width:97vw;padding:14px 1vw;}
-      .number-box {font-size:1.7em;width:80px;}
-      .bet-row input[type="number"] {width:55px;}
-      .choice-row {gap:9px;}
-      .choice-btn {padding:6px 10px;font-size:0.99em;}
+    #ui {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-family: sans-serif;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <div class="bet-panel">
-    <img src="https://i.imgur.com/4YXy2lO.png" class="bug-img" alt="жук">
-    <div class="bet-title">Жук-Бет: Больше / Меньше</div>
-    <div class="balance">Баланс: <span id="balance">100</span><span class="dollar">$</span></div>
-    <div>Текущий номер</div>
-    <div class="number-box" id="current-number">—</div>
-    <form id="bet-form" autocomplete="off" onsubmit="return false">
-      <div class="bet-row">
-        <input type="number" id="bet-amount" min="1" max="9999" step="1" placeholder="Ставка" required>
-        <button type="button" onclick="setMax()">max</button>
-      </div>
-      <div class="choice-row">
-        <button type="button" class="choice-btn higher" onclick="makeBet('higher')">Больше</button>
-        <button type="button" class="choice-btn lower" onclick="makeBet('lower')">Меньше</button>
-      </div>
-    </form>
-    <div class="result" id="result"></div>
-    <div class="history" id="history"></div>
-  </div>
-  <script>
-    // ———————— ИГРОВАЯ ЛОГИКА ————————
-    let balance = 100;
-    let currentNumber = null;
-    let minNum = 1, maxNum = 99;
-    let history = [];
-    let canBet = true;
-    const balanceEl = document.getElementById('balance');
-    const numberEl = document.getElementById('current-number');
-    const resultEl = document.getElementById('result');
-    const historyEl = document.getElementById('history');
-    const betInput = document.getElementById('bet-amount');
-    function newRound(isFirst=false) {
-      currentNumber = Math.floor(Math.random() * (maxNum-minNum+1)) + minNum;
-      numberEl.textContent = currentNumber;
-      resultEl.textContent = '';
-      resultEl.className = 'result';
-      if(!isFirst) history.unshift({num:currentNumber, win:null, bet:0, next:null});
-      updateHistory();
-      canBet = true;
-    }
-    function makeBet(type) {
-      if(!canBet) return;
-      let bet = parseInt(betInput.value);
-      if(isNaN(bet) || bet<1) return setResult("Введите корректную ставку!", "draw");
-      if(bet>balance) return setResult("Недостаточно $!", "loss");
-      canBet = false;
-      let nextNumber = Math.floor(Math.random()*(maxNum-minNum+1))+minNum;
-      let win = false, draw = false;
-      if(type==="higher") {
-        win = nextNumber>currentNumber;
-        draw = nextNumber===currentNumber;
-      } else {
-        win = nextNumber<currentNumber;
-        draw = nextNumber===currentNumber;
+  <div id="ui">Kills: <span id="kills">0</span></div>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three';
+    import { PointerLockControls } from 'https://cdn.skypack.dev/three/examples/jsm/controls/PointerLockControls.js';
+
+    let camera, scene, renderer, controls;
+    let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
+    let prevTime = performance.now();
+    let velocity = new THREE.Vector3();
+    let bullets = [], targets = [], kills = 0;
+
+    init();
+    animate();
+
+    function init() {
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x202020);
+
+      const light = new THREE.HemisphereLight(0xffffff, 0x444444);
+      light.position.set(0, 200, 0);
+      scene.add(light);
+
+      const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(200, 200),
+        new THREE.MeshStandardMaterial({ color: 0x444444 })
+      );
+      ground.rotation.x = -Math.PI / 2;
+      scene.add(ground);
+
+      // Add targets
+      for (let i = 0; i < 10; i++) {
+        const target = new THREE.Mesh(
+          new THREE.BoxGeometry(2, 2, 2),
+          new THREE.MeshStandardMaterial({ color: 0xff0000 })
+        );
+        target.position.set(Math.random() * 100 - 50, 1, Math.random() * 100 - 50);
+        scene.add(target);
+        targets.push(target);
       }
-      let winSum = bet*2;
-      if(draw) {
-        setResult("Ничья. Ставка возвращена.", "draw");
-        // ставка возвращается
-      } else if(win) {
-        balance += bet;
-        setResult("Победа! +" + bet + " $", "win");
-      } else {
-        balance -= bet;
-        setResult("Проигрыш! -" + bet + " $", "loss");
-      }
-      balanceEl.textContent = balance;
-      history[0] = {num:currentNumber, win, bet, next:nextNumber};
-      updateHistory();
-      setTimeout(()=>{ 
-        newRound();
-        betInput.value='';
-      }, 1200);
+
+      controls = new PointerLockControls(camera, document.body);
+
+      document.body.addEventListener('click', () => {
+        controls.lock();
+      });
+
+      scene.add(controls.getObject());
+
+      const onKeyDown = (event) => {
+        switch (event.code) {
+          case 'ArrowUp':
+          case 'KeyW': moveForward = true; break;
+          case 'ArrowLeft':
+          case 'KeyA': moveLeft = true; break;
+          case 'ArrowDown':
+          case 'KeyS': moveBackward = true; break;
+          case 'ArrowRight':
+          case 'KeyD': moveRight = true; break;
+        }
+      };
+
+      const onKeyUp = (event) => {
+        switch (event.code) {
+          case 'ArrowUp':
+          case 'KeyW': moveForward = false; break;
+          case 'ArrowLeft':
+          case 'KeyA': moveLeft = false; break;
+          case 'ArrowDown':
+          case 'KeyS': moveBackward = false; break;
+          case 'ArrowRight':
+          case 'KeyD': moveRight = false; break;
+        }
+      };
+
+      document.addEventListener('keydown', onKeyDown);
+      document.addEventListener('keyup', onKeyUp);
+
+      document.addEventListener('mousedown', () => shoot());
+
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     }
-    function setResult(txt, type) {
-      resultEl.textContent = txt;
-      resultEl.className = "result" + (type ? " "+type : "");
+
+    function shoot() {
+      const bullet = new THREE.Mesh(
+        new THREE.SphereGeometry(0.1),
+        new THREE.MeshStandardMaterial({ color: 0xffff00 })
+      );
+      bullet.position.copy(camera.position);
+      bullet.velocity = new THREE.Vector3();
+      camera.getWorldDirection(bullet.velocity);
+      bullet.velocity.multiplyScalar(2);
+      scene.add(bullet);
+      bullets.push(bullet);
     }
-    function setMax() {
-      betInput.value = balance;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const time = performance.now();
+      const delta = (time - prevTime) / 1000;
+
+      velocity.x -= velocity.x * 10.0 * delta;
+      velocity.z -= velocity.z * 10.0 * delta;
+
+      if (moveForward) velocity.z -= 20.0 * delta;
+      if (moveBackward) velocity.z += 20.0 * delta;
+      if (moveLeft) velocity.x -= 20.0 * delta;
+      if (moveRight) velocity.x += 20.0 * delta;
+
+      controls.moveRight(-velocity.x * delta);
+      controls.moveForward(-velocity.z * delta);
+
+      bullets.forEach((bullet, i) => {
+        bullet.position.add(bullet.velocity.clone().multiplyScalar(delta * 60));
+        targets.forEach((target, j) => {
+          if (target.position.distanceTo(bullet.position) < 1) {
+            scene.remove(target);
+            scene.remove(bullet);
+            targets.splice(j, 1);
+            bullets.splice(i, 1);
+            kills++;
+            document.getElementById('kills').textContent = kills;
+          }
+        });
+      });
+
+      bullets = bullets.filter(b => b.position.length() < 500);
+
+      renderer.render(scene, camera);
+      prevTime = time;
     }
-    function updateHistory() {
-      let html = '';
-      for(let i=0;i<Math.min(5,history.length);++i) {
-        let h = history[i];
-        if(!h) continue;
-        html += `<div>
-          <span style="color:#ffd800;">${h.num}</span>
-          <span style="color:#ff465a;font-size:0.9em;">${h.bet?(" ("+h.bet+"$)"):""}</span>
-          <span style="color:${h.win===true?'#21e87b':(h.win===false?'#ff465a':'#ffd800')};font-weight:bold;">
-            ${h.win===true?'↑':' '}${h.win===false?'↓':' '}${h.win===null?'':'→'+h.next}
-          </span>
-        </div>`;
-      }
-      historyEl.innerHTML = html;
-    }
-    // ———————— СТАРТ ————————
-    newRound(true);
   </script>
 </body>
 </html>

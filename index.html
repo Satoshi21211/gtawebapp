@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini FPS WebGL</title>
+  <meta charset="UTF-8">
+  <title>Mini FPS Shooter</title>
   <style>
     html, body {
       margin: 0;
+      padding: 0;
       overflow: hidden;
-      height: 100%;
-      background: #000;
+      background-color: black;
     }
     canvas {
       display: block;
@@ -19,94 +18,86 @@
       top: 10px;
       left: 10px;
       color: white;
-      font-family: sans-serif;
-      z-index: 10;
+      font-family: Arial, sans-serif;
+      z-index: 1;
+    }
+    #crosshair {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      margin-top: -5px;
+      background: white;
+      border-radius: 50%;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
   <div id="ui">Kills: <span id="kills">0</span></div>
-  <script type="module">
-    import * as THREE from 'https://cdn.skypack.dev/three';
-    import { PointerLockControls } from 'https://cdn.skypack.dev/three/examples/jsm/controls/PointerLockControls.js';
-
-    let camera, scene, renderer, controls;
+  <div id="crosshair"></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.150.1/examples/js/controls/PointerLockControls.js"></script>
+  <script>
+    let scene, camera, renderer, controls;
     let moveForward = false, moveBackward = false, moveLeft = false, moveRight = false;
-    let prevTime = performance.now();
+    let canJump = false;
     let velocity = new THREE.Vector3();
-    let bullets = [], targets = [], kills = 0;
+    let direction = new THREE.Vector3();
+    let objects = [];
+    let bullets = [], targets = [];
+    let kills = 0;
+    let clock = new THREE.Clock();
 
     init();
     animate();
 
     function init() {
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
-
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x202020);
+      scene.background = new THREE.Color(0x111111);
+
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
 
       const light = new THREE.HemisphereLight(0xffffff, 0x444444);
       light.position.set(0, 200, 0);
       scene.add(light);
 
       const ground = new THREE.Mesh(
-        new THREE.PlaneGeometry(200, 200),
-        new THREE.MeshStandardMaterial({ color: 0x444444 })
+        new THREE.PlaneGeometry(1000, 1000),
+        new THREE.MeshStandardMaterial({ color: 0x222222 })
       );
       ground.rotation.x = -Math.PI / 2;
+      ground.receiveShadow = true;
       scene.add(ground);
 
-      // Add targets
-      for (let i = 0; i < 10; i++) {
-        const target = new THREE.Mesh(
-          new THREE.BoxGeometry(2, 2, 2),
-          new THREE.MeshStandardMaterial({ color: 0xff0000 })
-        );
-        target.position.set(Math.random() * 100 - 50, 1, Math.random() * 100 - 50);
-        scene.add(target);
-        targets.push(target);
-      }
-
-      controls = new PointerLockControls(camera, document.body);
+      controls = new THREE.PointerLockControls(camera, document.body);
+      scene.add(controls.getObject());
 
       document.body.addEventListener('click', () => {
         controls.lock();
       });
 
-      scene.add(controls.getObject());
-
-      const onKeyDown = (event) => {
-        switch (event.code) {
-          case 'ArrowUp':
-          case 'KeyW': moveForward = true; break;
-          case 'ArrowLeft':
-          case 'KeyA': moveLeft = true; break;
-          case 'ArrowDown':
-          case 'KeyS': moveBackward = true; break;
-          case 'ArrowRight':
-          case 'KeyD': moveRight = true; break;
-        }
-      };
-
-      const onKeyUp = (event) => {
-        switch (event.code) {
-          case 'ArrowUp':
-          case 'KeyW': moveForward = false; break;
-          case 'ArrowLeft':
-          case 'KeyA': moveLeft = false; break;
-          case 'ArrowDown':
-          case 'KeyS': moveBackward = false; break;
-          case 'ArrowRight':
-          case 'KeyD': moveRight = false; break;
-        }
-      };
-
       document.addEventListener('keydown', onKeyDown);
       document.addEventListener('keyup', onKeyUp);
+      document.addEventListener('mousedown', shoot);
 
-      document.addEventListener('mousedown', () => shoot());
+      for (let i = 0; i < 20; i++) {
+        const enemy = new THREE.Mesh(
+          new THREE.BoxGeometry(2, 2, 2),
+          new THREE.MeshStandardMaterial({ color: 0xff0000 })
+        );
+        enemy.position.set(
+          Math.random() * 500 - 250,
+          1,
+          Math.random() * 500 - 250
+        );
+        scene.add(enemy);
+        targets.push(enemy);
+      }
 
-      renderer = new THREE.WebGLRenderer();
+      renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
@@ -119,51 +110,97 @@
 
     function shoot() {
       const bullet = new THREE.Mesh(
-        new THREE.SphereGeometry(0.1),
-        new THREE.MeshStandardMaterial({ color: 0xffff00 })
+        new THREE.SphereGeometry(0.1, 8, 8),
+        new THREE.MeshBasicMaterial({ color: 0xffff00 })
       );
       bullet.position.copy(camera.position);
-      bullet.velocity = new THREE.Vector3();
-      camera.getWorldDirection(bullet.velocity);
-      bullet.velocity.multiplyScalar(2);
+
+      const dir = new THREE.Vector3();
+      camera.getWorldDirection(dir);
+      bullet.userData.velocity = dir.clone().multiplyScalar(2);
+
       scene.add(bullet);
       bullets.push(bullet);
     }
 
+    function onKeyDown(event) {
+      switch (event.code) {
+        case 'ArrowUp':
+        case 'KeyW': moveForward = true; break;
+        case 'ArrowLeft':
+        case 'KeyA': moveLeft = true; break;
+        case 'ArrowDown':
+        case 'KeyS': moveBackward = true; break;
+        case 'ArrowRight':
+        case 'KeyD': moveRight = true; break;
+        case 'Space':
+          if (canJump === true) velocity.y += 10;
+          canJump = false;
+          break;
+      }
+    }
+
+    function onKeyUp(event) {
+      switch (event.code) {
+        case 'ArrowUp':
+        case 'KeyW': moveForward = false; break;
+        case 'ArrowLeft':
+        case 'KeyA': moveLeft = false; break;
+        case 'ArrowDown':
+        case 'KeyS': moveBackward = false; break;
+        case 'ArrowRight':
+        case 'KeyD': moveRight = false; break;
+      }
+    }
+
     function animate() {
       requestAnimationFrame(animate);
-      const time = performance.now();
-      const delta = (time - prevTime) / 1000;
+
+      const delta = clock.getDelta();
 
       velocity.x -= velocity.x * 10.0 * delta;
       velocity.z -= velocity.z * 10.0 * delta;
+      velocity.y -= 9.8 * 10.0 * delta; // gravity
 
-      if (moveForward) velocity.z -= 20.0 * delta;
-      if (moveBackward) velocity.z += 20.0 * delta;
-      if (moveLeft) velocity.x -= 20.0 * delta;
-      if (moveRight) velocity.x += 20.0 * delta;
+      direction.z = Number(moveForward) - Number(moveBackward);
+      direction.x = Number(moveRight) - Number(moveLeft);
+      direction.normalize();
+
+      if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+      if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
 
       controls.moveRight(-velocity.x * delta);
       controls.moveForward(-velocity.z * delta);
 
-      bullets.forEach((bullet, i) => {
-        bullet.position.add(bullet.velocity.clone().multiplyScalar(delta * 60));
-        targets.forEach((target, j) => {
+      controls.getObject().position.y += velocity.y * delta;
+
+      if (controls.getObject().position.y < 1.5) {
+        velocity.y = 0;
+        controls.getObject().position.y = 1.5;
+        canJump = true;
+      }
+
+      bullets.forEach((bullet, index) => {
+        bullet.position.add(bullet.userData.velocity.clone().multiplyScalar(5));
+
+        targets.forEach((target, i) => {
           if (target.position.distanceTo(bullet.position) < 1) {
             scene.remove(target);
             scene.remove(bullet);
-            targets.splice(j, 1);
-            bullets.splice(i, 1);
+            targets.splice(i, 1);
+            bullets.splice(index, 1);
             kills++;
             document.getElementById('kills').textContent = kills;
           }
         });
+
+        if (bullet.position.length() > 1000) {
+          scene.remove(bullet);
+          bullets.splice(index, 1);
+        }
       });
 
-      bullets = bullets.filter(b => b.position.length() < 500);
-
       renderer.render(scene, camera);
-      prevTime = time;
     }
   </script>
 </body>

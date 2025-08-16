@@ -87,3 +87,103 @@
   </script>
 </body>
 </html>
+📌 Инструкции:
+
+Сохрани это как index.html.
+
+Положи картинку ЕГОР.jpg в ту же папку, что и HTML.
+
+Открой в браузере.
+
+Хочешь, я сделаю, чтобы сверху прямо было число: Выполнено X/7 и оно обновлялось при нажатии кнопок?
+
+
+
+
+
+
+
+
+Вы сказали:
+нет ты не понял именно что бы я нажимал на кнопки картинки 
+
+
+ChatGPT сказал:
+Ааа, теперь понял 🙌
+То есть тебе нужно, чтобы кнопки были прямо на самой картинке (как бы "поверх" неё), и ты кликом по кнопке на нужной строке отмечаешь выполнение квеста.
+
+Тогда делаем так:
+
+картинку вставляем как фон или <img>;
+
+поверх неё (абсолютным позиционированием) кладём кнопки напротив каждой строки задания;
+
+при клике кнопка меняется на «Выполнено ✅».
+
+Вот пример готового index.html:
+
+html
+Копировать
+Редактировать
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Квесты #1</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      position: relative;
+      display: inline-block;
+    }
+    .container img {
+      display: block;
+      max-width: 100%;
+      border-radius: 12px;
+    }
+    .btn {
+      position: absolute;
+      right: 10%; /* отступ от правого края */
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #22c55e;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="ЕГОР.jpg" alt="quests">
+
+    <!-- Кнопки поверх картинки -->
+    <button class="btn" style="top: 18%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 28%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 38%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 48%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 58%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 68%;" onclick="complete(this)">Выполнить</button>
+    <button class="btn" style="top: 78%;" onclick="complete(this)">Выполнить</button>
+  </div>
+
+  <script>
+    function complete(btn) {
+      btn.innerText = "Выполнено ✅";
+      btn.disabled = true;
+    }
+  </script>
+</body>
+</html>

@@ -1,189 +1,238 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Квесты #1</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      text-align: center;
-    }
-    .wrapper {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    img {
-      max-width: 100%;
-      border-radius: 12px;
-    }
-    .quest {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 10px 0;
-      padding: 10px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 8px;
-    }
-    button {
-      padding: 8px 14px;
-      border: none;
-      border-radius: 6px;
-      background: #22c55e;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-  </style>
-</head>
-<body>
-  <div class="wrapper">
-    <h1>Квесты #1</h1>
-    <img src="ЕГОР.jpg" alt="quests">
+// index.js
+// Telegram IRL-квест-бот: задания, приём фото/гео, прогресс.
+// by Code Companion
 
-    <div class="quest">
-      <span>Заработать 200$</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Сдать на вод. права</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Не курить 7 дней</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Отложить 1000$</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Вылечить зубы</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Получить машину</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-    <div class="quest">
-      <span>Повысить массу</span>
-      <button onclick="complete(this)">Выполнить</button>
-    </div>
-  </div>
+import 'dotenv/config';
+import { Telegraf } from 'telegraf';
+import fs from 'fs';
 
-  <script>
-    function complete(btn) {
-      btn.innerText = "Выполнено ✅";
-      btn.disabled = true;
-    }
-  </script>
-</body>
-</html>
-📌 Инструкции:
+const BOT_TOKEN = process.env.BOT_TOKEN;
+if (!BOT_TOKEN) {
+  console.error('Не найден BOT_TOKEN в .env');
+  process.exit(1);
+}
 
-Сохрани это как index.html.
+const bot = new Telegraf(BOT_TOKEN);
 
-Положи картинку ЕГОР.jpg в ту же папку, что и HTML.
+// ====== Конфиг заданий ======
+// proofType: 'photo' | 'location'
+// Для location задаём координаты и радиус в метрах.
+const TASKS = [
+  {
+    id: 1,
+    title: 'Фото с зелёной дверью',
+    description: 'Найди любую зелёную дверь в городе и сделай фото.',
+    proofType: 'photo',
+    points: 10,
+  },
+  {
+    id: 2,
+    title: 'Парк у фонтана',
+    description:
+      'Подойди к фонтану в центральном парке и пришли геопозицию (радиус 100м).',
+    proofType: 'location',
+    target: { lat: 55.751244, lon: 37.618423 }, // Пример: центр Москвы — замени на свой POI
+    radiusM: 100,
+    points: 20,
+  },
+  {
+    id: 3,
+    title: 'Фото команды',
+    description: 'Сделай групповое фото минимум из 3 людей (селфи засчитывается).',
+    proofType: 'photo',
+    points: 15,
+  },
+];
 
-Открой в браузере.
+// ====== Простая база (JSON) ======
+const DB_FILE = 'progress.json';
+function loadDB() {
+  if (!fs.existsSync(DB_FILE)) return { users: {} };
+  try {
+    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+  } catch {
+    return { users: {} };
+  }
+}
+function saveDB(db) {
+  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+}
 
-Хочешь, я сделаю, чтобы сверху прямо было число: Выполнено X/7 и оно обновлялось при нажатии кнопок?
+let db = loadDB();
 
+// ====== Утилиты ======
+function ensureUser(userId) {
+  if (!db.users[userId]) {
+    db.users[userId] = {
+      acceptedTaskId: null,
+      completed: [], // [{taskId, proof, at}]
+      points: 0,
+    };
+  }
+  return db.users[userId];
+}
 
+function formatTasks() {
+  return TASKS.map(
+    (t) =>
+      `#${t.id} — ${t.title}\n` +
+      `Тип: ${t.proofType === 'photo' ? '📷 фото' : '📍 локация'}\n` +
+      (t.proofType === 'location'
+        ? `Цель в радиусе ${t.radiusM}м\n`
+        : '') +
+      `Очки: ${t.points}\n` +
+      `${t.description}`
+  ).join('\n\n');
+}
 
+function haversineDistanceM(lat1, lon1, lat2, lon2) {
+  const toRad = (d) => (d * Math.PI) / 180;
+  const R = 6371000; // m
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) *
+      Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
 
+function getTaskById(id) {
+  return TASKS.find((t) => t.id === id);
+}
 
+// ====== Команды ======
+bot.start((ctx) => {
+  ensureUser(String(ctx.from.id));
+  ctx.reply(
+    'Привет! Я бот для IRL-заданий 🙌\n\n' +
+      'Команды:\n' +
+      '• /tasks — список заданий\n' +
+      '• /accept <id> — принять задание\n' +
+      '• Отправь фото — зачту задания с типом 📷\n' +
+      '• Отправь геолокацию — зачту задания с типом 📍\n' +
+      '• /progress — твой прогресс'
+  );
+});
 
+bot.command('tasks', (ctx) => {
+  ctx.reply('Доступные задания:\n\n' + formatTasks());
+});
 
+bot.command('accept', (ctx) => {
+  const user = ensureUser(String(ctx.from.id));
+  const parts = ctx.message.text.trim().split(/\s+/);
+  const id = Number(parts[1]);
+  if (!id || !getTaskById(id)) {
+    return ctx.reply('Укажи корректный id: /accept <id>. Посмотри /tasks');
+  }
+  if (user.completed.some((c) => c.taskId === id)) {
+    return ctx.reply('Это задание уже выполнено 👍. Выбери другое.');
+  }
+  user.acceptedTaskId = id;
+  saveDB(db);
+  const task = getTaskById(id);
+  ctx.reply(
+    `Принято задание #${task.id}: ${task.title}\n` +
+      `Описание: ${task.description}\n` +
+      `Доказательство: ${
+        task.proofType === 'photo' ? '📷 фото' : '📍 геопозиция'
+      }`
+  );
+});
 
-Вы сказали:
-нет ты не понял именно что бы я нажимал на кнопки картинки 
+bot.command('progress', (ctx) => {
+  const user = ensureUser(String(ctx.from.id));
+  if (user.completed.length === 0) {
+    return ctx.reply('Пока нет выполненных заданий. Начни с /tasks');
+  }
+  const lines = user.completed
+    .map((c) => {
+      const t = getTaskById(c.taskId);
+      const when = new Date(c.at).toLocaleString();
+      return `#${t.id} ${t.title} — +${t.points} очков (${when})`;
+    })
+    .join('\n');
+  ctx.reply(`Твои очки: ${user.points}\nВыполнено:\n${lines}`);
+});
 
+// ====== Приём доказательств ======
+bot.on('photo', async (ctx) => {
+  const user = ensureUser(String(ctx.from.id));
+  if (!user.acceptedTaskId) {
+    return ctx.reply('Сначала прими задание: /accept <id>');
+  }
+  const task = getTaskById(user.acceptedTaskId);
+  if (!task) return ctx.reply('Такого задания больше нет. Выбери /tasks');
 
-ChatGPT сказал:
-Ааа, теперь понял 🙌
-То есть тебе нужно, чтобы кнопки были прямо на самой картинке (как бы "поверх" неё), и ты кликом по кнопке на нужной строке отмечаешь выполнение квеста.
+  if (task.proofType !== 'photo') {
+    return ctx.reply('Для этого задания требуется геопозиция 📍, а не фото.');
+  }
 
-Тогда делаем так:
+  // Минимально: сохраняем file_id в прогресс (без скачивания).
+  const photos = ctx.message.photo;
+  const best = photos[photos.length - 1];
+  completeTask(ctx, user, task, { type: 'photo', file_id: best.file_id });
+});
 
-картинку вставляем как фон или <img>;
+bot.on('location', (ctx) => {
+  const user = ensureUser(String(ctx.from.id));
+  if (!user.acceptedTaskId) {
+    return ctx.reply('Сначала прими задание: /accept <id>');
+  }
+  const task = getTaskById(user.acceptedTaskId);
+  if (!task) return ctx.reply('Такого задания больше нет. Выбери /tasks');
 
-поверх неё (абсолютным позиционированием) кладём кнопки напротив каждой строки задания;
+  if (task.proofType !== 'location') {
+    return ctx.reply('Для этого задания нужно фото 📷, а не геопозиция.');
+  }
 
-при клике кнопка меняется на «Выполнено ✅».
+  const { latitude, longitude } = ctx.message.location;
+  const dist = haversineDistanceM(
+    latitude,
+    longitude,
+    task.target.lat,
+    task.target.lon
+  );
 
-Вот пример готового index.html:
+  if (dist <= task.radiusM) {
+    completeTask(ctx, user, task, {
+      type: 'location',
+      lat: latitude,
+      lon: longitude,
+      dist: Math.round(dist),
+    });
+  } else {
+    ctx.reply(
+      `Ты вне зоны цели: ${Math.round(dist)}м. Нужно ≤ ${task.radiusM}м. Подойди ближе и пришли геопозицию ещё раз.`
+    );
+  }
+});
 
-html
-Копировать
-Редактировать
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Квесты #1</title>
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      position: relative;
-      display: inline-block;
-    }
-    .container img {
-      display: block;
-      max-width: 100%;
-      border-radius: 12px;
-    }
-    .btn {
-      position: absolute;
-      right: 10%; /* отступ от правого края */
-      padding: 6px 12px;
-      border: none;
-      border-radius: 6px;
-      background: #22c55e;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .btn:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <img src="ЕГОР.jpg" alt="quests">
+// ====== Общая функция закрытия задания ======
+function completeTask(ctx, user, task, proof) {
+  user.completed.push({
+    taskId: task.id,
+    proof,
+    at: Date.now(),
+    points: task.points,
+  });
+  user.points += task.points;
+  user.acceptedTaskId = null;
+  saveDB(db);
 
-    <!-- Кнопки поверх картинки -->
-    <button class="btn" style="top: 18%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 28%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 38%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 48%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 58%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 68%;" onclick="complete(this)">Выполнить</button>
-    <button class="btn" style="top: 78%;" onclick="complete(this)">Выполнить</button>
-  </div>
+  ctx.reply(
+    `Задание #${task.id} выполнено! 🎉 +${task.points} очков.\n` +
+      `Хочешь ещё? Посмотри /tasks`
+  );
+}
 
-  <script>
-    function complete(btn) {
-      btn.innerText = "Выполнено ✅";
-      btn.disabled = true;
-    }
-  </script>
-</body>
-</html>
+// ====== Запуск ======
+bot.launch().then(() => {
+  console.log('✅ Бот запущен');
+});
+
+// Грейсфул-шатдаун для Heroku/Render и т.п.
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
